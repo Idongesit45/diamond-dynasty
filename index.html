@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,7 @@
 <title>Diamond Dynasty</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -31,13 +30,8 @@ header h1 {
   font-size: 28px;
 }
 
-header p {
-  margin: 5px 0 0;
-}
-
-nav {
-  margin-top: 15px;
-}
+header p { margin: 5px 0 0; }
+nav { margin-top: 15px; }
 
 nav button {
   background: #294768;
@@ -56,9 +50,7 @@ nav button {
   text-align: center;
 }
 
-.hero h2 {
-  font-size: 30px;
-}
+.hero h2 { font-size: 30px; }
 
 .hero p {
   max-width: 650px;
@@ -71,9 +63,7 @@ main {
   padding: 20px;
 }
 
-h2, h3 {
-  color: #102544;
-}
+h2, h3 { color: #102544; }
 
 .grid {
   display: grid;
@@ -89,9 +79,7 @@ h2, h3 {
   box-shadow: 0 3px 10px #1025440c;
 }
 
-.card h3 {
-  margin-top: 0;
-}
+.card h3 { margin-top: 0; }
 
 button.action {
   background: #102544;
@@ -104,8 +92,11 @@ button.action {
   margin-top: 8px;
 }
 
-button.action:hover {
-  background: #315782;
+button.action:hover { background: #315782; }
+
+button.action:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 button.gold {
@@ -124,9 +115,7 @@ button.subject {
   cursor: pointer;
 }
 
-button.subject:hover {
-  background: #fff2cf;
-}
+button.subject:hover { background: #fff2cf; }
 
 .panel {
   background: white;
@@ -136,9 +125,7 @@ button.subject:hover {
   border: 1px solid #dce3ec;
 }
 
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 .back {
   color: #18375f;
@@ -181,22 +168,20 @@ footer {
   margin-top: 30px;
 }
 
-footer strong {
-  color: #f2bd4b;
+footer strong { color: #f2bd4b; }
+
+.material-card { margin-bottom: 15px; }
+
+.material-link {
+  display: inline-block;
+  text-decoration: none;
+  margin: 8px 8px 0 0;
 }
 
 @media (max-width: 500px) {
-  header h1 {
-    font-size: 23px;
-  }
-
-  .hero h2 {
-    font-size: 25px;
-  }
-
-  main {
-    padding: 15px;
-  }
+  header h1 { font-size: 23px; }
+  .hero h2 { font-size: 25px; }
+  main { padding: 15px; }
 }
 </style>
 </head>
@@ -206,7 +191,6 @@ footer strong {
 <header>
   <h1>DIAMOND DYNASTY</h1>
   <p>Making Learning Easier, Building Brighter Futures</p>
-
   <nav>
     <button onclick="goHome()">Home</button>
     <button onclick="showLevels()">Classes</button>
@@ -223,9 +207,7 @@ footer strong {
     subjects and practise what you learn.
   </p>
   <br>
-  <button class="action gold" onclick="showLevels()">
-    Choose Your Class
-  </button>
+  <button class="action gold" onclick="showLevels()">Choose Your Class</button>
 </div>
 
 <main>
@@ -238,25 +220,19 @@ footer strong {
     <div class="card">
       <h3>Primary School</h3>
       <p>Learning resources for Primary 1 to Primary 6.</p>
-      <button class="action" onclick="showClasses('primary')">
-        View Primary Classes
-      </button>
+      <button class="action" onclick="showClasses('primary')">View Primary Classes</button>
     </div>
 
     <div class="card">
       <h3>Junior Secondary School</h3>
       <p>Learning resources for JSS 1 to JSS 3.</p>
-      <button class="action" onclick="showClasses('jss')">
-        View JSS Classes
-      </button>
+      <button class="action" onclick="showClasses('jss')">View JSS Classes</button>
     </div>
 
     <div class="card">
       <h3>Revision Centre</h3>
       <p>Answer practice questions and check your score.</p>
-      <button class="action gold" onclick="showQuiz()">
-        Try Mathematics Quiz
-      </button>
+      <button class="action gold" onclick="showQuiz()">Try Mathematics Quiz</button>
     </div>
   </div>
 </section>
@@ -314,10 +290,7 @@ footer strong {
         <label><input type="radio" name="q3" value="16"> 16</label>
       </div>
 
-      <button type="button" class="action gold" onclick="markQuiz()">
-        Check My Answers
-      </button>
-
+      <button type="button" class="action gold" onclick="markQuiz()">Check My Answers</button>
       <p id="result"></p>
     </form>
   </div>
@@ -350,7 +323,16 @@ footer strong {
   © <span id="year"></span> Diamond Dynasty
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+"use strict";
+
+/* Supabase connection */
+const supabaseClient = window.supabase.createClient(
+  "https://nmurlbjnkhcpaosgicet.supabase.co",
+  "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t"
+);
+
 const primarySubjects = [
   "Mathematics",
   "English Language",
@@ -380,9 +362,10 @@ const jssSubjects = [
 
 let currentLevel = "primary";
 let currentClass = "";
+let lessonRequestNumber = 0;
 
 function hideAll() {
-  const sections = [
+  [
     "homeSection",
     "classSection",
     "subjectSection",
@@ -390,9 +373,7 @@ function hideAll() {
     "quizSection",
     "aboutSection",
     "contactSection"
-  ];
-
-  sections.forEach(function(id) {
+  ].forEach(function(id) {
     document.getElementById(id).classList.add("hidden");
   });
 }
@@ -418,7 +399,7 @@ function showClasses(level) {
 
   const title = document.getElementById("classTitle");
   const box = document.getElementById("classButtons");
-  box.innerHTML = "";
+  box.replaceChildren();
 
   const classes = level === "primary"
     ? ["Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"]
@@ -442,8 +423,7 @@ function showClasses(level) {
       showSubjects(name);
     };
 
-    card.appendChild(heading);
-    card.appendChild(button);
+    card.append(heading, button);
     box.appendChild(card);
   });
 
@@ -455,12 +435,11 @@ function showSubjects(className) {
   currentClass = className;
   hideAll();
   document.getElementById("welcome").classList.add("hidden");
-
   document.getElementById("subjectTitle").textContent =
     className + " — Choose a Subject";
 
   const box = document.getElementById("subjectButtons");
-  box.innerHTML = "";
+  box.replaceChildren();
 
   const subjects = className.startsWith("Primary")
     ? primarySubjects
@@ -480,588 +459,152 @@ function showSubjects(className) {
   window.scrollTo(0, 0);
 }
 
-function showLesson(subject) {
+function addNotice(container, message) {
+  const notice = document.createElement("p");
+  notice.className = "notice";
+  notice.textContent = message;
+  container.appendChild(notice);
+}
+
+async function showLesson(subject) {
+  const requestNumber = ++lessonRequestNumber;
+
   hideAll();
   document.getElementById("welcome").classList.add("hidden");
-
   document.getElementById("lessonTitle").textContent =
     currentClass + " — " + subject;
 
   const content = document.getElementById("lessonContent");
-  content.innerHTML = "";
+  content.replaceChildren();
 
-  const message = document.createElement("p");
-  message.textContent =
-    "Welcome to " + subject + " for " + currentClass + ".";
-
-  const notice = document.createElement("p");
-  notice.className = "notice";
-  notice.textContent =
-    "This subject page is ready. The actual lesson notes, videos and assignments still need to be added.";
-
-  content.appendChild(message);
-  content.appendChild(notice);
+  const loading = document.createElement("p");
+  loading.textContent = "Loading learning materials...";
+  content.appendChild(loading);
 
   document.getElementById("lessonSection").classList.remove("hidden");
   window.scrollTo(0, 0);
-}
 
-function showQuiz() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("quizSection").classList.remove("hidden");
-  document.getElementById("result").textContent = "";
-  window.scrollTo(0, 0);
-}
+  try {
+    const result = await supabaseClient
+      .from("learning_content")
+      .select("id, title, class_level, subject, content_type, description, file_path, video_url, created_at")
+      .eq("class_level", currentClass)
+      .eq("subject", subject)
+      .order("created_at", { ascending: false });
 
-function markQuiz() {
-  const answers = {
-    q1: "12",
-    q2: "12",
-    q3: "16"
-  };
+    if (requestNumber !== lessonRequestNumber) return;
+    if (result.error) throw result.error;
 
-  let score = 0;
+    content.replaceChildren();
 
-  Object.keys(answers).forEach(function(question) {
-    const selected = document.querySelector(
-      'input[name="' + question + '"]:checked'
-    );
+    const intro = document.createElement("p");
+    intro.textContent =
+      "Welcome to " + subject + " for " + currentClass + ".";
+    content.appendChild(intro);
 
-    if (selected && selected.value === answers[question]) {
-      score++;
+    const materials = result.data || [];
+
+    if (materials.length === 0) {
+      addNotice(
+        content,
+        "No learning materials have been uploaded for this class and subject yet. Please check again later."
+      );
+      return;
     }
-  });
 
-  document.getElementById("result").textContent =
-    "You scored " + score + " out of 3. " +
-    (score === 3 ? "Excellent work!" : "Keep practising and try again!");
-}
+    for (const material of materials) {
+      if (requestNumber !== lessonRequestNumber) return;
 
-function showAbout() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("aboutSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
+      const card = document.createElement("div");
+      card.className = "card material-card";
 
-function showContact() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("contactSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
+      const heading = document.createElement("h3");
+      heading.textContent = material.title || "Learning Material";
+      card.appendChild(heading);
 
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+      if (material.content_type) {
+        const type = document.createElement("p");
+        type.textContent = "Type: " + material.content_type;
+        card.appendChild(type);
+      }
 
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diamond Dynasty</title>
+      if (material.description) {
+        const description = document.createElement("p");
+        description.textContent = material.description;
+        card.appendChild(description);
+      }
 
-<style>
-* {
-  box-sizing: border-box;
-}
+      if (material.file_path) {
+        const fileButton = document.createElement("button");
+        fileButton.className = "action";
+        fileButton.textContent = "Open / Download Material";
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #17243a;
-  line-height: 1.6;
-}
+        fileButton.onclick = async function() {
+          fileButton.disabled = true;
+          fileButton.textContent = "Preparing file...";
 
-header {
-  background: #102544;
-  color: white;
-  padding: 18px;
-  text-align: center;
-}
+          try {
+            const fileResult = await supabaseClient.storage
+              .from("diamond-learning-files")
+              .createSignedUrl(material.file_path, 3600);
 
-header h1 {
-  margin: 0;
-  color: #f2bd4b;
-  font-size: 28px;
-}
+            if (fileResult.error) throw fileResult.error;
 
-header p {
-  margin: 5px 0 0;
-}
+            const link = document.createElement("a");
+            link.href = fileResult.data.signedUrl;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = "Click here if the file does not open automatically";
+            link.className = "material-link";
+            link.style.display = "block";
 
-nav {
-  margin-top: 15px;
-}
+            card.appendChild(link);
+            window.open(
+              fileResult.data.signedUrl,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          } catch (error) {
+            console.error("File access error:", error);
+            alert("Unable to open this file. Please try again later.");
+          } finally {
+            fileButton.disabled = false;
+            fileButton.textContent = "Open / Download Material";
+          }
+        };
 
-nav button {
-  background: #294768;
-  color: white;
-  border: none;
-  padding: 10px 13px;
-  margin: 4px;
-  border-radius: 6px;
-  cursor: pointer;
-}
+        card.appendChild(fileButton);
+      }
 
-.hero {
-  background: #18375f;
-  color: white;
-  padding: 35px 20px;
-  text-align: center;
-}
+      if (material.video_url) {
+        const videoLink = document.createElement("a");
+        videoLink.href = material.video_url;
+        videoLink.target = "_blank";
+        videoLink.rel = "noopener noreferrer";
+        videoLink.className = "action material-link";
+        videoLink.textContent = "Watch Video";
+        card.appendChild(videoLink);
+      }
 
-.hero h2 {
-  font-size: 30px;
-}
+      if (!material.file_path && !material.video_url) {
+        const note = document.createElement("p");
+        note.textContent = "No file or video link is attached to this material.";
+        card.appendChild(note);
+      }
 
-.hero p {
-  max-width: 650px;
-  margin: auto;
-}
+      content.appendChild(card);
+    }
+  } catch (error) {
+    console.error("Learning materials error:", error);
 
-main {
-  max-width: 950px;
-  margin: auto;
-  padding: 20px;
-}
+    if (requestNumber !== lessonRequestNumber) return;
 
-h2, h3 {
-  color: #102544;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #dce3ec;
-  box-shadow: 0 3px 10px #1025440c;
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-button.action {
-  background: #102544;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  padding: 12px 15px;
-  cursor: pointer;
-  font-size: 15px;
-  margin-top: 8px;
-}
-
-button.action:hover {
-  background: #315782;
-}
-
-button.gold {
-  background: #f2bd4b;
-  color: #102544;
-  font-weight: bold;
-}
-
-button.subject {
-  background: white;
-  color: #102544;
-  border: 1px solid #ccd7e5;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-button.subject:hover {
-  background: #fff2cf;
-}
-
-.panel {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border: 1px solid #dce3ec;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.back {
-  color: #18375f;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 15px;
-  font-size: 15px;
-}
-
-.notice {
-  background: #fff7df;
-  padding: 13px;
-  border-radius: 8px;
-  border: 1px solid #f1d990;
-}
-
-.question {
-  padding: 12px 0;
-  border-bottom: 1px solid #e4e9f0;
-}
-
-.question label {
-  display: block;
-  padding: 5px;
-}
-
-#result {
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-footer {
-  background: #102544;
-  color: white;
-  text-align: center;
-  padding: 25px 15px;
-  margin-top: 30px;
-}
-
-footer strong {
-  color: #f2bd4b;
-}
-
-@media (max-width: 500px) {
-  header h1 {
-    font-size: 23px;
+    content.replaceChildren();
+    addNotice(
+      content,
+      "We could not load the learning materials. Please try again later."
+    );
   }
-
-  .hero h2 {
-    font-size: 25px;
-  }
-
-  main {
-    padding: 15px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <h1>DIAMOND DYNASTY</h1>
-  <p>Making Learning Easier, Building Brighter Futures</p>
-
-  <nav>
-    <button onclick="goHome()">Home</button>
-    <button onclick="showLevels()">Classes</button>
-    <button onclick="showAbout()">About Us</button>
-    <button onclick="showContact()">Contact</button>
-  </nav>
-</header>
-
-<div class="hero" id="welcome">
-  <h2>Your Learning Journey Starts Here!</h2>
-  <p>
-    Welcome to Diamond Dynasty, a learning platform for Primary 1–6
-    and Junior Secondary School 1–3. Choose your class, explore
-    subjects and practise what you learn.
-  </p>
-  <br>
-  <button class="action gold" onclick="showLevels()">
-    Choose Your Class
-  </button>
-</div>
-
-<main>
-
-<section id="homeSection">
-  <h2>Welcome, Learner!</h2>
-  <p>Select your school level to begin learning.</p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Primary School</h3>
-      <p>Learning resources for Primary 1 to Primary 6.</p>
-      <button class="action" onclick="showClasses('primary')">
-        View Primary Classes
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>Junior Secondary School</h3>
-      <p>Learning resources for JSS 1 to JSS 3.</p>
-      <button class="action" onclick="showClasses('jss')">
-        View JSS Classes
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>Revision Centre</h3>
-      <p>Answer practice questions and check your score.</p>
-      <button class="action gold" onclick="showQuiz()">
-        Try Mathematics Quiz
-      </button>
-    </div>
-  </div>
-</section>
-
-<section id="classSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="showLevels()">← Back to School Levels</button>
-    <h2 id="classTitle">Choose Your Class</h2>
-    <div class="grid" id="classButtons"></div>
-  </div>
-</section>
-
-<section id="subjectSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="showClasses(currentLevel)">← Back to Classes</button>
-    <h2 id="subjectTitle">Choose a Subject</h2>
-    <p>Select a subject to open its learning page.</p>
-    <div id="subjectButtons"></div>
-  </div>
-</section>
-
-<section id="lessonSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="showSubjects(currentClass)">← Back to Subjects</button>
-    <h2 id="lessonTitle">Lesson</h2>
-    <div id="lessonContent"></div>
-  </div>
-</section>
-
-<section id="quizSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="goHome()">← Back to Home</button>
-    <h2>Mathematics Practice Quiz</h2>
-    <p>Choose one answer for each question.</p>
-
-    <form id="quizForm">
-      <div class="question">
-        <p><strong>1. What is 7 + 5?</strong></p>
-        <label><input type="radio" name="q1" value="10"> 10</label>
-        <label><input type="radio" name="q1" value="12"> 12</label>
-        <label><input type="radio" name="q1" value="13"> 13</label>
-      </div>
-
-      <div class="question">
-        <p><strong>2. What is 3 × 4?</strong></p>
-        <label><input type="radio" name="q2" value="7"> 7</label>
-        <label><input type="radio" name="q2" value="12"> 12</label>
-        <label><input type="radio" name="q2" value="14"> 14</label>
-      </div>
-
-      <div class="question">
-        <p><strong>3. Which number is even?</strong></p>
-        <label><input type="radio" name="q3" value="9"> 9</label>
-        <label><input type="radio" name="q3" value="11"> 11</label>
-        <label><input type="radio" name="q3" value="16"> 16</label>
-      </div>
-
-      <button type="button" class="action gold" onclick="markQuiz()">
-        Check My Answers
-      </button>
-
-      <p id="result"></p>
-    </form>
-  </div>
-</section>
-
-<section id="aboutSection" class="hidden">
-  <div class="panel">
-    <h2>About Diamond Dynasty</h2>
-    <p>
-      Diamond Dynasty is an educational platform being developed to
-      support Primary 1–6 and JSS 1–3 learners through lessons,
-      revision activities and practice questions.
-    </p>
-    <p><strong>Our slogan:</strong> Making Learning Easier, Building Brighter Futures.</p>
-  </div>
-</section>
-
-<section id="contactSection" class="hidden">
-  <div class="panel">
-    <h2>Contact Diamond Dynasty</h2>
-    <p>Contact details will be added when they are ready.</p>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <strong>DIAMOND DYNASTY</strong><br>
-  Making Learning Easier, Building Brighter Futures<br>
-  © <span id="year"></span> Diamond Dynasty
-</footer>
-
-<script>
-const primarySubjects = [
-  "Mathematics",
-  "English Language",
-  "Basic Science",
-  "Basic Technology",
-  "Social Studies",
-  "Civic Education",
-  "Computer Studies",
-  "Agricultural Science",
-  "Religious Studies",
-  "Creative Arts"
-];
-
-const jssSubjects = [
-  "Mathematics",
-  "English Studies",
-  "Basic Science",
-  "Basic Technology",
-  "Business Studies",
-  "Social Studies",
-  "Civic Education",
-  "Computer Studies",
-  "Agricultural Science",
-  "Christian Religious Studies",
-  "Physical and Health Education"
-];
-
-let currentLevel = "primary";
-let currentClass = "";
-
-function hideAll() {
-  const sections = [
-    "homeSection",
-    "classSection",
-    "subjectSection",
-    "lessonSection",
-    "quizSection",
-    "aboutSection",
-    "contactSection"
-  ];
-
-  sections.forEach(function(id) {
-    document.getElementById(id).classList.add("hidden");
-  });
-}
-
-function goHome() {
-  hideAll();
-  document.getElementById("homeSection").classList.remove("hidden");
-  document.getElementById("welcome").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showLevels() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("homeSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showClasses(level) {
-  currentLevel = level;
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-
-  const title = document.getElementById("classTitle");
-  const box = document.getElementById("classButtons");
-  box.innerHTML = "";
-
-  const classes = level === "primary"
-    ? ["Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"]
-    : ["JSS 1", "JSS 2", "JSS 3"];
-
-  title.textContent = level === "primary"
-    ? "Choose a Primary Class"
-    : "Choose a Junior Secondary Class";
-
-  classes.forEach(function(name) {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const heading = document.createElement("h3");
-    heading.textContent = name;
-
-    const button = document.createElement("button");
-    button.className = "action";
-    button.textContent = "Open " + name;
-    button.onclick = function() {
-      showSubjects(name);
-    };
-
-    card.appendChild(heading);
-    card.appendChild(button);
-    box.appendChild(card);
-  });
-
-  document.getElementById("classSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showSubjects(className) {
-  currentClass = className;
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-
-  document.getElementById("subjectTitle").textContent =
-    className + " — Choose a Subject";
-
-  const box = document.getElementById("subjectButtons");
-  box.innerHTML = "";
-
-  const subjects = className.startsWith("Primary")
-    ? primarySubjects
-    : jssSubjects;
-
-  subjects.forEach(function(subject) {
-    const button = document.createElement("button");
-    button.className = "subject";
-    button.textContent = subject;
-    button.onclick = function() {
-      showLesson(subject);
-    };
-    box.appendChild(button);
-  });
-
-  document.getElementById("subjectSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showLesson(subject) {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-
-  document.getElementById("lessonTitle").textContent =
-    currentClass + " — " + subject;
-
-  const content = document.getElementById("lessonContent");
-  content.innerHTML = "";
-
-  const message = document.createElement("p");
-  message.textContent =
-    "Welcome to " + subject + " for " + currentClass + ".";
-
-  const notice = document.createElement("p");
-  notice.className = "notice";
-  notice.textContent =
-    "This subject page is ready. The actual lesson notes, videos and assignments still need to be added.";
-
-  content.appendChild(message);
-  content.appendChild(notice);
-
-  document.getElementById("lessonSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
 }
 
 function showQuiz() {
