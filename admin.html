@@ -1,425 +1,407 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diamond Dynasty | Admin Dashboard</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      color: #172033;
-    }
-    header {
-      background: #102a43;
-      color: white;
-      padding: 22px 16px;
-      text-align: center;
-    }
-    header h1 { margin: 0 0 8px; }
-    header p { margin: 0; }
-    main {
-      width: min(950px, 94%);
-      margin: 25px auto;
-    }
-    .card {
-      background: white;
-      padding: 22px;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px #0000000d;
-    }
-    h2 { margin-top: 0; color: #102a43; }
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 14px 0 6px;
-    }
-    input, select, textarea, button {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccd5e0;
-      border-radius: 7px;
-      font-size: 16px;
-    }
-    textarea { min-height: 90px; resize: vertical; }
-    button {
-      background: #147d64;
-      color: white;
-      border: 0;
-      cursor: pointer;
-      margin-top: 14px;
-      font-weight: bold;
-    }
-    button:hover { opacity: .9; }
-    button.danger { background: #b42318; }
-    button.secondary { background: #334e68; }
-    .hidden { display: none; }
-    .message { margin-top: 12px; overflow-wrap: anywhere; }
-    .item {
-      border: 1px solid #dce3eb;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 12px;
-      overflow-wrap: anywhere;
-    }
-    .item h3 { margin-top: 0; }
-    .small { color: #52606d; font-size: 14px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diamond Dynasty | Admin Dashboard</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
+header{background:#102a43;color:white;text-align:center;padding:24px 12px}
+main{max-width:900px;width:94%;margin:25px auto}
+.card{background:white;padding:20px;margin-bottom:20px;border-radius:12px;box-shadow:0 3px 12px #0001}
+h2{color:#102a43}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select,textarea,button{width:100%;padding:12px;border:1px solid #ccd5e0;border-radius:7px;font-size:16px}
+textarea{min-height:90px}
+button{background:#147d64;color:white;border:0;margin-top:14px;cursor:pointer;font-weight:bold}
+button:disabled{opacity:.6}
+.hidden{display:none}
+.message{overflow-wrap:anywhere}
+.item{border:1px solid #dce3eb;padding:14px;margin-top:12px;border-radius:8px;overflow-wrap:anywhere}
+.small{font-size:14px;color:#52606d}
+.danger{background:#b42318}
+.secondary{background:#334e68}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>💎 Diamond Dynasty</h1>
-    <p>Making Learning Easier, Building Brighter Futures</p>
-    <p>Administrator Dashboard</p>
-  </header>
+<header>
+<h1>💎 Diamond Dynasty</h1>
+<p>Making Learning Easier, Building Brighter Futures</p>
+<p>Administrator Dashboard</p>
+</header>
 
-  <main>
-    <section class="card" id="loginCard">
-      <h2>Administrator Login</h2>
-      <p class="small">Sign in using the administrator account already created in Supabase.</p>
+<main>
+<section class="card" id="loginCard">
+<h2>Administrator Login</h2>
+<form id="loginForm">
+<label for="email">Email address</label>
+<input id="email" type="email" autocomplete="username" required>
 
-      <form id="loginForm">
-        <label for="email">Email address</label>
-        <input id="email" type="email" autocomplete="username" required>
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password" required>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="current-password" required>
+<button type="submit" id="loginButton">Sign In</button>
+</form>
+<p id="loginMessage" class="message" role="status"></p>
+</section>
 
-        <button type="submit">Sign In</button>
-      </form>
-      <p id="loginMessage" class="message" role="status"></p>
-    </section>
+<section id="dashboard" class="hidden">
 
-    <section id="dashboard" class="hidden">
-      <div class="card">
-        <h2>Welcome, Administrator</h2>
-        <p>Add lesson notes, videos, assignments and other learning materials.</p>
-        <button id="logoutButton" class="secondary">Sign Out</button>
-      </div>
+<div class="card">
+<h2>Welcome, Administrator!</h2>
+<p>Add and manage learning materials for Primary 1–6 and JSS 1–3.</p>
+<button id="logoutButton" class="secondary">Sign Out</button>
+</div>
 
-      <div class="card">
-        <h2>Add Learning Material</h2>
-        <form id="contentForm">
-          <label for="title">Title</label>
-          <input id="title" required placeholder="e.g. Fractions">
+<div class="card">
+<h2>Add Learning Material</h2>
 
-          <label for="classLevel">Class</label>
-          <select id="classLevel" required>
-            <option value="">Choose class</option>
-            <option>Primary 1</option>
-            <option>Primary 2</option>
-            <option>Primary 3</option>
-            <option>Primary 4</option>
-            <option>Primary 5</option>
-            <option>Primary 6</option>
-            <option>JSS 1</option>
-            <option>JSS 2</option>
-            <option>JSS 3</option>
-          </select>
+<form id="contentForm">
+<label for="title">Title</label>
+<input id="title" required placeholder="Example: Fractions">
 
-          <label for="subject">Subject</label>
-          <input id="subject" required placeholder="e.g. Mathematics">
+<label for="classLevel">Class</label>
+<select id="classLevel" required>
+<option value="">Select class</option>
+<option>Primary 1</option>
+<option>Primary 2</option>
+<option>Primary 3</option>
+<option>Primary 4</option>
+<option>Primary 5</option>
+<option>Primary 6</option>
+<option>JSS 1</option>
+<option>JSS 2</option>
+<option>JSS 3</option>
+</select>
 
-          <label for="type">Material type</label>
-          <select id="type" required>
-            <option value="note">Lesson note</option>
-            <option value="video">Video</option>
-            <option value="assignment">Assignment</option>
-            <option value="test">Test</option>
-            <option value="other">Other</option>
-          </select>
+<label for="subject">Subject</label>
+<input id="subject" required placeholder="Example: Mathematics">
 
-          <label for="description">Description or instructions</label>
-          <textarea id="description" placeholder="Enter lesson details or instructions"></textarea>
+<label for="type">Material type</label>
+<select id="type" required>
+<option value="note">Lesson note</option>
+<option value="video">Video</option>
+<option value="assignment">Assignment</option>
+<option value="test">Test</option>
+<option value="other">Other</option>
+</select>
 
-          <label for="videoUrl">Video URL (optional)</label>
-          <input id="videoUrl" type="url" placeholder="Paste a video link">
+<label for="description">Description or lesson content</label>
+<textarea id="description" placeholder="Enter lesson details or instructions"></textarea>
 
-          <label for="file">Upload PDF or video file (optional)</label>
-          <input id="file" type="file" accept=".pdf,video/*">
+<label for="videoUrl">Video link (optional)</label>
+<input id="videoUrl" type="url" placeholder="Paste a video URL">
 
-          <p class="small">Upload limit: 50 MB per file. Keep lesson notes in PDF format where possible.</p>
+<label for="file">Upload a PDF or video (optional)</label>
+<input id="file" type="file" accept=".pdf,video/*">
+<p class="small">Maximum file size: 50 MB.</p>
 
-          <button type="submit" id="saveButton">Save Material</button>
-        </form>
-        <p id="contentMessage" class="message" role="status"></p>
-      </div>
+<button id="saveButton" type="submit">Save Material</button>
+</form>
 
-      <div class="card">
-        <h2>Saved Learning Materials</h2>
-        <label for="filterClass">Filter by class</label>
-        <select id="filterClass">
-          <option value="">All classes</option>
-          <option>Primary 1</option>
-          <option>Primary 2</option>
-          <option>Primary 3</option>
-          <option>Primary 4</option>
-          <option>Primary 5</option>
-          <option>Primary 6</option>
-          <option>JSS 1</option>
-          <option>JSS 2</option>
-          <option>JSS 3</option>
-        </select>
-        <div id="contentList">Loading materials...</div>
-      </div>
-    </section>
-  </main>
+<p id="contentMessage" class="message" role="status"></p>
+</div>
 
-  <script type="module">
-    import { createClient } from
-      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+<div class="card">
+<h2>Learning Materials</h2>
 
-    const SUPABASE_URL = 'https://nmurlbjnkhcpaosgicet.supabase.co';
+<label for="filterClass">Filter by class</label>
+<select id="filterClass">
+<option value="">All classes</option>
+<option>Primary 1</option>
+<option>Primary 2</option>
+<option>Primary 3</option>
+<option>Primary 4</option>
+<option>Primary 5</option>
+<option>Primary 6</option>
+<option>JSS 1</option>
+<option>JSS 2</option>
+<option>JSS 3</option>
+</select>
 
-    // Replace this placeholder with your Supabase publishable key.
-    const SUPABASE_PUBLISHABLE_KEY = 'PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE';
+<div id="contentList">Loading materials...</div>
+</div>
 
-    const BUCKET = 'diamond-learning-files';
-    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+</section>
+</main>
 
-    const $ = id => document.getElementById(id);
-    let currentUser = null;
+<script type="module">
+import { createClient } from
+'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    function message(id, text, isError = false) {
-      const el = $(id);
-      el.textContent = text;
-      el.style.color = isError ? '#b42318' : '#147d64';
-    }
+const SUPABASE_URL =
+'https://nmurlbjnkhcpaosgicet.supabase.co';
 
-    function showDashboard(user) {
-      currentUser = user;
-      $('loginCard').classList.add('hidden');
-      $('dashboard').classList.remove('hidden');
-      loadContent();
-    }
+const SUPABASE_PUBLISHABLE_KEY =
+'sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t';
 
-    function showLogin() {
-      currentUser = null;
-      $('dashboard').classList.add('hidden');
-      $('loginCard').classList.remove('hidden');
-    }
+const BUCKET = 'diamond-learning-files';
 
-    async function checkAdmin() {
-      const { data: { user }, error } = await supabase.auth.getUser();
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-      if (error || !user) {
-        showLogin();
-        return;
+const $ = id => document.getElementById(id);
+let currentUser = null;
+
+function showMessage(id, text, error = false) {
+  $(id).textContent = text;
+  $(id).style.color = error ? '#b42318' : '#147d64';
+}
+
+function showLogin() {
+  currentUser = null;
+  $('dashboard').classList.add('hidden');
+  $('loginCard').classList.remove('hidden');
+}
+
+async function checkAdmin() {
+  const { data: { user }, error } =
+    await supabase.auth.getUser();
+
+  if (error || !user) {
+    showLogin();
+    return;
+  }
+
+  const { data, error: adminError } = await supabase
+    .from('site_admins')
+    .select('user_id')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  if (adminError || !data) {
+    await supabase.auth.signOut();
+    showLogin();
+    showMessage(
+      'loginMessage',
+      'This account is not registered as an administrator.',
+      true
+    );
+    return;
+  }
+
+  currentUser = user;
+  $('loginCard').classList.add('hidden');
+  $('dashboard').classList.remove('hidden');
+  await loadContent();
+}
+
+$('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+
+  const button = $('loginButton');
+  button.disabled = true;
+  showMessage('loginMessage', 'Signing in...');
+
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: $('email').value.trim(),
+      password: $('password').value
+    });
+
+    if (error) throw error;
+
+    await checkAdmin();
+  } catch (error) {
+    showMessage('loginMessage', error.message, true);
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$('logoutButton').addEventListener('click', async () => {
+  await supabase.auth.signOut();
+  showLogin();
+});
+
+$('contentForm').addEventListener('submit', async event => {
+  event.preventDefault();
+
+  if (!currentUser) {
+    showMessage('contentMessage', 'Please sign in again.', true);
+    return;
+  }
+
+  const button = $('saveButton');
+  button.disabled = true;
+  let uploadedPath = null;
+
+  try {
+    showMessage('contentMessage', 'Saving material...');
+
+    const file = $('file').files[0];
+
+    if (file) {
+      if (file.size > 50 * 1024 * 1024) {
+        throw new Error('The file exceeds the 50 MB limit.');
       }
 
-      const { data, error: adminError } = await supabase
-        .from('site_admins')
-        .select('user_id')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
 
-      if (adminError || !data) {
-        await supabase.auth.signOut();
-        showLogin();
-        message('loginMessage',
-          'This account is not authorised as an administrator.', true);
-        return;
-      }
+      uploadedPath =
+        `${currentUser.id}/${Date.now()}-${safeName}`;
 
-      showDashboard(user);
+      const { error: uploadError } = await supabase.storage
+        .from(BUCKET)
+        .upload(uploadedPath, file);
+
+      if (uploadError) throw uploadError;
     }
 
-    $('loginForm').addEventListener('submit', async event => {
-      event.preventDefault();
-      message('loginMessage', 'Signing in...');
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email: $('email').value.trim(),
-        password: $('password').value
+    const { error: insertError } = await supabase
+      .from('learning_content')
+      .insert({
+        title: $('title').value.trim(),
+        class_level: $('classLevel').value,
+        subject: $('subject').value.trim(),
+        content_type: $('type').value,
+        description: $('description').value.trim() || null,
+        file_path: uploadedPath,
+        video_url: $('videoUrl').value.trim() || null,
+        created_by: currentUser.id
       });
 
-      if (error) {
-        message('loginMessage', error.message, true);
-        return;
-      }
+    if (insertError) throw insertError;
 
-      await checkAdmin();
-    });
+    $('contentForm').reset();
+    showMessage('contentMessage', 'Material saved successfully.');
+    await loadContent();
 
-    $('logoutButton').addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      showLogin();
-    });
+  } catch (error) {
+    showMessage('contentMessage', error.message, true);
 
-    $('contentForm').addEventListener('submit', async event => {
-      event.preventDefault();
+    if (uploadedPath) {
+      await supabase.storage
+        .from(BUCKET)
+        .remove([uploadedPath]);
+    }
+  } finally {
+    button.disabled = false;
+  }
+});
 
-      if (!currentUser) {
-        message('contentMessage', 'Please sign in again.', true);
-        return;
-      }
+$('filterClass').addEventListener('change', loadContent);
 
-      const button = $('saveButton');
-      button.disabled = true;
-      message('contentMessage', 'Saving material...');
+async function loadContent() {
+  const list = $('contentList');
+  list.textContent = 'Loading materials...';
 
-      try {
-        let filePath = null;
-        const file = $('file').files[0];
+  let query = supabase
+    .from('learning_content')
+    .select('*')
+    .order('created_at', { ascending: false });
 
-        if (file) {
-          if (file.size > 50 * 1024 * 1024) {
-            throw new Error('The file is larger than 50 MB.');
-          }
+  const selectedClass = $('filterClass').value;
 
-          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          filePath = `${currentUser.id}/${Date.now()}-${safeName}`;
+  if (selectedClass) {
+    query = query.eq('class_level', selectedClass);
+  }
 
-          const { error: uploadError } = await supabase.storage
-            .from(BUCKET)
-            .upload(filePath, file, {
-              upsert: false,
-              contentType: file.type || 'application/octet-stream'
-            });
+  const { data, error } = await query;
 
-          if (uploadError) throw uploadError;
-        }
+  if (error) {
+    list.textContent = 'Unable to load materials: ' + error.message;
+    return;
+  }
 
-        const { error: insertError } = await supabase
-          .from('learning_content')
-          .insert({
-            title: $('title').value.trim(),
-            class_level: $('classLevel').value,
-            subject: $('subject').value.trim(),
-            content_type: $('type').value,
-            description: $('description').value.trim() || null,
-            file_path: filePath,
-            video_url: $('videoUrl').value.trim() || null,
-            created_by: currentUser.id
-          });
+  list.replaceChildren();
 
-        if (insertError) throw insertError;
+  if (!data || data.length === 0) {
+    list.textContent = 'No learning materials have been added yet.';
+    return;
+  }
 
-        $('contentForm').reset();
-        message('contentMessage', 'Material saved successfully.');
-        await loadContent();
-      } catch (error) {
-        message('contentMessage', error.message || 'Unable to save material.', true);
-      } finally {
-        button.disabled = false;
-      }
-    });
+  for (const item of data) {
+    const box = document.createElement('article');
+    box.className = 'item';
 
-    $('filterClass').addEventListener('change', loadContent);
+    const heading = document.createElement('h3');
+    heading.textContent = item.title;
 
-    async function loadContent() {
-      const list = $('contentList');
-      list.textContent = 'Loading materials...';
+    const details = document.createElement('p');
+    details.textContent =
+      `${item.class_level} | ${item.subject} | ${item.content_type}`;
 
-      let query = supabase
-        .from('learning_content')
-        .select('*')
-        .order('created_at', { ascending: false });
+    const description = document.createElement('p');
+    description.textContent = item.description || '';
 
-      if ($('filterClass').value) {
-        query = query.eq('class_level', $('filterClass').value);
-      }
+    box.append(heading, details, description);
 
-      const { data, error } = await query;
-
-      if (error) {
-        list.textContent = 'Unable to load materials: ' + error.message;
-        return;
-      }
-
-      list.replaceChildren();
-
-      if (!data || data.length === 0) {
-        list.textContent = 'No learning materials have been added yet.';
-        return;
-      }
-
-      for (const item of data) {
-        const box = document.createElement('article');
-        box.className = 'item';
-
-        const heading = document.createElement('h3');
-        heading.textContent = item.title;
-
-        const details = document.createElement('p');
-        details.textContent =
-          `${item.class_level} • ${item.subject} • ${item.content_type}`;
-
-        const description = document.createElement('p');
-        description.textContent = item.description || '';
-
-        box.append(heading, details, description);
-
-        if (item.video_url) {
-          const link = document.createElement('a');
-          link.href = item.video_url;
-          link.textContent = 'Open video link';
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          box.append(link);
-        }
-
-        if (item.file_path) {
-          const fileButton = document.createElement('button');
-          fileButton.textContent = 'Open uploaded file';
-          fileButton.addEventListener('click', async () => {
-            const { data: fileData, error: fileError } = await supabase.storage
-              .from(BUCKET)
-              .createSignedUrl(item.file_path, 300);
-
-            if (fileError) {
-              alert('Could not open file: ' + fileError.message);
-              return;
-            }
-
-            window.open(fileData.signedUrl, '_blank', 'noopener');
-          });
-          box.append(fileButton);
-        }
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete material';
-        deleteButton.className = 'danger';
-        deleteButton.addEventListener('click', async () => {
-          if (!confirm(`Delete "${item.title}"? This cannot be undone.`)) return;
-
-          const { error: deleteError } = await supabase
-            .from('learning_content')
-            .delete()
-            .eq('id', item.id);
-
-          if (deleteError) {
-            alert('Could not delete: ' + deleteError.message);
-            return;
-          }
-
-          if (item.file_path) {
-            const { error: storageError } = await supabase.storage
-              .from(BUCKET)
-              .remove([item.file_path]);
-
-            if (storageError) {
-              alert('The record was deleted, but its file could not be removed: ' +
-                storageError.message);
-            }
-          }
-
-          await loadContent();
-        });
-
-        box.append(deleteButton);
-        list.append(box);
-      }
+    if (item.video_url) {
+      const link = document.createElement('a');
+      link.href = item.video_url;
+      link.textContent = 'Open video';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      box.append(link);
     }
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) showLogin();
+    if (item.file_path) {
+      const openButton = document.createElement('button');
+      openButton.textContent = 'Open uploaded file';
+
+      openButton.addEventListener('click', async () => {
+        const { data: fileData, error: fileError } =
+          await supabase.storage
+            .from(BUCKET)
+            .createSignedUrl(item.file_path, 300);
+
+        if (fileError) {
+          alert(fileError.message);
+          return;
+        }
+
+        window.open(fileData.signedUrl, '_blank', 'noopener');
+      });
+
+      box.append(openButton);
+    }
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete material';
+    deleteButton.className = 'danger';
+
+    deleteButton.addEventListener('click', async () => {
+      if (!confirm(`Delete "${item.title}"?`)) return;
+
+      const { error: deleteError } = await supabase
+        .from('learning_content')
+        .delete()
+        .eq('id', item.id);
+
+      if (deleteError) {
+        alert('Unable to delete: ' + deleteError.message);
+        return;
+      }
+
+      if (item.file_path) {
+        await supabase.storage
+          .from(BUCKET)
+          .remove([item.file_path]);
+      }
+
+      await loadContent();
     });
 
-    checkAdmin();
-  </script>
+    box.append(deleteButton);
+    list.append(box);
+  }
+}
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT' || !session) {
+    showLogin();
+  }
+});
+
+checkAdmin();
+</script>
 </body>
-            </html>
+</html>
+```
