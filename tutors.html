@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutor Matching | Diamond Dynasty</title>
+
 <style>
 :root {
   --navy:#102542;
@@ -15,7 +16,9 @@
   --green:#16834a;
   --red:#b42318;
 }
+
 * { box-sizing:border-box; }
+
 body {
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
@@ -23,14 +26,21 @@ body {
   color:var(--text);
   line-height:1.6;
 }
+
 header {
   background:var(--navy);
   color:white;
   padding:22px 16px;
   text-align:center;
 }
-header h1 { margin:0; font-size:clamp(25px,5vw,38px); }
+
+header h1 {
+  margin:0;
+  font-size:clamp(25px,5vw,38px);
+}
+
 header p { margin:6px 0 0; }
+
 nav {
   display:flex;
   justify-content:center;
@@ -40,13 +50,19 @@ nav {
   background:#fff;
   box-shadow:0 2px 7px #00000012;
 }
+
 nav a {
   color:var(--navy);
   text-decoration:none;
   font-weight:bold;
   padding:7px 10px;
 }
-.container { width:min(1050px,94%); margin:24px auto; }
+
+.container {
+  width:min(1050px,94%);
+  margin:24px auto;
+}
+
 .hero {
   background:linear-gradient(135deg,#102542,#1769aa);
   color:white;
@@ -54,8 +70,14 @@ nav a {
   border-radius:16px;
   text-align:center;
 }
+
 .hero h2 { margin:0 0 10px; font-size:28px; }
-.hero p { max-width:720px; margin:0 auto; }
+
+.hero p {
+  max-width:720px;
+  margin:0 auto;
+}
+
 .tabs {
   display:flex;
   flex-wrap:wrap;
@@ -63,6 +85,7 @@ nav a {
   justify-content:center;
   margin:22px 0;
 }
+
 button,.button {
   border:0;
   border-radius:8px;
@@ -73,9 +96,11 @@ button,.button {
   text-decoration:none;
   display:inline-block;
 }
+
 .primary { background:var(--blue); color:white; }
 .secondary { background:var(--gold); color:#172033; }
 .dark { background:var(--navy); color:white; }
+
 .card {
   background:white;
   border-radius:14px;
@@ -83,13 +108,24 @@ button,.button {
   margin:18px 0;
   box-shadow:0 4px 18px #1720330c;
 }
-.card h2,.card h3 { color:var(--navy); margin-top:0; }
+
+.card h2,.card h3 {
+  color:var(--navy);
+  margin-top:0;
+}
+
 .grid {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:15px;
 }
-label { display:block; font-weight:bold; margin:12px 0 5px; }
+
+label {
+  display:block;
+  font-weight:bold;
+  margin:12px 0 5px;
+}
+
 input,select,textarea {
   display:block;
   width:100%;
@@ -99,20 +135,45 @@ input,select,textarea {
   font:inherit;
   background:white;
 }
-textarea { min-height:95px; resize:vertical; }
+
+textarea {
+  min-height:95px;
+  resize:vertical;
+}
+
 small,.muted { color:#657386; }
+
 form button { margin-top:18px; }
-.status { margin-top:12px; padding:12px; border-radius:8px; display:none; }
-.status.success { display:block; background:#e7f7ed; color:#176b38; }
-.status.error { display:block; background:#fff0ef; color:var(--red); }
+
+.status {
+  margin-top:12px;
+  padding:12px;
+  border-radius:8px;
+  display:none;
+}
+
+.status.success {
+  display:block;
+  background:#e7f7ed;
+  color:#176b38;
+}
+
+.status.error {
+  display:block;
+  background:#fff0ef;
+  color:var(--red);
+}
+
 .section { display:none; }
 .section.active { display:block; }
+
 .notice {
   background:#fff7df;
   border-left:4px solid var(--gold);
   padding:12px;
   border-radius:5px;
 }
+
 .result-card {
   border:1px solid #e1e7ef;
   border-radius:10px;
@@ -120,10 +181,7 @@ form button { margin-top:18px; }
   margin:12px 0;
   overflow-wrap:anywhere;
 }
-.table-wrap { overflow-x:auto; }
-table { width:100%; border-collapse:collapse; min-width:550px; }
-th,td { padding:10px; border-bottom:1px solid #e0e6ed; text-align:left; }
-th { background:#edf2f8; }
+
 footer {
   background:var(--navy);
   color:white;
@@ -131,9 +189,16 @@ footer {
   padding:22px;
   margin-top:35px;
 }
+
 [hidden] { display:none !important; }
+
+@media(max-width:500px) {
+  .card { padding:16px; }
+  .hero { padding:25px 16px; }
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -150,240 +215,281 @@ footer {
 </nav>
 
 <main class="container">
-  <section class="hero">
-    <h2>Connect with the Right Tutor</h2>
-    <p>
-      Find suitable support for your child's learning. Choose online lessons
-      or private home tutoring, and let Diamond Dynasty help coordinate the match.
-    </p>
-  </section>
 
-  <div class="tabs">
-    <button class="primary" onclick="showSection('parent')">Find a Tutor</button>
-    <button class="secondary" onclick="showSection('tutor')">Register as a Tutor</button>
-    <button class="dark" onclick="showSection('admin')">Administrator</button>
+<section class="hero">
+  <h2>Connect with the Right Tutor</h2>
+  <p>
+    Find suitable support for your child's learning. Choose online lessons
+    or private home tutoring, and let Diamond Dynasty help coordinate the match.
+  </p>
+</section>
+
+<div class="tabs">
+  <button class="primary" onclick="showSection('parent')">Find a Tutor</button>
+  <button class="secondary" onclick="showSection('tutor')">Register as a Tutor</button>
+  <button class="dark" onclick="showSection('admin')">Administrator</button>
+</div>
+
+<!-- PARENT REQUEST FORM -->
+<section id="parent" class="section active card">
+  <h2>Parent / Guardian Tutor Request</h2>
+  <p>Complete this form and our team will review your request.</p>
+
+  <div class="notice">
+    Submitting this form does not guarantee immediate placement.
+    We will review your requirements and work towards a suitable match.
   </div>
 
-  <section id="parent" class="section active card">
-    <h2>Parent / Guardian Tutor Request</h2>
-    <p>Complete this form and our team will review your request.</p>
-    <div class="notice">
-      Submitting this form does not guarantee an immediate placement.
-      We will review your requirements and work towards a suitable match.
-    </div>
-
-    <form id="parentForm">
-      <div class="grid">
-        <div>
-          <label for="parentName">Parent or Guardian's Name *</label>
-          <input id="parentName" maxlength="120" required>
-        </div>
-        <div>
-          <label for="parentPhone">Phone Number *</label>
-          <input id="parentPhone" type="tel" maxlength="30" required>
-        </div>
-        <div>
-          <label for="parentEmail">Email Address</label>
-          <input id="parentEmail" type="email" maxlength="254">
-        </div>
-        <div>
-          <label for="childClass">Child's Class *</label>
-          <select id="childClass" required>
-            <option value="">Choose class</option>
-            <option>Primary 1</option><option>Primary 2</option>
-            <option>Primary 3</option><option>Primary 4</option>
-            <option>Primary 5</option><option>Primary 6</option>
-            <option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
-            <option>SS 1</option><option>SS 2</option><option>SS 3</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div>
-          <label for="parentSubject">Subject Needed *</label>
-          <input id="parentSubject" maxlength="120"
-                 placeholder="e.g. Mathematics, English" required>
-        </div>
-        <div>
-          <label for="tutoringMode">Tutoring Preference *</label>
-          <select id="tutoringMode" required>
-            <option value="">Choose preference</option>
-            <option value="online">Online tutoring</option>
-            <option value="home">Private/home tutoring</option>
-            <option value="both">Either online or home tutoring</option>
-          </select>
-        </div>
-        <div>
-          <label for="parentLocation">Location *</label>
-          <input id="parentLocation" maxlength="200"
-                 placeholder="Town or area; required for home tutoring">
-        </div>
-        <div>
-          <label for="parentBudget">Budget (₦) *</label>
-          <input id="parentBudget" type="number" min="0" step="any" required>
-        </div>
-        <div>
-          <label for="parentSchedule">Preferred Days and Times *</label>
-          <input id="parentSchedule" maxlength="250" required
-                 placeholder="e.g. Saturdays, 10 am">
-        </div>
-      </div>
-
-      <label for="parentDetails">Additional Information</label>
-      <textarea id="parentDetails" maxlength="1500"
-        placeholder="Learning needs, lesson frequency, or other requirements"></textarea>
-
-      <button class="primary" type="submit">Submit Tutor Request</button>
-      <div id="parentStatus" class="status" role="status"></div>
-    </form>
-  </section>
-
-  <section id="tutor" class="section card">
-    <h2>Tutor Registration</h2>
-    <p>Register your interest in teaching through Diamond Dynasty.</p>
-    <p class="notice">
-      New applications are marked pending until reviewed by the administrator.
-      Do not include passwords or sensitive identity documents in this form.
-    </p>
-
-    <form id="tutorForm">
-      <div class="grid">
-        <div>
-          <label for="tutorName">Full Name *</label>
-          <input id="tutorName" maxlength="120" required>
-        </div>
-        <div>
-          <label for="tutorEmail">Email Address *</label>
-          <input id="tutorEmail" type="email" maxlength="254" required>
-        </div>
-        <div>
-          <label for="tutorPhone">Phone Number *</label>
-          <input id="tutorPhone" type="tel" maxlength="30" required>
-        </div>
-        <div>
-          <label for="tutorLocation">Current Location *</label>
-          <input id="tutorLocation" maxlength="200" required>
-        </div>
-        <div>
-          <label for="tutorQualifications">Qualifications *</label>
-          <input id="tutorQualifications" maxlength="300" required
-                 placeholder="e.g. B.Ed., NCE">
-        </div>
-        <div>
-          <label for="tutorExperience">Years of Experience *</label>
-          <input id="tutorExperience" type="number" min="0" max="60"
-                 step="1" required>
-        </div>
-        <div>
-          <label for="tutorSubjects">Subjects You Teach *</label>
-          <input id="tutorSubjects" maxlength="300" required
-                 placeholder="Separate subjects with commas">
-        </div>
-        <div>
-          <label for="tutorClasses">Classes You Teach *</label>
-          <input id="tutorClasses" maxlength="300" required
-                 placeholder="e.g. Primary 4, JSS 2, SS 1">
-        </div>
-        <div>
-          <label for="tutorModes">Teaching Mode *</label>
-          <select id="tutorModes" required>
-            <option value="">Choose mode</option>
-            <option value="online">Online only</option>
-            <option value="home">Home tutoring only</option>
-            <option value="both">Online and home tutoring</option>
-          </select>
-        </div>
-        <div>
-          <label for="tutorAreas">Preferred Home-Tutoring Areas</label>
-          <input id="tutorAreas" maxlength="300"
-                 placeholder="Separate areas with commas">
-        </div>
-        <div>
-          <label for="tutorAvailability">Availability *</label>
-          <input id="tutorAvailability" maxlength="250" required
-                 placeholder="Days and times available">
-        </div>
-        <div>
-          <label for="tutorFee">Expected Fee (₦) *</label>
-          <input id="tutorFee" type="number" min="0" step="any" required>
-        </div>
-        <div>
-          <label for="tutorFeeBasis">Fee Basis *</label>
-          <select id="tutorFeeBasis" required>
-            <option value="">Choose basis</option>
-            <option value="per_hour">Per hour</option>
-            <option value="per_lesson">Per lesson</option>
-            <option value="per_week">Per week</option>
-            <option value="per_month">Per month</option>
-          </select>
-        </div>
-      </div>
-
-      <label for="tutorBio">Brief Professional Profile *</label>
-      <textarea id="tutorBio" maxlength="1500" required
-        placeholder="Describe your teaching approach and experience"></textarea>
-
-      <button class="primary" type="submit">Submit Tutor Application</button>
-      <div id="tutorStatus" class="status" role="status"></div>
-    </form>
-  </section>
-
-  <section id="admin" class="section card">
-    <h2>Administrator Dashboard</h2>
-    <p>
-      Sign in with your existing Supabase administrator account to review
-      applications and parent requests.
-    </p>
-
-    <form id="adminLoginForm">
-      <label for="adminEmail">Administrator Email</label>
-      <input id="adminEmail" type="email" autocomplete="username" required>
-
-      <label for="adminPassword">Password</label>
-      <input id="adminPassword" type="password"
-             autocomplete="current-password" required>
-
-      <button class="primary" type="submit">Sign In</button>
-      <div id="adminLoginStatus" class="status" role="status"></div>
-    </form>
-
-    <div id="adminPanel" hidden>
-      <hr>
-      <h3>Parent Requests</h3>
-      <button class="primary" onclick="loadAdminData()">Refresh Requests</button>
-      <div id="requestsOutput"></div>
-
-      <h3>Tutor Applications</h3>
-      <button class="primary" onclick="loadAdminData()">Refresh Tutors</button>
-      <div id="tutorsOutput"></div>
-
-      <h3>Placement and Commission Tracking</h3>
-      <p class="muted">
-        Placement creation and commission tracking will be connected after
-        the forms and administrator review have been tested.
-      </p>
-
-      <button class="dark" onclick="adminSignOut()">Sign Out</button>
-      <div id="adminDataStatus" class="status" role="status"></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>How the Service Works</h2>
+  <form id="parentForm">
     <div class="grid">
+
       <div>
-        <h3>1. Send a Request</h3>
-        <p>Parents tell us the class, subject, budget, and preferred schedule.</p>
+        <label for="parentName">Parent or Guardian's Name *</label>
+        <input id="parentName" maxlength="120" required>
       </div>
+
       <div>
-        <h3>2. Review and Match</h3>
-        <p>We review suitable tutor applications and coordinate a potential match.</p>
+        <label for="parentPhone">Phone Number *</label>
+        <input id="parentPhone" type="tel" maxlength="30" required>
       </div>
+
       <div>
-        <h3>3. Agree on Terms</h3>
-        <p>The parties confirm lesson arrangements and applicable service fees before starting.</p>
+        <label for="parentEmail">Email Address</label>
+        <input id="parentEmail" type="email" maxlength="254">
       </div>
+
+      <div>
+        <label for="childClass">Child's Class *</label>
+        <select id="childClass" required>
+          <option value="">Choose class</option>
+          <option>Primary 1</option>
+          <option>Primary 2</option>
+          <option>Primary 3</option>
+          <option>Primary 4</option>
+          <option>Primary 5</option>
+          <option>Primary 6</option>
+          <option>JSS 1</option>
+          <option>JSS 2</option>
+          <option>JSS 3</option>
+          <option>SS 1</option>
+          <option>SS 2</option>
+          <option>SS 3</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="parentSubject">Subject Needed *</label>
+        <input id="parentSubject" maxlength="120"
+               placeholder="e.g. Mathematics, English" required>
+      </div>
+
+      <div>
+        <label for="tutoringMode">Tutoring Preference *</label>
+        <select id="tutoringMode" required>
+          <option value="">Choose preference</option>
+          <option value="online">Online tutoring</option>
+          <option value="home">Private/home tutoring</option>
+          <option value="both">Either online or home tutoring</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="parentLocation">Location *</label>
+        <input id="parentLocation" maxlength="200"
+               placeholder="Town or area; required for home tutoring">
+      </div>
+
+      <div>
+        <label for="parentBudget">Budget (₦) *</label>
+        <input id="parentBudget" type="number" min="0" step="any" required>
+      </div>
+
+      <div>
+        <label for="parentSchedule">Preferred Days and Times *</label>
+        <input id="parentSchedule" maxlength="250" required
+               placeholder="e.g. Saturdays, 10 am">
+      </div>
+
     </div>
-  </section>
+
+    <label for="parentDetails">Additional Information</label>
+    <textarea id="parentDetails" maxlength="1500"
+      placeholder="Learning needs, lesson frequency, or other requirements"></textarea>
+
+    <button class="primary" type="submit">Submit Tutor Request</button>
+    <div id="parentStatus" class="status" role="status"></div>
+  </form>
+</section>
+
+<!-- TUTOR REGISTRATION FORM -->
+<section id="tutor" class="section card">
+  <h2>Tutor Registration</h2>
+  <p>Register your interest in teaching through Diamond Dynasty.</p>
+
+  <p class="notice">
+    New applications are marked pending until reviewed by the administrator.
+    Do not include passwords or sensitive identity documents in this form.
+  </p>
+
+  <form id="tutorForm">
+    <div class="grid">
+
+      <div>
+        <label for="tutorName">Full Name *</label>
+        <input id="tutorName" maxlength="120" required>
+      </div>
+
+      <div>
+        <label for="tutorEmail">Email Address *</label>
+        <input id="tutorEmail" type="email" maxlength="254" required>
+      </div>
+
+      <div>
+        <label for="tutorPhone">Phone Number *</label>
+        <input id="tutorPhone" type="tel" maxlength="30" required>
+      </div>
+
+      <div>
+        <label for="tutorLocation">Current Location *</label>
+        <input id="tutorLocation" maxlength="200" required>
+      </div>
+
+      <div>
+        <label for="tutorQualifications">Qualifications *</label>
+        <input id="tutorQualifications" maxlength="300" required
+               placeholder="e.g. B.Ed., NCE">
+      </div>
+
+      <div>
+        <label for="tutorExperience">Years of Experience *</label>
+        <input id="tutorExperience" type="number" min="0" max="60"
+               step="1" required>
+      </div>
+
+      <div>
+        <label for="tutorSubjects">Subjects You Teach *</label>
+        <input id="tutorSubjects" maxlength="300" required
+               placeholder="Separate subjects with commas">
+      </div>
+
+      <div>
+        <label for="tutorClasses">Classes You Teach *</label>
+        <input id="tutorClasses" maxlength="300" required
+               placeholder="e.g. Primary 4, JSS 2, SS 1">
+      </div>
+
+      <div>
+        <label for="tutorModes">Teaching Mode *</label>
+        <select id="tutorModes" required>
+          <option value="">Choose mode</option>
+          <option value="online">Online only</option>
+          <option value="home">Home tutoring only</option>
+          <option value="both">Online and home tutoring</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="tutorAreas">Preferred Home-Tutoring Areas</label>
+        <input id="tutorAreas" maxlength="300"
+               placeholder="Separate areas with commas">
+      </div>
+
+      <div>
+        <label for="tutorAvailability">Availability *</label>
+        <input id="tutorAvailability" maxlength="250" required
+               placeholder="Days and times available">
+      </div>
+
+      <div>
+        <label for="tutorFee">Expected Fee (₦) *</label>
+        <input id="tutorFee" type="number" min="0" step="any" required>
+      </div>
+
+      <div>
+        <label for="tutorFeeBasis">Fee Basis *</label>
+        <select id="tutorFeeBasis" required>
+          <option value="">Choose basis</option>
+          <option value="per_hour">Per hour</option>
+          <option value="per_lesson">Per lesson</option>
+          <option value="per_week">Per week</option>
+          <option value="per_month">Per month</option>
+        </select>
+      </div>
+
+    </div>
+
+    <label for="tutorBio">Brief Professional Profile *</label>
+    <textarea id="tutorBio" maxlength="1500" required
+      placeholder="Describe your teaching approach and experience"></textarea>
+
+    <button class="primary" type="submit">Submit Tutor Application</button>
+    <div id="tutorStatus" class="status" role="status"></div>
+  </form>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="admin" class="section card">
+  <h2>Administrator Dashboard</h2>
+  <p>
+    Sign in with your existing Supabase administrator account to review
+    applications and parent requests.
+  </p>
+
+  <form id="adminLoginForm">
+    <label for="adminEmail">Administrator Email</label>
+    <input id="adminEmail" type="email" autocomplete="username" required>
+
+    <label for="adminPassword">Password</label>
+    <input id="adminPassword" type="password"
+           autocomplete="current-password" required>
+
+    <button class="primary" type="submit">Sign In</button>
+    <div id="adminLoginStatus" class="status" role="status"></div>
+  </form>
+
+  <div id="adminPanel" hidden>
+    <hr>
+
+    <h3>Parent Requests</h3>
+    <button class="primary" onclick="loadAdminData()">Refresh Dashboard</button>
+    <div id="requestsOutput"></div>
+
+    <h3>Tutor Applications</h3>
+    <div id="tutorsOutput"></div>
+
+    <h3>Placement and Commission Tracking</h3>
+    <p class="muted">
+      Placement creation, tutor approval controls, and commission tracking
+      still need to be added.
+    </p>
+
+    <button class="dark" onclick="adminSignOut()">Sign Out</button>
+    <div id="adminDataStatus" class="status" role="status"></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>How the Service Works</h2>
+
+  <div class="grid">
+    <div>
+      <h3>1. Send a Request</h3>
+      <p>Parents tell us the class, subject, budget, and preferred schedule.</p>
+    </div>
+
+    <div>
+      <h3>2. Review and Match</h3>
+      <p>We review suitable tutor applications and coordinate a potential match.</p>
+    </div>
+
+    <div>
+      <h3>3. Agree on Terms</h3>
+      <p>The parties confirm lesson arrangements and applicable service fees before starting.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
@@ -393,6 +499,7 @@ footer {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = "https://nmurlbjnkhcpaosgicet.supabase.co";
 const SUPABASE_KEY = "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
@@ -405,6 +512,7 @@ function showSection(id) {
   document.querySelectorAll(".section").forEach(section => {
     section.classList.toggle("active", section.id === id);
   });
+
   if (id === "admin") checkAdminSession();
 }
 
@@ -437,7 +545,7 @@ function getTutorModes() {
   return selected === "both" ? ["online", "home"] : [selected];
 }
 
-/* Parent request form */
+/* PARENT REQUEST */
 document.getElementById("parentForm").addEventListener("submit", async event => {
   event.preventDefault();
   clearStatus("parentStatus");
@@ -471,23 +579,32 @@ document.getElementById("parentForm").addEventListener("submit", async event => 
 
     if (error) throw error;
 
-    showStatus("parentStatus",
+    showStatus(
+      "parentStatus",
       "Your request has been submitted successfully. Reference number: " +
-      String(data) + ". Please keep this number for your records.", true);
+      String(data) + ". Please keep this number for your records.",
+      true
+    );
 
     event.target.reset();
+
   } catch (error) {
     console.error("Parent request submission failed:", error);
-    showStatus("parentStatus",
+
+    showStatus(
+      "parentStatus",
       "We could not submit your request. Please check your entries and try again. " +
-      (error.message || ""), false);
+      (error.message || ""),
+      false
+    );
+
   } finally {
     button.disabled = false;
     button.textContent = "Submit Tutor Request";
   }
 });
 
-/* Tutor application form */
+/* TUTOR REGISTRATION */
 document.getElementById("tutorForm").addEventListener("submit", async event => {
   event.preventDefault();
   clearStatus("tutorStatus");
@@ -516,24 +633,33 @@ document.getElementById("tutorForm").addEventListener("submit", async event => {
 
     if (error) throw error;
 
-    showStatus("tutorStatus",
+    showStatus(
+      "tutorStatus",
       "Your application has been submitted. Application reference: " +
-      String(data) + ". Your status is pending until the administrator reviews it.",
-      true);
+      String(data) +
+      ". Your status is pending until the administrator reviews it.",
+      true
+    );
 
     event.target.reset();
+
   } catch (error) {
     console.error("Tutor registration failed:", error);
-    showStatus("tutorStatus",
+
+    showStatus(
+      "tutorStatus",
       "We could not submit your application. Please check your entries and try again. " +
-      (error.message || ""), false);
+      (error.message || ""),
+      false
+    );
+
   } finally {
     button.disabled = false;
     button.textContent = "Submit Tutor Application";
   }
 });
 
-/* Administrator authentication */
+/* ADMINISTRATOR LOGIN */
 async function checkAdminSession() {
   const { data } = await db.auth.getSession();
 
@@ -568,11 +694,18 @@ async event => {
     document.getElementById("adminPanel").hidden = false;
 
     showStatus("adminLoginStatus", "Signed in successfully.", true);
+
     await loadAdminData();
+
   } catch (error) {
     console.error("Administrator sign-in failed:", error);
-    showStatus("adminLoginStatus",
-      "Sign-in failed. Check your administrator credentials.", false);
+
+    showStatus(
+      "adminLoginStatus",
+      "Sign-in failed. Check your administrator credentials.",
+      false
+    );
+
   } finally {
     button.disabled = false;
   }
@@ -580,17 +713,22 @@ async event => {
 
 async function adminSignOut() {
   await db.auth.signOut();
+
   document.getElementById("adminLoginForm").hidden = false;
   document.getElementById("adminPanel").hidden = true;
+
   document.getElementById("requestsOutput").replaceChildren();
   document.getElementById("tutorsOutput").replaceChildren();
+
   showStatus("adminLoginStatus", "You have signed out.", true);
 }
 
 function makeElement(tag, text, className) {
   const el = document.createElement(tag);
   el.textContent = text == null ? "" : String(text);
+
   if (className) el.className = className;
+
   return el;
 }
 
@@ -607,15 +745,19 @@ function renderRecords(containerId, rows, columns, emptyMessage) {
     const card = makeElement("div", null, "result-card");
 
     columns.forEach(([label, key]) => {
-      const value = Array.isArray(row[key])
+      const recordValue = Array.isArray(row[key])
         ? row[key].join(", ")
         : row[key];
 
       const line = makeElement("p", null);
       line.appendChild(makeElement("strong", label + ": "));
+
       line.appendChild(document.createTextNode(
-        value == null || value === "" ? "Not provided" : String(value)
+        recordValue == null || recordValue === ""
+          ? "Not provided"
+          : String(recordValue)
       ));
+
       card.appendChild(line);
     });
 
@@ -632,15 +774,22 @@ async function loadAdminData() {
   if (sessionError || !sessionData.session) {
     document.getElementById("adminPanel").hidden = true;
     document.getElementById("adminLoginForm").hidden = false;
-    showStatus("adminDataStatus",
-      "Please sign in again to access the dashboard.", false);
+
+    showStatus(
+      "adminDataStatus",
+      "Please sign in again to access the dashboard.",
+      false
+    );
+
     return;
   }
 
   try {
     const { data: requests, error: requestsError } = await db
       .from("tutor_requests")
-      .select("id,parent_name,parent_phone,parent_email,class_level,subject,tutoring_mode,location,budget,preferred_schedule,request_status,created_at")
+      .select(
+        "id,parent_name,parent_phone,parent_email,class_level,subject,tutoring_mode,location,budget,preferred_schedule,request_status,created_at"
+      )
       .order("created_at", { ascending: false });
 
     if (requestsError) throw requestsError;
@@ -662,7 +811,9 @@ async function loadAdminData() {
 
     const { data: tutors, error: tutorsError } = await db
       .from("tutors")
-      .select("id,full_name,email,phone,location,qualifications,experience_years,subjects,class_levels,tutoring_modes,availability,expected_fee,fee_basis,verification_status,created_at")
+      .select(
+        "id,full_name,email,phone,location,qualifications,experience_years,subjects,class_levels,tutoring_modes,availability,expected_fee,fee_basis,verification_status,created_at"
+      )
       .order("created_at", { ascending: false });
 
     if (tutorsError) throw tutorsError;
@@ -686,13 +837,19 @@ async function loadAdminData() {
     ], "No tutor applications have been submitted yet.");
 
     showStatus("adminDataStatus", "Dashboard data refreshed.", true);
+
   } catch (error) {
     console.error("Dashboard loading failed:", error);
-    showStatus("adminDataStatus",
+
+    showStatus(
+      "adminDataStatus",
       "Could not load dashboard data. Check the table permissions and administrator policies. " +
-      (error.message || ""), false);
+      (error.message || ""),
+      false
+    );
   }
 }
 </script>
+
 </body>
 </html>
