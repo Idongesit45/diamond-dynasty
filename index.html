@@ -1,10 +1,8 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Diamond Dynasty: Making Learning Easier, Building Brighter Futures. Learning resources for Primary, Junior Secondary and Senior Secondary learners.">
+<meta name="description" content="Diamond Dynasty: Making Learning Easier, Building Brighter Futures. Learning resources, revision materials, examinations and tutoring services for Primary, Junior Secondary and Senior Secondary learners.">
 <title>Diamond Dynasty | Learning Made Easier</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -45,50 +43,46 @@ select{width:100%;padding:12px;border:1px solid #cbd4e2;border-radius:7px;font-s
 .link-button{display:inline-block;margin-top:8px;padding:9px 13px;background:var(--blue);color:white;text-decoration:none;border:0;border-radius:6px;font-weight:bold;cursor:pointer}
 .exam-panel{background:#fff;border:1px solid #dce4ef;border-radius:12px;padding:22px;margin-bottom:22px}
 .exam-panel p{margin-bottom:12px}
+.tutor-panel{background:linear-gradient(135deg,#fff,#f1f5ff);border:2px solid #e4b64f;border-radius:12px;padding:24px;margin-bottom:22px}
+.tutor-panel h2{margin-top:0}
+.tutor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 footer{background:var(--navy);color:white;text-align:center;padding:28px 15px;margin-top:35px}
 .hidden{display:none!important}
 @media(max-width:600px){
 header{align-items:flex-start}
 .brand h1{font-size:19px}
 .hero{padding:45px 16px}
-.panel,.exam-panel{padding:16px}
+.panel,.exam-panel,.tutor-panel{padding:16px}
 nav button{font-size:12px;padding:8px}
 }
 </style>
 </head>
-<body>
-
-<header>
+<body><header>
 <div class="brand">
 <img id="schoolLogo" alt="Diamond Dynasty logo">
 <div>
 <h1>Diamond Dynasty</h1>
 <p>Making Learning Easier, Building Brighter Futures</p>
 </div>
-</div>
-<nav aria-label="Main navigation">
+</div><nav aria-label="Main navigation">
 <button type="button" data-goto="home">Home</button>
 <button type="button" data-goto="classes">Classes</button>
 <button type="button" data-goto="revision">Revision Centre</button>
 <button type="button" onclick="window.location.href='exams.html'">Examination Centre</button>
+<button type="button" onclick="window.location.href='tutors.html'">Tutorship Services</button>
 <button type="button" data-goto="about">About Us</button>
 <button type="button" data-goto="contact">Contact</button>
 </nav>
-</header>
-
-<section class="hero" id="home">
+</header><section class="hero" id="home">
 <h2>Welcome to Diamond Dynasty</h2>
-<p>Making learning easier and building brighter futures through accessible learning materials, practice activities, revision resources and online examinations.</p>
+<p>Making learning easier and building brighter futures through accessible learning materials, practice activities, revision resources, online examinations and tutor-matching services.</p>
 <button type="button" class="primary-button" data-goto="classes">Explore Learning Materials</button>
 <button type="button" class="secondary-button" data-goto="revision">Visit Revision Centre</button>
 <a class="primary-button" href="exams.html">Take an Examination</a>
-</section>
-
-<main>
-<section class="panel" id="classes">
+<a class="primary-button" href="tutors.html">Find a Tutor</a>
+</section><main><section class="panel" id="classes">
 <h2>Learning Centre</h2>
-<p>Select your class and subject to find available lesson notes, documents, videos and other resources.</p>
-<div class="grid">
+<p>Select your class and subject to find available lesson notes, documents, videos and other resources.</p><div class="grid">
 <div>
 <label for="classSelect">Select Class</label>
 <select id="classSelect">
@@ -109,16 +103,13 @@ nav button{font-size:12px;padding:8px}
 <label for="subjectSelect">Select Subject</label>
 <select id="subjectSelect"><option value="">Choose your subject</option></select>
 </div>
-</div>
-<button type="button" class="primary-button" id="findMaterials">Find Learning Materials</button>
+</div><button type="button" class="primary-button" id="findMaterials">Find Learning Materials</button>
+
 <div id="materialsStatus" class="status">Choose a class and subject to begin.</div>
 <div id="materialsResults"></div>
-</section>
-
-<section class="panel" id="revision">
+</section><section class="panel" id="revision">
 <h2>Revision Centre</h2>
-<p>Practise what you have learned using revision materials and online quizzes or tests.</p>
-<div class="grid">
+<p>Practise what you have learned using revision materials and online quizzes or tests.</p><div class="grid">
 <div>
 <label for="revisionClass">Select Class</label>
 <select id="revisionClass">
@@ -139,31 +130,40 @@ nav button{font-size:12px;padding:8px}
 <label for="revisionSubject">Select Subject</label>
 <select id="revisionSubject"><option value="">Choose your subject</option></select>
 </div>
-</div>
-<button type="button" class="primary-button" id="findRevision">Find Revision Resources</button>
+</div><button type="button" class="primary-button" id="findRevision">Find Revision Resources</button>
+
 <div id="revisionStatus" class="status">Choose a class and subject to find revision materials.</div>
 <div id="revisionResults"></div>
-</section>
-
-<section class="exam-panel" id="examination">
+</section><section class="exam-panel" id="examination">
 <h2>Examination Centre</h2>
 <p>Take your online examinations, answer questions and submit your work for marking.</p>
 <p>Choose your examination below to begin.</p>
 <a class="primary-button" href="exams.html">Open Examination Centre</a>
-</section>
-
-<section class="panel" id="about">
+</section><section class="tutor-panel" id="tutorship">
+<h2>Diamond Dynasty Tutorship Services</h2>
+<p><strong>Need extra support with learning?</strong></p>
+<p>We help parents connect with suitable tutors for their children. You can request online tutoring or private home tutoring, depending on your needs and location.</p><div class="grid">
+<div class="feature">
+<h3>Find a Tutor</h3>
+<p>Tell us your child's class, the subject they need help with, your preferred schedule and budget. Our team will review your request and work to identify a suitable tutor.</p>
+<a class="primary-button" href="tutors.html#parent">Request a Tutor</a>
+</div><div class="feature">
+<h3>Become a Tutor</h3>
+<p>Are you a teacher or tutor? Submit your qualifications, teaching experience, subjects and availability for review by Diamond Dynasty.</p>
+<a class="primary-button" href="tutors.html#apply">Apply to Become a Tutor</a>
+</div>
+</div><p class="small">All tutor applications are subject to review. Submitting a request does not guarantee immediate placement.</p>
+<a class="secondary-button" href="tutors.html">Open Tutorship Services</a>
+</section><section class="panel" id="about">
 <h2>About Us</h2>
-<p id="aboutText">Diamond Dynasty is committed to making learning easier and building brighter futures by providing learners with accessible educational resources.</p>
-<div id="missionContainer" class="hidden">
-<h3>Our Mission</h3><p id="missionText"></p>
+<p id="aboutText">Diamond Dynasty is committed to making learning easier and building brighter futures by providing learners with accessible educational resources.</p><div id="missionContainer" class="hidden">
+<h3>Our Mission</h3>
+<p id="missionText"></p>
+</div><div id="visionContainer" class="hidden">
+<h3>Our Vision</h3>
+<p id="visionText"></p>
 </div>
-<div id="visionContainer" class="hidden">
-<h3>Our Vision</h3><p id="visionText"></p>
-</div>
-</section>
-
-<section class="panel" id="contact">
+</section><section class="panel" id="contact">
 <h2>Contact Us</h2>
 <p>For enquiries and further information, please use the contact details below.</p>
 <p id="contactPhoneLine" class="hidden"><strong>Phone:</strong> <a id="contactPhoneLink"></a></p>
@@ -171,16 +171,11 @@ nav button{font-size:12px;padding:8px}
 <p id="contactAddressLine" class="hidden"><strong>Address:</strong> <span id="contactAddressText"></span></p>
 <p id="contactWhatsAppLine" class="hidden"><strong>WhatsApp:</strong> <a id="contactWhatsAppLink" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></p>
 <p id="contactFallback" class="small">Contact information will appear here when provided by the administrator.</p>
-</section>
-</main>
-
-<footer>
+</section></main><footer>
 <p><strong>Diamond Dynasty</strong></p>
 <p>Making Learning Easier, Building Brighter Futures</p>
 <p>&copy; <span id="year"></span> Diamond Dynasty. All rights reserved.</p>
-</footer>
-
-<script>
+</footer><script>
 "use strict";
 
 const SUPABASE_URL="https://nmurlbjnkhcpaosgicet.supabase.co";
@@ -214,239 +209,252 @@ const seniorSubjects=[
 ];
 
 function normalize(value){
-  return String(value||"").trim().replace(/\s+/g," ").toLowerCase();
+return String(value||"").trim().replace(/\s+/g," ").toLowerCase();
 }
 
 function subjectsFor(className){
-  if(className.startsWith("SS"))return seniorSubjects;
-  if(className.startsWith("JSS"))return jssSubjects;
-  return primarySubjects;
+if(className.startsWith("SS"))return seniorSubjects;
+if(className.startsWith("JSS"))return jssSubjects;
+return primarySubjects;
 }
 
 function fillSubjects(classId,subjectId){
-  const className=$(classId).value;
-  const select=$(subjectId);
-  select.innerHTML='<option value="">Choose your subject</option>';
-  if(!className)return;
-  subjectsFor(className).forEach(subject=>{
-    const option=document.createElement("option");
-    option.value=subject;
-    option.textContent=subject;
-    select.appendChild(option);
-  });
+const className=$(classId).value;
+const select=$(subjectId);
+select.innerHTML='<option value="">Choose your subject</option>';
+if(!className)return;
+
+subjectsFor(className).forEach(subject=>{
+const option=document.createElement("option");
+option.value=subject;
+option.textContent=subject;
+select.appendChild(option);
+});
 }
 
 $("classSelect").addEventListener("change",()=>fillSubjects("classSelect","subjectSelect"));
 $("revisionClass").addEventListener("change",()=>fillSubjects("revisionClass","revisionSubject"));
 
 function safe(value){
-  return String(value??"").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+return String(value??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+})[c]);
 }
 
 function validUrl(value){
-  try{
-    const u=new URL(value);
-    return u.protocol==="https:"||u.protocol==="http:";
-  }catch{return false;}
+try{
+const u=new URL(value);
+return u.protocol==="https:"||u.protocol==="http:";
+}catch{return false;}
 }
 
 function resourceCard(item,type){
-  let action="";
-  if(type==="material"){
-    if(item.video_url&&validUrl(item.video_url)){
-      action=`<a class="link-button" href="${safe(item.video_url)}" target="_blank" rel="noopener noreferrer">Open Resource</a>`;
-    }else if(item.file_path){
-      action=`<button class="link-button" type="button" data-file-path="${safe(item.file_path)}">Open / Download File</button>`;
-    }else{
-      action='<p class="small">No file or external link is available.</p>';
-    }
-  }else if(validUrl(item.url)){
-    action=`<a class="link-button" href="${safe(item.url)}" target="_blank" rel="noopener noreferrer">${item.link_type==="google_form"?"Open Google Form":"Open Revision Resource"}</a>`;
-  }
+let action="";
 
-  const typeLabel=type==="material"
-    ?(item.content_type||"Learning Material")
-    :(item.link_type==="google_form"?"Google Forms":"Revision Resource");
+if(type==="material"){
+if(item.video_url&&validUrl(item.video_url)){
+action=`<a class="link-button" href="${safe(item.video_url)}" target="_blank" rel="noopener noreferrer">Open Resource</a>`;
+}else if(item.file_path){
+action=`<button class="link-button" type="button" data-file-path="${safe(item.file_path)}">Open / Download File</button>`;
+}else{
+action='<p class="small">No file or external link is available.</p>';
+}
+}else if(validUrl(item.url)){
+action=`<a class="link-button" href="${safe(item.url)}" target="_blank" rel="noopener noreferrer">${item.link_type==="google_form"?"Open Google Form":"Open Revision Resource"}</a>`;
+}
 
-  return `<article class="card">
-    <h3>${safe(item.title)}</h3>
-    <span class="badge">${safe(item.class_level)}</span>
-    <span class="badge">${safe(item.subject)}</span>
-    <span class="badge">${safe(typeLabel)}</span>
-    ${item.description?`<p>${safe(item.description)}</p>`:""}
-    ${action}
-  </article>`;
+const typeLabel=type==="material"
+?(item.content_type||"Learning Material")
+:(item.link_type==="google_form"?"Google Forms":"Revision Resource");
+
+return `<article class="card">
+<h3>${safe(item.title)}</h3>
+<span class="badge">${safe(item.class_level)}</span>
+<span class="badge">${safe(item.subject)}</span>
+<span class="badge">${safe(typeLabel)}</span>
+${item.description?`<p>${safe(item.description)}</p>`:""}
+${action}
+</article>`;
 }
 
 async function openStoredFile(path){
-  const {data,error}=await db.storage.from(BUCKET).createSignedUrl(path,3600);
-  if(error){
-    alert("The file could not be opened. Please try again later.");
-    console.error(error);
-    return;
-  }
-  if(data?.signedUrl)window.open(data.signedUrl,"_blank","noopener,noreferrer");
+const {data,error}=await db.storage.from(BUCKET).createSignedUrl(path,3600);
+
+if(error){
+alert("The file could not be opened. Please try again later.");
+console.error(error);
+return;
+}
+
+if(data?.signedUrl)window.open(data.signedUrl,"_blank","noopener,noreferrer");
 }
 
 async function loadMaterials(){
-  const className=$("classSelect").value;
-  const subject=$("subjectSelect").value;
-  const status=$("materialsStatus");
-  const results=$("materialsResults");
-  results.innerHTML="";
+const className=$("classSelect").value;
+const subject=$("subjectSelect").value;
+const status=$("materialsStatus");
+const results=$("materialsResults");
 
-  if(!className||!subject){
-    status.className="status";
-    status.textContent="Please select both a class and a subject.";
-    return;
-  }
+results.innerHTML="";
 
-  status.className="status";
-  status.textContent="Loading learning materials...";
+if(!className||!subject){
+status.className="status";
+status.textContent="Please select both a class and a subject.";
+return;
+}
 
-  try{
-    const {data,error}=await db.from("learning_content")
-      .select("id,title,class_level,subject,content_type,description,file_path,video_url,created_at")
-      .order("created_at",{ascending:false});
-    if(error)throw error;
+status.className="status";
+status.textContent="Loading learning materials...";
 
-    const matches=(data||[]).filter(item=>
-      normalize(item.class_level)===normalize(className)&&
-      normalize(item.subject)===normalize(subject)
-    );
+try{
+const {data,error}=await db.from("learning_content")
+.select("id,title,class_level,subject,content_type,description,file_path,video_url,created_at")
+.order("created_at",{ascending:false});
 
-    if(!matches.length){
-      status.textContent="No materials are available for this class and subject yet.";
-      return;
-    }
+if(error)throw error;
 
-    status.textContent=matches.length+" learning material(s) found.";
-    results.innerHTML=matches.map(item=>resourceCard(item,"material")).join("");
+const matches=(data||[]).filter(item=>
+normalize(item.class_level)===normalize(className)&&
+normalize(item.subject)===normalize(subject)
+);
 
-    results.querySelectorAll("[data-file-path]").forEach(button=>{
-      button.addEventListener("click",()=>openStoredFile(button.dataset.filePath));
-    });
-  }catch(error){
-    console.error(error);
-    status.className="status error";
-    status.textContent="Could not load learning materials. Please refresh and try again.";
-  }
+if(!matches.length){
+status.textContent="No materials are available for this class and subject yet.";
+return;
+}
+
+status.textContent=matches.length+" learning material(s) found.";
+results.innerHTML=matches.map(item=>resourceCard(item,"material")).join("");
+
+results.querySelectorAll("[data-file-path]").forEach(button=>{
+button.addEventListener("click",()=>openStoredFile(button.dataset.filePath));
+});
+
+}catch(error){
+console.error(error);
+status.className="status error";
+status.textContent="Could not load learning materials. Please refresh and try again.";
+}
 }
 
 $("findMaterials").addEventListener("click",loadMaterials);
 
 async function loadRevision(){
-  const className=$("revisionClass").value;
-  const subject=$("revisionSubject").value;
-  const status=$("revisionStatus");
-  const results=$("revisionResults");
-  results.innerHTML="";
+const className=$("revisionClass").value;
+const subject=$("revisionSubject").value;
+const status=$("revisionStatus");
+const results=$("revisionResults");
 
-  if(!className||!subject){
-    status.className="status";
-    status.textContent="Please select both a class and a subject.";
-    return;
-  }
+results.innerHTML="";
 
-  status.className="status";
-  status.textContent="Loading revision resources...";
+if(!className||!subject){
+status.className="status";
+status.textContent="Please select both a class and a subject.";
+return;
+}
 
-  try{
-    const {data,error}=await db.from("learning_links")
-      .select("id,title,class_level,subject,link_type,url,description,created_at")
-      .order("created_at",{ascending:false});
-    if(error)throw error;
+status.className="status";
+status.textContent="Loading revision resources...";
 
-    const matches=(data||[]).filter(item=>
-      normalize(item.class_level)===normalize(className)&&
-      normalize(item.subject)===normalize(subject)
-    );
+try{
+const {data,error}=await db.from("learning_links")
+.select("id,title,class_level,subject,link_type,url,description,created_at")
+.order("created_at",{ascending:false});
 
-    if(!matches.length){
-      status.textContent="No revision resources have been added for this class and subject yet.";
-      return;
-    }
+if(error)throw error;
 
-    status.textContent=matches.length+" revision resource(s) found.";
-    results.innerHTML=matches.map(item=>resourceCard(item,"revision")).join("");
-  }catch(error){
-    console.error(error);
-    status.className="status error";
-    status.textContent="Could not load revision resources. Please try again later.";
-  }
+const matches=(data||[]).filter(item=>
+normalize(item.class_level)===normalize(className)&&
+normalize(item.subject)===normalize(subject)
+);
+
+if(!matches.length){
+status.textContent="No revision resources have been added for this class and subject yet.";
+return;
+}
+
+status.textContent=matches.length+" revision resource(s) found.";
+results.innerHTML=matches.map(item=>resourceCard(item,"revision")).join("");
+
+}catch(error){
+console.error(error);
+status.className="status error";
+status.textContent="Could not load revision resources. Please try again later.";
+}
 }
 
 $("findRevision").addEventListener("click",loadRevision);
 
 async function loadSettings(){
-  try{
-    const {data,error}=await db.from("site_settings")
-      .select("setting_key,setting_value");
-    if(error)throw error;
+try{
+const {data,error}=await db.from("site_settings").select("setting_key,setting_value");
+if(error)throw error;
 
-    const settings={};
-    (data||[]).forEach(row=>settings[row.setting_key]=row.setting_value||"");
+const settings={};
+(data||[]).forEach(row=>settings[row.setting_key]=row.setting_value||"");
 
-    if(settings.about_us)$("aboutText").textContent=settings.about_us;
+if(settings.about_us)$("aboutText").textContent=settings.about_us;
 
-    if(settings.mission){
-      $("missionContainer").classList.remove("hidden");
-      $("missionText").textContent=settings.mission;
-    }
-    if(settings.vision){
-      $("visionContainer").classList.remove("hidden");
-      $("visionText").textContent=settings.vision;
-    }
+if(settings.mission){
+$("missionContainer").classList.remove("hidden");
+$("missionText").textContent=settings.mission;
+}
 
-    if(settings.contact_phone){
-      $("contactPhoneLine").classList.remove("hidden");
-      $("contactPhoneLink").textContent=settings.contact_phone;
-      $("contactPhoneLink").href="tel:"+settings.contact_phone.replace(/[^\d+]/g,"");
-    }
-    if(settings.contact_email){
-      $("contactEmailLine").classList.remove("hidden");
-      $("contactEmailLink").textContent=settings.contact_email;
-      $("contactEmailLink").href="mailto:"+settings.contact_email;
-    }
-    if(settings.contact_address){
-      $("contactAddressLine").classList.remove("hidden");
-      $("contactAddressText").textContent=settings.contact_address;
-    }
-    if(settings.contact_whatsapp){
-      let number=settings.contact_whatsapp.replace(/\D/g,"");
-      if(number.startsWith("0"))number="234"+number.slice(1);
-      $("contactWhatsAppLine").classList.remove("hidden");
-      $("contactWhatsAppLink").href="https://wa.me/"+number;
-    }
+if(settings.vision){
+$("visionContainer").classList.remove("hidden");
+$("visionText").textContent=settings.vision;
+}
 
-    if(settings.contact_phone||settings.contact_email||settings.contact_address||settings.contact_whatsapp){
-      $("contactFallback").classList.add("hidden");
-    }
+if(settings.contact_phone){
+$("contactPhoneLine").classList.remove("hidden");
+$("contactPhoneLink").textContent=settings.contact_phone;
+$("contactPhoneLink").href="tel:"+settings.contact_phone.replace(/[^\d+]/g,"");
+}
 
-    if(settings.school_logo){
-      const {data:logo,error:logoError}=await db.storage.from(BUCKET)
-        .createSignedUrl(settings.school_logo,3600);
-      if(!logoError&&logo?.signedUrl){
-        $("schoolLogo").src=logo.signedUrl;
-        $("schoolLogo").style.display="block";
-      }
-    }
-  }catch(error){
-    console.error("Could not load website settings:",error);
-  }
+if(settings.contact_email){
+$("contactEmailLine").classList.remove("hidden");
+$("contactEmailLink").textContent=settings.contact_email;
+$("contactEmailLink").href="mailto:"+settings.contact_email;
+}
+
+if(settings.contact_address){
+$("contactAddressLine").classList.remove("hidden");
+$("contactAddressText").textContent=settings.contact_address;
+}
+
+if(settings.contact_whatsapp){
+let number=settings.contact_whatsapp.replace(/\D/g,"");
+if(number.startsWith("0"))number="234"+number.slice(1);
+$("contactWhatsAppLine").classList.remove("hidden");
+$("contactWhatsAppLink").href="https://wa.me/"+number;
+}
+
+if(settings.contact_phone||settings.contact_email||settings.contact_address||settings.contact_whatsapp){
+$("contactFallback").classList.add("hidden");
+}
+
+if(settings.school_logo){
+const {data:logo,error:logoError}=await db.storage.from(BUCKET).createSignedUrl(settings.school_logo,3600);
+
+if(!logoError&&logo?.signedUrl){
+$("schoolLogo").src=logo.signedUrl;
+$("schoolLogo").style.display="block";
+}
+}
+
+}catch(error){
+console.error("Could not load website settings:",error);
+}
 }
 
 document.querySelectorAll("[data-goto]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    const target=$(button.dataset.goto);
-    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
-  });
+button.addEventListener("click",()=>{
+const target=$(button.dataset.goto);
+if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+});
 });
 
 $("year").textContent=new Date().getFullYear();
 loadSettings();
-</script>
-</body>
+</script></body>
 </html>
