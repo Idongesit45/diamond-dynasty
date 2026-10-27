@@ -1,0 +1,102 @@
+-- DIAMOND DYNASTY TUTOR SERVICE
+-- ADMIN-ONLY ACCESS POLICIES
+
+-- Allow authenticated users to access these tables at the
+-- database permission level. RLS policies below restrict
+-- actual access to registered administrators.
+
+GRANT SELECT, UPDATE, DELETE
+ON public.tutors
+TO authenticated;
+
+GRANT SELECT, UPDATE, DELETE
+ON public.tutor_requests
+TO authenticated;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON public.tutor_placements
+TO authenticated;
+
+
+-- TUTORS: only registered administrators may view or manage
+
+DROP POLICY IF EXISTS "Admins manage tutors"
+ON public.tutors;
+
+CREATE POLICY "Admins manage tutors"
+ON public.tutors
+FOR ALL
+TO authenticated
+USING (
+    EXISTS (
+        SELECT 1
+        FROM public.site_admins sa
+        WHERE sa.user_id = (SELECT auth.uid())
+    )
+)
+WITH CHECK (
+    EXISTS (
+        SELECT 1
+        FROM public.site_admins sa
+        WHERE sa.user_id = (SELECT auth.uid())
+    )
+);
+
+
+-- PARENT REQUESTS: only registered administrators may view
+-- or manage parent information
+
+DROP POLICY IF EXISTS "Admins manage tutor requests"
+ON public.tutor_requests;
+
+CREATE POLICY "Admins manage tutor requests"
+ON public.tutor_requests
+FOR ALL
+TO authenticated
+USING (
+    EXISTS (
+        SELECT 1
+        FROM public.site_admins sa
+        WHERE sa.user_id = (SELECT auth.uid())
+    )
+)
+WITH CHECK (
+    EXISTS (
+        SELECT 1
+        FROM public.site_admins sa
+        WHERE sa.user_id = (SELECT auth.uid())
+    )
+);
+
+
+-- PLACEMENTS: only registered administrators may view
+-- or manage placement and commission records
+
+DROP POLICY IF EXISTS "Admins manage tutor placements"
+ON public.tutor_placements;
+
+CREATE POLICY "Admins manage tutor placements"
+ON public.tutor_placements
+FOR ALL
+TO authenticated
+USING (
+    EXISTS (
+        SELECT 1
+        FROM public.site_admins sa
+        WHERE sa.user_id = (SELECT auth.uid())
+    )
+)
+WITH CHECK (
+    EXISTS (
+        SELECT 1
+        FROM public.site_admins sa
+        WHERE sa.user_id = (SELECT auth.uid())
+    )
+);
+
+
+-- Ensure anonymous users have no direct table privileges
+
+REVOKE ALL ON public.tutors FROM anon;
+REVOKE ALL ON public.tutor_requests FROM anon;
+REVOKE ALL ON public.tutor_placements FROM anon;
