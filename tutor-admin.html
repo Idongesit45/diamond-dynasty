@@ -1,0 +1,585 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutor Management | Diamond Dynasty</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--navy:#101b3d;--blue:#2456a6;--gold:#e4b64f;--pale:#f4f7fc;--ink:#202943;--muted:#64708a;--green:#18794e;--red:#b42318}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pale);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.5}
+header{background:var(--navy);color:white;padding:22px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header h1{margin:0;font-size:1.45rem}
+header p{margin:5px 0 0;color:#e7eaf3;font-size:.9rem}
+header a{color:var(--gold);text-decoration:none;font-weight:bold}
+.container{max-width:1250px;margin:25px auto;padding:0 16px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 4px 18px #101b3d0d;margin-bottom:20px}
+h2{color:var(--navy);margin-top:0}
+h3{color:var(--navy)}
+label{display:block;font-weight:bold;font-size:.9rem;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ccd4e2;border-radius:8px;font:inherit;background:white}
+textarea{min-height:75px;resize:vertical}
+button,.button{display:inline-block;background:var(--blue);color:white;border:0;padding:10px 14px;border-radius:8px;font-weight:bold;cursor:pointer;text-decoration:none;font-size:.9rem}
+button:hover,.button:hover{opacity:.9}
+button:disabled{opacity:.5;cursor:wait}
+.gold{background:var(--gold);color:var(--navy)}
+.green{background:var(--green)}
+.red{background:var(--red)}
+.gray{background:#64708a}
+.small{font-size:.82rem;padding:7px 10px;margin:2px}
+.muted{color:var(--muted)}
+.notice{padding:12px;border-radius:8px;background:#fff7dc;color:#6b5010;margin:12px 0}
+.success{padding:12px;border-radius:8px;background:#e8f7ee;color:#17633f;margin:12px 0}
+.error{padding:12px;border-radius:8px;background:#fff0ee;color:#a52219;margin:12px 0}
+.hidden{display:none!important}
+.login-box{max-width:440px;margin:45px auto}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.stat{background:white;padding:18px;border-radius:12px;border-top:4px solid var(--gold)}
+.stat strong{display:block;font-size:1.8rem;color:var(--navy)}
+.stat span{font-size:.88rem;color:var(--muted)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{background:#e4eaf5;color:var(--navy)}
+.tabs button.active{background:var(--navy);color:white}
+.panel{display:none}
+.panel.active{display:block}
+.filters{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:16px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:780px}
+th,td{text-align:left;padding:12px;border-bottom:1px solid #e7ebf2;vertical-align:top;font-size:.9rem}
+th{background:#f3f6fb;color:var(--navy)}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#edf0f5;font-size:.78rem;font-weight:bold}
+.badge.pending,.badge.new,.badge.proposed{background:#fff1c7;color:#795600}
+.badge.approved,.badge.completed,.badge.paid,.badge.started{background:#dff6e8;color:#17633f}
+.badge.rejected,.badge.suspended,.badge.cancelled,.badge.waived{background:#ffe3e0;color:#a52219}
+.badge.due,.badge.accepted,.badge.matched{background:#e0ebff;color:#214f9b}
+.actions{display:flex;flex-wrap:wrap;gap:4px}
+.actions button{margin:2px 0}
+.empty{text-align:center;padding:28px;color:var(--muted)}
+#message{position:sticky;top:0;z-index:10}
+@media(max-width:750px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}.card{padding:16px}}
+</style>
+</head>
+<body><header>
+  <div>
+    <h1>DIAMOND DYNASTY</h1>
+    <p>Tutor Management Dashboard</p>
+  </div>
+  <div>
+    <a href="index.html">Home</a>
+    &nbsp; | &nbsp;
+    <a href="tutors.html">Public Tutor Page</a>
+    &nbsp; | &nbsp;
+    <button id="logoutBtn" class="gold hidden" onclick="logout()">Log out</button>
+  </div>
+</header><div id="message" class="container"></div><section id="loginSection" class="container login-box">
+  <div class="card">
+    <h2>Administrator Login</h2>
+    <p class="muted">Sign in using your existing Diamond Dynasty administrator account.</p>
+    <form id="loginForm">
+      <label for="email">Administrator Email</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <br><br>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <br><br>
+      <button id="loginBtn" type="submit">Log In</button>
+    </form>
+    <p class="muted">Access is restricted to accounts registered in the site's administrator table.</p>
+  </div>
+</section><main id="dashboard" class="container hidden">
+  <div class="card">
+    <h2>Welcome to Tutor Management</h2>
+    <p class="muted">Review tutor applications, process parent requests, arrange placements and keep commission records.</p>
+    <p id="adminIdentity" class="muted"></p>
+    <button onclick="loadAll()">Refresh Dashboard</button>
+  </div>  <div class="stats">
+    <div class="stat"><strong id="statPending">0</strong><span>Pending applications</span></div>
+    <div class="stat"><strong id="statApproved">0</strong><span>Approved tutors</span></div>
+    <div class="stat"><strong id="statRequests">0</strong><span>Open parent requests</span></div>
+    <div class="stat"><strong id="statCommissions">₦0</strong><span>Outstanding commissions</span></div>
+  </div>  <div class="tabs">
+    <button class="active" data-tab="applications">Tutor Applications</button>
+    <button data-tab="requests">Parent Requests</button>
+    <button data-tab="placements">Placements & Commissions</button>
+  </div>  <section id="applications" class="panel active card">
+    <h2>Tutor Applications</h2>
+    <p class="muted">Approve suitable applicants before assigning them to parent requests. Verify qualifications and references independently.</p>
+    <div class="filters">
+      <input id="tutorSearch" placeholder="Search name, email, phone, subject or location" oninput="renderTutors()">
+      <select id="tutorFilter" onchange="renderTutors()">
+        <option value="">All application statuses</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+        <option value="suspended">Suspended</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tutor</th><th>Subjects & Classes</th><th>Experience & Fee</th><th>Availability & Mode</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="tutorRows"></tbody>
+      </table>
+    </div>
+  </section>  <section id="requests" class="panel card">
+    <h2>Parent / Guardian Requests</h2>
+    <p class="muted">Update each request as you contact the parent and arrange a suitable tutor.</p>
+    <div class="filters">
+      <input id="requestSearch" placeholder="Search parent, class, subject or location" oninput="renderRequests()">
+      <select id="requestFilter" onchange="renderRequests()">
+        <option value="">All request statuses</option>
+        <option value="new">New</option>
+        <option value="reviewing">Reviewing</option>
+        <option value="matched">Matched</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parent / Contact</th><th>Learning Needs</th><th>Mode & Location</th><th>Budget & Schedule</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="requestRows"></tbody>
+      </table>
+    </div>
+  </section>  <section id="placements" class="panel card">
+    <h2>Tutor Placements & Commissions</h2>
+    <p class="muted">A placement links one approved tutor to one parent request. Record the agreed commission and update payment status as appropriate.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parent Request</th><th>Tutor</th><th>Placement Status</th><th>Commission</th><th>Admin Notes</th><th>Actions</th></tr></thead>
+        <tbody id="placementRows"></tbody>
+      </table>
+    </div>
+  </section>
+</main><script>
+const SUPABASE_URL = "https://nmurlbjnkhcpaosgicet.supabase.co";
+const SUPABASE_KEY = "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let tutors = [];
+let requests = [];
+let placements = [];
+
+const $ = id => document.getElementById(id);
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+function money(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? "₦" + n.toLocaleString("en-NG") : "—";
+}
+function statusBadge(value) {
+  const s = String(value || "unknown");
+  return `<span class="badge ${esc(s)}">${esc(s.replaceAll("_"," "))}</span>`;
+}
+function showMessage(message, type="success") {
+  $("message").innerHTML = `<div class="${type}" role="status">${esc(message)}</div>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+  setTimeout(() => {$("message").innerHTML = "";}, 6000);
+}
+function clearMessage() {$("message").innerHTML = "";}
+
+async function verifyAdmin(user) {
+  const {data,error} = await db.from("site_admins")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw new Error("Could not verify administrator access: " + error.message);
+  if (!data) throw new Error("This account is not registered as a Diamond Dynasty administrator.");
+  return true;
+}
+
+async function enterDashboard(user) {
+  await verifyAdmin(user);
+  currentUser = user;
+  $("loginSection").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+  $("adminIdentity").textContent = "Signed in as " + (user.email || "administrator");
+  await loadAll();
+}
+
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  clearMessage();
+  $("loginBtn").disabled = true;
+  $("loginBtn").textContent = "Signing in…";
+  try {
+    const {data,error} = await db.auth.signInWithPassword({
+      email:$("email").value.trim(),
+      password:$("password").value
+    });
+    if (error) throw error;
+    await enterDashboard(data.user);
+    showMessage("Administrator login successful.");
+  } catch(error) {
+    await db.auth.signOut();
+    $("dashboard").classList.add("hidden");
+    $("loginSection").classList.remove("hidden");
+    $("logoutBtn").classList.add("hidden");
+    currentUser = null;
+    showMessage(error.message || "Login failed.", "error");
+  } finally {
+    $("loginBtn").disabled = false;
+    $("loginBtn").textContent = "Log In";
+  }
+});
+
+async function logout() {
+  await db.auth.signOut();
+  currentUser = null;
+  $("dashboard").classList.add("hidden");
+  $("loginSection").classList.remove("hidden");
+  $("logoutBtn").classList.add("hidden");
+  showMessage("You have logged out.");
+}
+
+async function loadAll() {
+  clearMessage();
+  try {
+    const results = await Promise.all([
+      db.from("tutors").select("*").order("created_at",{ascending:false}),
+      db.from("tutor_requests").select("*").order("created_at",{ascending:false}),
+      db.from("tutor_placements").select("*").order("created_at",{ascending:false})
+    ]);
+
+    const labels = ["tutor applications","parent requests","placements"];
+    results.forEach((result,i) => {
+      if (result.error) throw new Error("Could not load " + labels[i] + ": " + result.error.message);
+    });
+
+    tutors = results[0].data || [];
+    requests = results[1].data || [];
+    placements = results[2].data || [];
+
+    renderTutors();
+    renderRequests();
+    renderPlacements();
+    updateStats();
+  } catch(error) {
+    showMessage(error.message || "Could not load dashboard data.", "error");
+  }
+}
+
+function updateStats() {
+  $("statPending").textContent = tutors.filter(t=>t.verification_status==="pending").length;
+  $("statApproved").textContent = tutors.filter(t=>t.verification_status==="approved").length;
+  $("statRequests").textContent = requests.filter(r=>["new","reviewing"].includes(r.request_status)).length;
+  const outstanding = placements
+    .filter(p=>["pending","due"].includes(p.commission_status))
+    .reduce((sum,p)=>sum+Number(p.agreed_commission||0),0);
+  $("statCommissions").textContent = money(outstanding);
+}
+
+function renderTutors() {
+  const query = $("tutorSearch").value.trim().toLowerCase();
+  const filter = $("tutorFilter").value;
+  const rows = tutors.filter(t => {
+    const haystack = [
+      t.full_name,t.email,t.phone,t.location,t.qualifications,
+      ...(t.subjects||[]),...(t.class_levels||[])
+    ].join(" ").toLowerCase();
+    return (!query || haystack.includes(query)) &&
+      (!filter || t.verification_status===filter);
+  });
+
+  $("tutorRows").innerHTML = rows.length ? rows.map(t => `
+    <tr>
+      <td><strong>${esc(t.full_name)}</strong><br>${esc(t.email)}<br>${esc(t.phone)}<br><span class="muted">${esc(t.location)}</span></td>
+      <td><strong>Subjects:</strong> ${esc((t.subjects||[]).join(", "))}<br><strong>Classes:</strong> ${esc((t.class_levels||[]).join(", "))}<br><span class="muted">${esc(t.qualifications)}</span></td>
+      <td>${esc(t.experience_years)} year(s)<br>${money(t.expected_fee)} / ${esc(t.fee_basis)}<br><span class="muted">${esc(t.preferred_locations)}</span></td>
+      <td>${esc(t.tutoring_modes||[])}<br>${esc(t.availability)}</td>
+      <td>${statusBadge(t.verification_status)}</td>
+      <td><div class="actions">
+        ${t.verification_status!=="approved"?`<button class="small green" onclick="setTutorStatus(${Number(t.id)},'approved')">Approve</button>`:""}
+        ${t.verification_status!=="rejected"?`<button class="small red" onclick="setTutorStatus(${Number(t.id)},'rejected')">Reject</button>`:""}
+        ${t.verification_status!=="suspended"?`<button class="small gray" onclick="setTutorStatus(${Number(t.id)},'suspended')">Suspend</button>`:""}
+        ${t.verification_status!=="pending"?`<button class="small" onclick="setTutorStatus(${Number(t.id)},'pending')">Set Pending</button>`:""}
+        <button class="small" onclick="viewTutor(${Number(t.id)})">Details</button>
+      </div></td>
+    </tr>`).join("") : `<tr><td colspan="6" class="empty">No tutor applications found.</td></tr>`;
+}
+
+async function setTutorStatus(id,status) {
+  if (!confirm(`Change this tutor's status to "${status}"?`)) return;
+  const {error} = await db.from("tutors")
+    .update({verification_status:status,updated_at:new Date().toISOString()})
+    .eq("id",id);
+  if (error) return showMessage("Could not update tutor: "+error.message,"error");
+  showMessage("Tutor status updated.");
+  await loadAll();
+}
+
+function viewTutor(id) {
+  const t = tutors.find(x=>Number(x.id)===id);
+  if (!t) return;
+  alert(
+    "TUTOR DETAILS\n\n"+
+    "Name: "+(t.full_name||"")+"\n"+
+    "Email: "+(t.email||"")+"\n"+
+    "Phone: "+(t.phone||"")+"\n"+
+    "Location: "+(t.location||"")+"\n"+
+    "Qualifications: "+(t.qualifications||"")+"\n"+
+    "Experience: "+(t.experience_years??"")+" years\n"+
+    "Subjects: "+((t.subjects||[]).join(", "))+"\n"+
+    "Classes: "+((t.class_levels||[]).join(", "))+"\n"+
+    "Modes: "+((t.tutoring_modes||[]).join(", "))+"\n"+
+    "Preferred locations: "+((t.preferred_locations||[]).join(", "))+"\n"+
+    "Availability: "+(t.availability||"")+"\n"+
+    "Expected fee: "+money(t.expected_fee)+" per "+(t.fee_basis||"")+"\n"+
+    "Bio: "+(t.bio||"")
+  );
+}
+
+function renderRequests() {
+  const query = $("requestSearch").value.trim().toLowerCase();
+  const filter = $("requestFilter").value;
+  const rows = requests.filter(r => {
+    const haystack = [
+      r.parent_name,r.parent_phone,r.parent_email,r.class_level,
+      r.subject,r.location,r.tutoring_mode,r.preferred_schedule
+    ].join(" ").toLowerCase();
+    return (!query || haystack.includes(query)) &&
+      (!filter || r.request_status===filter);
+  });
+
+  $("requestRows").innerHTML = rows.length ? rows.map(r => `
+    <tr>
+      <td><strong>${esc(r.parent_name)}</strong><br>${esc(r.parent_phone)}<br>${esc(r.parent_email)}</td>
+      <td>${esc(r.class_level)}<br><strong>${esc(r.subject)}</strong><br><span class="muted">${esc(r.additional_details)}</span></td>
+      <td>${esc(r.tutoring_mode)}<br>${esc(r.location)}</td>
+      <td>${esc(r.budget)}<br>${esc(r.preferred_schedule)}</td>
+      <td>${statusBadge(r.request_status)}</td>
+      <td><div class="actions">
+        <button class="small" onclick="changeRequestStatus(${Number(r.id)},'reviewing')">Reviewing</button>
+        <button class="small green" onclick="openMatch(${Number(r.id)})">Match Tutor</button>
+        <button class="small gray" onclick="changeRequestStatus(${Number(r.id)},'completed')">Complete</button>
+        <button class="small red" onclick="changeRequestStatus(${Number(r.id)},'cancelled')">Cancel</button>
+        <button class="small" onclick="viewRequest(${Number(r.id)})">Details</button>
+      </div></td>
+    </tr>`).join("") : `<tr><td colspan="6" class="empty">No parent requests found.</td></tr>`;
+}
+
+async function changeRequestStatus(id,status) {
+  if (!confirm(`Change this request's status to "${status}"?`)) return;
+  const {error} = await db.from("tutor_requests")
+    .update({request_status:status})
+    .eq("id",id);
+  if (error) return showMessage("Could not update request: "+error.message,"error");
+  showMessage("Parent request updated.");
+  await loadAll();
+}
+
+function viewRequest(id) {
+  const r = requests.find(x=>Number(x.id)===id);
+  if (!r) return;
+  alert(
+    "PARENT REQUEST\n\n"+
+    "Parent: "+(r.parent_name||"")+"\n"+
+    "Phone: "+(r.parent_phone||"")+"\n"+
+    "Email: "+(r.parent_email||"")+"\n"+
+    "Class: "+(r.class_level||"")+"\n"+
+    "Subject: "+(r.subject||"")+"\n"+
+    "Mode: "+(r.tutoring_mode||"")+"\n"+
+    "Location: "+(r.location||"")+"\n"+
+    "Budget: "+(r.budget||"")+"\n"+
+    "Schedule: "+(r.preferred_schedule||"")+"\n"+
+    "Additional details: "+(r.additional_details||"")+"\n"+
+    "Status: "+(r.request_status||"")
+  );
+}
+
+async function openMatch(requestId) {
+  const r = requests.find(x=>Number(x.id)===requestId);
+  if (!r) return;
+
+  const suitable = tutors.filter(t =>
+    t.verification_status==="approved" &&
+    (t.subjects||[]).some(s=>String(s).toLowerCase()===String(r.subject||"").toLowerCase()) &&
+    (t.class_levels||[]).some(c=>String(c).toLowerCase()===String(r.class_level||"").toLowerCase()) &&
+    (t.tutoring_modes||[]).some(m=>
+      r.tutoring_mode==="both" ? ["online","home"].includes(String(m).toLowerCase()) :
+      String(m).toLowerCase()===String(r.tutoring_mode||"").toLowerCase()
+    )
+  );
+
+  if (!suitable.length) {
+    showMessage("No approved tutor matched the subject, class and tutoring mode exactly. Review the tutor and request details before making a placement.", "error");
+    return;
+  }
+
+  const options = suitable.map(t=>`${t.id} — ${t.full_name} | ${(t.subjects||[]).join(", ")} | ${(t.tutoring_modes||[]).join("/")}`).join("\n");
+  const chosen = prompt(
+    "REQUEST #"+requestId+" — "+r.parent_name+"\n"+
+    "Class: "+r.class_level+" | Subject: "+r.subject+"\n\n"+
+    "Approved tutors matching the subject, class and mode:\n"+options+
+    "\n\nEnter the ID of the tutor you want to assign:"
+  );
+  if (chosen===null) return;
+
+  const tutorId = Number(chosen.trim());
+  const tutor = suitable.find(t=>Number(t.id)===tutorId);
+  if (!tutor) return showMessage("Enter a valid tutor ID from the list.","error");
+
+  const existing = placements.find(p=>Number(p.request_id)===requestId && Number(p.tutor_id)===tutorId);
+  if (existing) return showMessage("This tutor is already linked to this request.","error");
+
+  const commissionInput = prompt("Enter the agreed commission amount in Naira (enter 0 if no commission has been agreed):","0");
+  if (commissionInput===null) return;
+  const commission = Number(commissionInput);
+  if (!Number.isFinite(commission)||commission<0) return showMessage("Enter a valid non-negative commission amount.","error");
+
+  const notes = prompt("Optional administrator notes for this placement:","") ?? "";
+
+  const {error} = await db.from("tutor_placements").insert({
+    tutor_id:tutorId,
+    request_id:requestId,
+    placement_status:"proposed",
+    agreed_commission:commission,
+    commission_status:commission>0?"pending":"waived",
+    admin_notes:notes
+  });
+
+  if (error) return showMessage("Could not create placement: "+error.message,"error");
+
+  const {error:requestError} = await db.from("tutor_requests")
+    .update({request_status:"matched"})
+    .eq("id",requestId);
+
+  if (requestError) {
+    showMessage("Placement created, but the parent request status could not be updated: "+requestError.message,"error");
+  } else {
+    showMessage("Tutor placement created. Contact the parent and tutor to confirm the arrangement.");
+  }
+  await loadAll();
+  document.querySelector('[data-tab="placements"]').click();
+}
+
+function renderPlacements() {
+  $("placementRows").innerHTML = placements.length ? placements.map(p=>{
+    const r = requests.find(x=>Number(x.id)===Number(p.request_id));
+    const t = tutors.find(x=>Number(x.id)===Number(p.tutor_id));
+    return `<tr>
+      <td><strong>${esc(r?.parent_name||"Request #"+p.request_id)}</strong><br>${esc(r?.parent_phone||"")}<br>${esc(r?.subject||"")} — ${esc(r?.class_level||"")}</td>
+      <td><strong>${esc(t?.full_name||"Tutor #"+p.tutor_id)}</strong><br>${esc(t?.phone||"")}<br>${esc(t?.email||"")}</td>
+      <td>${statusBadge(p.placement_status)}<br><br>
+        <select id="placeStatus${Number(p.id)}">
+          ${["proposed","accepted","started","completed","cancelled"].map(s=>`<option value="${s}" ${p.placement_status===s?"selected":""}>${s}</option>`).join("")}
+        </select>
+        <button class="small" onclick="savePlacement(${Number(p.id)})">Save Status</button>
+      </td>
+      <td><strong>${money(p.agreed_commission)}</strong><br>${statusBadge(p.commission_status)}
+        <br><br><label for="commission${Number(p.id)}">Commission (₦)</label>
+        <input id="commission${Number(p.id)}" type="number" min="0" step="0.01" value="${Number(p.agreed_commission||0)}">
+        <label for="commissionStatus${Number(p.id)}">Payment status</label>
+        <select id="commissionStatus${Number(p.id)}">
+          ${["pending","due","paid","waived"].map(s=>`<option value="${s}" ${p.commission_status===s?"selected":""}>${s}</option>`).join("")}
+        </select>
+        <button class="small" onclick="saveCommission(${Number(p.id)})">Save Commission</button>
+      </td>
+      <td><textarea id="notes${Number(p.id)}">${esc(p.admin_notes||"")}</textarea><button class="small" onclick="saveNotes(${Number(p.id)})">Save Notes</button></td>  <td><button class="small gray" onclick="viewPlacement(${Number(p.id)})">Details</button></td>
+</tr>`;
+
+}).join("") : "<tr><td colspan="6" class="empty">No placements have been created yet. Use Match Tutor from a parent request to create one.</td></tr>";
+}
+
+async function savePlacement(id) {
+const status = $("placeStatus"+id).value;
+const {error} = await db.from("tutor_placements")
+.update({placement_status:status})
+.eq("id",id);
+if (error) return showMessage("Could not save placement status: "+error.message,"error");
+
+const p = placements.find(x=>Number(x.id)===id);
+if (p && status==="completed") {
+const {error:requestError} = await db.from("tutor_requests")
+.update({request_status:"completed"})
+.eq("id",p.request_id);
+if (requestError) showMessage("Placement updated, but request status could not be completed: "+requestError.message,"error");
+}
+
+showMessage("Placement status saved.");
+await loadAll();
+}
+
+async function saveCommission(id) {
+const amount = Number($("commission"+id).value);
+const status = $("commissionStatus"+id).value;
+if (!Number.isFinite(amount)||amount<0) return showMessage("Enter a valid non-negative commission.","error");
+if (status==="paid" && amount===0) {
+if (!confirm("The commission amount is zero. Mark it paid anyway?")) return;
+}
+
+const update = {agreed_commission:amount,commission_status:status};
+if (status==="paid") update.commission_paid_at = new Date().toISOString();
+else update.commission_paid_at = null;
+
+const {error} = await db.from("tutor_placements").update(update).eq("id",id);
+if (error) return showMessage("Could not save commission: "+error.message,"error");
+showMessage("Commission record saved.");
+await loadAll();
+}
+
+async function saveNotes(id) {
+const notes = $("notes"+id).value;
+const {error} = await db.from("tutor_placements")
+.update({admin_notes:notes})
+.eq("id",id);
+if (error) return showMessage("Could not save notes: "+error.message,"error");
+showMessage("Administrator notes saved.");
+await loadAll();
+}
+
+function viewPlacement(id) {
+const p = placements.find(x=>Number(x.id)===id);
+if (!p) return;
+const r = requests.find(x=>Number(x.id)===Number(p.request_id));
+const t = tutors.find(x=>Number(x.id)===Number(p.tutor_id));
+alert(
+"PLACEMENT DETAILS\n\n"+
+"Placement ID: "+p.id+"\n"+
+"Parent request: "+(r?.parent_name||p.request_id)+"\n"+
+"Tutor: "+(t?.full_name||p.tutor_id)+"\n"+
+"Placement status: "+p.placement_status+"\n"+
+"Agreed commission: "+money(p.agreed_commission)+"\n"+
+"Commission status: "+p.commission_status+"\n"+
+"Commission due date: "+(p.commission_due_date||"Not set")+"\n"+
+"Paid date: "+(p.commission_paid_at||"Not recorded")+"\n"+
+"Notes: "+(p.admin_notes||"None")
+);
+}
+
+document.querySelectorAll("[data-tab]").forEach(button=>{
+button.addEventListener("click",()=>{
+document.querySelectorAll("[data-tab]").forEach(b=>b.classList.remove("active"));
+document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+button.classList.add("active");
+$(button.dataset.tab).classList.add("active");
+});
+});
+
+(async function restoreSession(){
+const {data,error} = await db.auth.getSession();
+if (error) return showMessage(error.message,"error");
+if (!data.session) return;
+
+try {
+await enterDashboard(data.session.user);
+} catch(error) {
+await db.auth.signOut();
+currentUser = null;
+$("dashboard").classList.add("hidden");
+$("loginSection").classList.remove("hidden");
+$("logoutBtn").classList.add("hidden");
+showMessage(error.message||"Administrator verification failed.","error");
+}
+})();
+</script>
+
+</body>
+</html>
