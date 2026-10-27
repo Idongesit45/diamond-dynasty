@@ -1,660 +1,445 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diamond Dynasty</title>
-
+<meta name="description" content="Diamond Dynasty: Making Learning Easier, Building Brighter Futures. Learning materials and revision resources for Primary 1–6 and JSS 1–3.">
+<title>Diamond Dynasty | Learning Made Easier</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #17243a;
-  line-height: 1.6;
-}
-
-header {
-  background: #102544;
-  color: white;
-  padding: 18px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  color: #f2bd4b;
-  font-size: 28px;
-}
-
-header p { margin: 5px 0 0; }
-nav { margin-top: 15px; }
-
-nav button {
-  background: #294768;
-  color: white;
-  border: none;
-  padding: 10px 13px;
-  margin: 4px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.hero {
-  background: #18375f;
-  color: white;
-  padding: 35px 20px;
-  text-align: center;
-}
-
-.hero h2 { font-size: 30px; }
-
-.hero p {
-  max-width: 650px;
-  margin: auto;
-}
-
-main {
-  max-width: 950px;
-  margin: auto;
-  padding: 20px;
-}
-
-h2, h3 { color: #102544; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #dce3ec;
-  box-shadow: 0 3px 10px #1025440c;
-}
-
-.card h3 { margin-top: 0; }
-
-button.action {
-  background: #102544;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  padding: 12px 15px;
-  cursor: pointer;
-  font-size: 15px;
-  margin-top: 8px;
-}
-
-button.action:hover { background: #315782; }
-
-button.action:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-button.gold {
-  background: #f2bd4b;
-  color: #102544;
-  font-weight: bold;
-}
-
-button.subject {
-  background: white;
-  color: #102544;
-  border: 1px solid #ccd7e5;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-button.subject:hover { background: #fff2cf; }
-
-.panel {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border: 1px solid #dce3ec;
-}
-
-.hidden { display: none !important; }
-
-.back {
-  color: #18375f;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 15px;
-  font-size: 15px;
-}
-
-.notice {
-  background: #fff7df;
-  padding: 13px;
-  border-radius: 8px;
-  border: 1px solid #f1d990;
-}
-
-.question {
-  padding: 12px 0;
-  border-bottom: 1px solid #e4e9f0;
-}
-
-.question label {
-  display: block;
-  padding: 5px;
-}
-
-#result {
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-footer {
-  background: #102544;
-  color: white;
-  text-align: center;
-  padding: 25px 15px;
-  margin-top: 30px;
-}
-
-footer strong { color: #f2bd4b; }
-
-.material-card { margin-bottom: 15px; }
-
-.material-link {
-  display: inline-block;
-  text-decoration: none;
-  margin: 8px 8px 0 0;
-}
-
-@media (max-width: 500px) {
-  header h1 { font-size: 23px; }
-  .hero h2 { font-size: 25px; }
-  main { padding: 15px; }
-}
+:root{--navy:#12264a;--blue:#2056a5;--gold:#f0b429;--light:#f4f7fc;--white:#fff;--text:#192438;--muted:#647086;--green:#18794e}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--text);line-height:1.6}
+header{background:var(--navy);color:white;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+#schoolLogo{display:none;width:60px;height:60px;object-fit:contain;background:white;border-radius:8px;padding:4px}
+.brand h1{font-size:23px;margin:0}
+.brand p{margin:0;font-size:12px;color:#e1e8f5}
+nav{display:flex;flex-wrap:wrap;gap:7px}
+nav button{background:transparent;color:white;border:1px solid #627594;border-radius:6px;padding:9px 12px;cursor:pointer;font-weight:bold}
+nav button:hover{background:var(--blue)}
+.hero{padding:65px 18px;text-align:center;background:linear-gradient(135deg,#12264a,#2056a5);color:white}
+.hero h2{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0 auto 18px;max-width:800px}
+.hero p{max-width:700px;margin:0 auto 22px;font-size:17px}
+.primary-button,.secondary-button{display:inline-block;padding:12px 19px;border:0;border-radius:7px;font-weight:bold;text-decoration:none;cursor:pointer;margin:4px}
+.primary-button{background:var(--gold);color:#172033}
+.secondary-button{background:var(--blue);color:white}
+.hero .secondary-button{background:white;color:var(--navy)}
+main{max-width:1100px;margin:28px auto;padding:0 15px}
+.panel{background:white;border-radius:12px;padding:22px;margin-bottom:22px;box-shadow:0 3px 14px #12264a0d}
+h2,h3{color:var(--navy)}
+.panel h2{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.feature{border:1px solid #dce4ef;border-radius:10px;padding:18px;background:white}
+.feature h3{margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+select,input,textarea{width:100%;padding:12px;border:1px solid #cbd4e2;border-radius:7px;font-size:15px;background:white}
+textarea{min-height:110px}
+.small{font-size:13px;color:var(--muted)}
+.status{padding:12px;border-radius:7px;background:#edf3fc;color:#204c87;margin:12px 0}
+.error{background:#ffebeb;color:#9b1c1c}
+.card{border:1px solid #dce4ef;border-radius:9px;padding:16px;margin:12px 0;overflow-wrap:anywhere}
+.card h3{margin:0 0 8px}
+.badge{display:inline-block;background:#e9effa;color:#174681;padding:4px 8px;border-radius:5px;font-size:12px;margin:2px}
+.card p{margin:8px 0}
+.link-button{display:inline-block;margin-top:8px;padding:9px 13px;background:var(--blue);color:white;text-decoration:none;border-radius:6px;font-weight:bold}
+.empty{text-align:center;padding:22px;color:var(--muted)}
+footer{background:var(--navy);color:white;text-align:center;padding:28px 15px;margin-top:35px}
+footer a{color:#ffdb76}
+.hidden{display:none!important}
+.section-title{margin-bottom:5px}
+#aboutText,#missionText,#visionText{white-space:pre-wrap}
+@media(max-width:600px){header{align-items:flex-start}.brand h1{font-size:19px}.hero{padding:45px 16px}.panel{padding:16px}nav button{font-size:12px;padding:8px}}
 </style>
 </head>
-
 <body>
 
 <header>
-  <h1>DIAMOND DYNASTY</h1>
-  <p>Making Learning Easier, Building Brighter Futures</p>
-  <nav>
-    <button onclick="goHome()">Home</button>
-    <button onclick="showLevels()">Classes</button>
-    <button onclick="showAbout()">About Us</button>
-    <button onclick="showContact()">Contact</button>
-  </nav>
+<div class="brand">
+<img id="schoolLogo" alt="Diamond Dynasty school logo">
+<div>
+<h1>Diamond Dynasty</h1>
+<p>Making Learning Easier, Building Brighter Futures</p>
+</div>
+</div>
+<nav aria-label="Main navigation">
+<button data-section="home">Home</button>
+<button data-section="classes">Classes</button>
+<button data-section="revision">Revision Centre</button>
+<button data-section="about">About Us</button>
+<button data-section="contact">Contact</button>
+</nav>
 </header>
 
-<div class="hero" id="welcome">
-  <h2>Your Learning Journey Starts Here!</h2>
-  <p>
-    Welcome to Diamond Dynasty, a learning platform for Primary 1–6
-    and Junior Secondary School 1–3. Choose your class, explore
-    subjects and practise what you learn.
-  </p>
-  <br>
-  <button class="action gold" onclick="showLevels()">Choose Your Class</button>
-</div>
+<section class="hero" id="home">
+<h2>Welcome to Diamond Dynasty</h2>
+<p>Making learning easier and building brighter futures through accessible learning materials, practice activities and revision resources.</p>
+<button class="primary-button" data-goto="classes">Explore Learning Materials</button>
+<button class="secondary-button" data-goto="revision">Visit Revision Centre</button>
+</section>
 
 <main>
+<section class="panel" id="classes">
+<h2 class="section-title">Learning Centre</h2>
+<p>Select your class and subject to find available lesson notes, documents, videos and other learning resources.</p>
 
-<section id="homeSection">
-  <h2>Welcome, Learner!</h2>
-  <p>Select your school level to begin learning.</p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Primary School</h3>
-      <p>Learning resources for Primary 1 to Primary 6.</p>
-      <button class="action" onclick="showClasses('primary')">View Primary Classes</button>
-    </div>
-
-    <div class="card">
-      <h3>Junior Secondary School</h3>
-      <p>Learning resources for JSS 1 to JSS 3.</p>
-      <button class="action" onclick="showClasses('jss')">View JSS Classes</button>
-    </div>
-
-    <div class="card">
-      <h3>Revision Centre</h3>
-      <p>Answer practice questions and check your score.</p>
-      <button class="action gold" onclick="showQuiz()">Try Mathematics Quiz</button>
-    </div>
-  </div>
+<div class="grid">
+<div>
+<label for="classSelect">Select Class</label>
+<select id="classSelect">
+<option value="">Choose your class</option>
+<option>Primary 1</option><option>Primary 2</option><option>Primary 3</option>
+<option>Primary 4</option><option>Primary 5</option><option>Primary 6</option>
+<option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
+</select>
+</div>
+<div>
+<label for="subjectSelect">Select Subject</label>
+<select id="subjectSelect">
+<option value="">Choose your subject</option>
+</select>
+</div>
+</div>
+<button class="primary-button" id="findMaterials">Find Learning Materials</button>
+<div id="materialsStatus" class="status">Choose a class and subject to begin.</div>
+<div id="materialsResults"></div>
 </section>
 
-<section id="classSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="showLevels()">← Back to School Levels</button>
-    <h2 id="classTitle">Choose Your Class</h2>
-    <div class="grid" id="classButtons"></div>
-  </div>
+<section class="panel" id="revision">
+<h2 class="section-title">Revision Centre</h2>
+<p>Practise what you have learned using revision resources and online quizzes or tests.</p>
+<div class="grid">
+<div>
+<label for="revisionClass">Select Class</label>
+<select id="revisionClass">
+<option value="">Choose your class</option>
+<option>Primary 1</option><option>Primary 2</option><option>Primary 3</option>
+<option>Primary 4</option><option>Primary 5</option><option>Primary 6</option>
+<option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
+</select>
+</div>
+<div>
+<label for="revisionSubject">Select Subject</label>
+<select id="revisionSubject">
+<option value="">Choose your subject</option>
+</select>
+</div>
+</div>
+<button class="primary-button" id="findRevision">Find Revision Resources</button>
+<div id="revisionStatus" class="status">Choose a class and subject to find revision materials.</div>
+<div id="revisionResults"></div>
 </section>
 
-<section id="subjectSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="showClasses(currentLevel)">← Back to Classes</button>
-    <h2 id="subjectTitle">Choose a Subject</h2>
-    <p>Select a subject to open its learning page.</p>
-    <div id="subjectButtons"></div>
-  </div>
+<section class="panel" id="about">
+<h2>About Us</h2>
+<p id="aboutText">Diamond Dynasty is committed to making learning easier and building brighter futures by providing learners with accessible educational resources.</p>
+<div id="missionContainer" class="hidden">
+<h3>Our Mission</h3>
+<p id="missionText"></p>
+</div>
+<div id="visionContainer" class="hidden">
+<h3>Our Vision</h3>
+<p id="visionText"></p>
+</div>
 </section>
 
-<section id="lessonSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="showSubjects(currentClass)">← Back to Subjects</button>
-    <h2 id="lessonTitle">Lesson</h2>
-    <div id="lessonContent"></div>
-  </div>
+<section class="panel" id="contact">
+<h2>Contact Us</h2>
+<p>For enquiries and further information, please use the contact details below.</p>
+<div id="contactDetails">
+<p id="contactPhoneLine" class="hidden"><strong>Phone:</strong> <a id="contactPhoneLink"></a></p>
+<p id="contactEmailLine" class="hidden"><strong>Email:</strong> <a id="contactEmailLink"></a></p>
+<p id="contactAddressLine" class="hidden"><strong>Address:</strong> <span id="contactAddressText"></span></p>
+<p id="contactWhatsAppLine" class="hidden"><strong>WhatsApp:</strong> <a id="contactWhatsAppLink" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></p>
+<p id="contactFallback" class="small">Contact information will appear here when provided by the website administrator.</p>
+</div>
 </section>
-
-<section id="quizSection" class="hidden">
-  <div class="panel">
-    <button class="back" onclick="goHome()">← Back to Home</button>
-    <h2>Mathematics Practice Quiz</h2>
-    <p>Choose one answer for each question.</p>
-
-    <form id="quizForm">
-      <div class="question">
-        <p><strong>1. What is 7 + 5?</strong></p>
-        <label><input type="radio" name="q1" value="10"> 10</label>
-        <label><input type="radio" name="q1" value="12"> 12</label>
-        <label><input type="radio" name="q1" value="13"> 13</label>
-      </div>
-
-      <div class="question">
-        <p><strong>2. What is 3 × 4?</strong></p>
-        <label><input type="radio" name="q2" value="7"> 7</label>
-        <label><input type="radio" name="q2" value="12"> 12</label>
-        <label><input type="radio" name="q2" value="14"> 14</label>
-      </div>
-
-      <div class="question">
-        <p><strong>3. Which number is even?</strong></p>
-        <label><input type="radio" name="q3" value="9"> 9</label>
-        <label><input type="radio" name="q3" value="11"> 11</label>
-        <label><input type="radio" name="q3" value="16"> 16</label>
-      </div>
-
-      <button type="button" class="action gold" onclick="markQuiz()">Check My Answers</button>
-      <p id="result"></p>
-    </form>
-  </div>
-</section>
-
-<section id="aboutSection" class="hidden">
-  <div class="panel">
-    <h2>About Diamond Dynasty</h2>
-    <p>
-      Diamond Dynasty is an educational platform being developed to
-      support Primary 1–6 and JSS 1–3 learners through lessons,
-      revision activities and practice questions.
-    </p>
-    <p><strong>Our slogan:</strong> Making Learning Easier, Building Brighter Futures.</p>
-  </div>
-</section>
-
-<section id="contactSection" class="hidden">
-  <div class="panel">
-    <h2>Contact Diamond Dynasty</h2>
-    <p>Contact details will be added when they are ready.</p>
-  </div>
-</section>
-
 </main>
 
 <footer>
-  <strong>DIAMOND DYNASTY</strong><br>
-  Making Learning Easier, Building Brighter Futures<br>
-  © <span id="year"></span> Diamond Dynasty
+<p><strong>Diamond Dynasty</strong></p>
+<p>Making Learning Easier, Building Brighter Futures</p>
+<p>&copy; <span id="year"></span> Diamond Dynasty. All rights reserved.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
 
-/* Supabase connection */
-const supabaseClient = window.supabase.createClient(
-  "https://nmurlbjnkhcpaosgicet.supabase.co",
-  "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t"
-);
+const SUPABASE_URL = "https://nmurlbjnkhcpaosgicet.supabase.co";
+const SUPABASE_KEY = "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
+const BUCKET = "diamond-learning-files";
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $ = id => document.getElementById(id);
 
 const primarySubjects = [
-  "Mathematics",
-  "English Language",
-  "Basic Science",
-  "Basic Technology",
-  "Social Studies",
-  "Civic Education",
-  "Computer Studies",
-  "Agricultural Science",
-  "Religious Studies",
-  "Creative Arts"
+"Mathematics","English Language","Basic Science","Basic Technology",
+"Social Studies","Civic Education","Computer Studies","Agricultural Science",
+"Religious Studies","Creative Arts"
 ];
 
 const jssSubjects = [
-  "Mathematics",
-  "English Studies",
-  "Basic Science",
-  "Basic Technology",
-  "Business Studies",
-  "Social Studies",
-  "Civic Education",
-  "Computer Studies",
-  "Agricultural Science",
-  "Christian Religious Studies",
-  "Physical and Health Education"
+"Mathematics","English Studies","Basic Science","Basic Technology",
+"Business Studies","Social Studies","Civic Education","Computer Studies",
+"Agricultural Science","Christian Religious Studies",
+"Physical and Health Education"
 ];
 
-let currentLevel = "primary";
-let currentClass = "";
-let lessonRequestNumber = 0;
-
-function hideAll() {
-  [
-    "homeSection",
-    "classSection",
-    "subjectSection",
-    "lessonSection",
-    "quizSection",
-    "aboutSection",
-    "contactSection"
-  ].forEach(function(id) {
-    document.getElementById(id).classList.add("hidden");
-  });
+function subjectsFor(className) {
+  return className.startsWith("JSS") ? jssSubjects : primarySubjects;
 }
 
-function goHome() {
-  hideAll();
-  document.getElementById("homeSection").classList.remove("hidden");
-  document.getElementById("welcome").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
+function fillSubjects(classSelectId,subjectSelectId) {
+  const className = $(classSelectId).value;
+  const subjectSelect = $(subjectSelectId);
+  const previous = subjectSelect.value;
+  subjectSelect.innerHTML = '<option value="">Choose your subject</option>';
+  if (!className) return;
 
-function showLevels() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("homeSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showClasses(level) {
-  currentLevel = level;
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-
-  const title = document.getElementById("classTitle");
-  const box = document.getElementById("classButtons");
-  box.replaceChildren();
-
-  const classes = level === "primary"
-    ? ["Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"]
-    : ["JSS 1", "JSS 2", "JSS 3"];
-
-  title.textContent = level === "primary"
-    ? "Choose a Primary Class"
-    : "Choose a Junior Secondary Class";
-
-  classes.forEach(function(name) {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const heading = document.createElement("h3");
-    heading.textContent = name;
-
-    const button = document.createElement("button");
-    button.className = "action";
-    button.textContent = "Open " + name;
-    button.onclick = function() {
-      showSubjects(name);
-    };
-
-    card.append(heading, button);
-    box.appendChild(card);
+  subjectsFor(className).forEach(subject=>{
+    const option = document.createElement("option");
+    option.value = subject;
+    option.textContent = subject;
+    subjectSelect.appendChild(option);
   });
 
-  document.getElementById("classSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showSubjects(className) {
-  currentClass = className;
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("subjectTitle").textContent =
-    className + " — Choose a Subject";
-
-  const box = document.getElementById("subjectButtons");
-  box.replaceChildren();
-
-  const subjects = className.startsWith("Primary")
-    ? primarySubjects
-    : jssSubjects;
-
-  subjects.forEach(function(subject) {
-    const button = document.createElement("button");
-    button.className = "subject";
-    button.textContent = subject;
-    button.onclick = function() {
-      showLesson(subject);
-    };
-    box.appendChild(button);
-  });
-
-  document.getElementById("subjectSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function addNotice(container, message) {
-  const notice = document.createElement("p");
-  notice.className = "notice";
-  notice.textContent = message;
-  container.appendChild(notice);
-}
-
-async function showLesson(subject) {
-  const requestNumber = ++lessonRequestNumber;
-
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("lessonTitle").textContent =
-    currentClass + " — " + subject;
-
-  const content = document.getElementById("lessonContent");
-  content.replaceChildren();
-
-  const loading = document.createElement("p");
-  loading.textContent = "Loading learning materials...";
-  content.appendChild(loading);
-
-  document.getElementById("lessonSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-
-  try {
-    const result = await supabaseClient
-      .from("learning_content")
-      .select("id, title, class_level, subject, content_type, description, file_path, video_url, created_at")
-      .eq("class_level", currentClass)
-      .eq("subject", subject)
-      .order("created_at", { ascending: false });
-
-    if (requestNumber !== lessonRequestNumber) return;
-    if (result.error) throw result.error;
-
-    content.replaceChildren();
-
-    const intro = document.createElement("p");
-    intro.textContent =
-      "Welcome to " + subject + " for " + currentClass + ".";
-    content.appendChild(intro);
-
-    const materials = result.data || [];
-
-    if (materials.length === 0) {
-      addNotice(
-        content,
-        "No learning materials have been uploaded for this class and subject yet. Please check again later."
-      );
-      return;
-    }
-
-    for (const material of materials) {
-      if (requestNumber !== lessonRequestNumber) return;
-
-      const card = document.createElement("div");
-      card.className = "card material-card";
-
-      const heading = document.createElement("h3");
-      heading.textContent = material.title || "Learning Material";
-      card.appendChild(heading);
-
-      if (material.content_type) {
-        const type = document.createElement("p");
-        type.textContent = "Type: " + material.content_type;
-        card.appendChild(type);
-      }
-
-      if (material.description) {
-        const description = document.createElement("p");
-        description.textContent = material.description;
-        card.appendChild(description);
-      }
-
-      if (material.file_path) {
-        const fileButton = document.createElement("button");
-        fileButton.className = "action";
-        fileButton.textContent = "Open / Download Material";
-
-        fileButton.onclick = async function() {
-          fileButton.disabled = true;
-          fileButton.textContent = "Preparing file...";
-
-          try {
-            const fileResult = await supabaseClient.storage
-              .from("diamond-learning-files")
-              .createSignedUrl(material.file_path, 3600);
-
-            if (fileResult.error) throw fileResult.error;
-
-            const link = document.createElement("a");
-            link.href = fileResult.data.signedUrl;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-            link.textContent = "Click here if the file does not open automatically";
-            link.className = "material-link";
-            link.style.display = "block";
-
-            card.appendChild(link);
-            window.open(
-              fileResult.data.signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-          } catch (error) {
-            console.error("File access error:", error);
-            alert("Unable to open this file. Please try again later.");
-          } finally {
-            fileButton.disabled = false;
-            fileButton.textContent = "Open / Download Material";
-          }
-        };
-
-        card.appendChild(fileButton);
-      }
-
-      if (material.video_url) {
-        const videoLink = document.createElement("a");
-        videoLink.href = material.video_url;
-        videoLink.target = "_blank";
-        videoLink.rel = "noopener noreferrer";
-        videoLink.className = "action material-link";
-        videoLink.textContent = "Watch Video";
-        card.appendChild(videoLink);
-      }
-
-      if (!material.file_path && !material.video_url) {
-        const note = document.createElement("p");
-        note.textContent = "No file or video link is attached to this material.";
-        card.appendChild(note);
-      }
-
-      content.appendChild(card);
-    }
-  } catch (error) {
-    console.error("Learning materials error:", error);
-
-    if (requestNumber !== lessonRequestNumber) return;
-
-    content.replaceChildren();
-    addNotice(
-      content,
-      "We could not load the learning materials. Please try again later."
-    );
+  if (subjectsFor(className).includes(previous)) {
+    subjectSelect.value = previous;
   }
 }
 
-function showQuiz() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("quizSection").classList.remove("hidden");
-  document.getElementById("result").textContent = "";
-  window.scrollTo(0, 0);
+$("classSelect").addEventListener("change",()=>fillSubjects("classSelect","subjectSelect"));
+$("revisionClass").addEventListener("change",()=>fillSubjects("revisionClass","revisionSubject"));
+
+function normalize(value) {
+  return String(value || "").trim().replace(/\s+/g," ").toLowerCase();
 }
 
-function markQuiz() {
-  const answers = {
-    q1: "12",
-    q2: "12",
-    q3: "16"
-  };
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
+}
 
-  let score = 0;
+function isHttpUrl(value) {
+  try {
+    const u = new URL(value);
+    return u.protocol==="https:" || u.protocol==="http:";
+  } catch {
+    return false;
+  }
+}
 
-  Object.keys(answers).forEach(function(question) {
-    const selected = document.querySelector(
-      'input[name="' + question + '"]:checked'
+function makeResourceCard(item,type) {
+  const description = safe(item.description || "");
+  let button = "";
+
+  if (type==="material") {
+    if (item.video_url && isHttpUrl(item.video_url)) {
+      button = `<a class="link-button" href="${safe(item.video_url)}" target="_blank" rel="noopener noreferrer">Open Resource</a>`;
+    } else if (item.file_path) {
+      button = `<button class="link-button" type="button" data-file-path="${safe(item.file_path)}">Open / Download File</button>`;
+    } else {
+      button = `<span class="small">No file or external link is available for this item.</span>`;
+    }
+  } else {
+    if (isHttpUrl(item.url)) {
+      button = `<a class="link-button" href="${safe(item.url)}" target="_blank" rel="noopener noreferrer">${item.link_type==="google_form"?"Open Google Form":"Open Revision Resource"}</a>`;
+    }
+  }
+
+  return `
+    <article class="card">
+      <h3>${safe(item.title)}</h3>
+      <span class="badge">${safe(item.class_level)}</span>
+      <span class="badge">${safe(item.subject)}</span>
+      <span class="badge">${safe(type==="material" ? (item.content_type || "Learning Material") : (item.link_type==="google_form" ? "Google Forms" : "Revision Resource"))}</span>
+      ${description ? `<p>${description}</p>` : ""}
+      ${button}
+    </article>`;
+}
+
+async function openStoredFile(path) {
+  const {data,error} = await db.storage.from(BUCKET).createSignedUrl(path,3600);
+  if (error) {
+    alert("The file could not be opened. Please try again later.");
+    console.error(error);
+    return;
+  }
+  if (data && data.signedUrl) {
+    window.open(data.signedUrl,"_blank","noopener,noreferrer");
+  }
+}
+
+async function loadMaterials() {
+  const className = $("classSelect").value;
+  const subject = $("subjectSelect").value;
+  const status = $("materialsStatus");
+  const results = $("materialsResults");
+
+  results.innerHTML = "";
+  if (!className || !subject) {
+    status.className = "status";
+    status.textContent = "Please select both a class and a subject.";
+    return;
+  }
+
+  status.className = "status";
+  status.textContent = "Loading learning materials...";
+
+  try {
+    const {data,error} = await db.from("learning_content")
+      .select("id,title,class_level,subject,content_type,description,file_path,video_url,created_at")
+      .order("created_at",{ascending:false});
+
+    if (error) throw error;
+
+    const matches = (data || []).filter(item =>
+      normalize(item.class_level)===normalize(className) &&
+      normalize(item.subject)===normalize(subject)
     );
 
-    if (selected && selected.value === answers[question]) {
-      score++;
+    if (!matches.length) {
+      status.textContent = "No materials are available for this class and subject yet. Please check again later.";
+      return;
     }
+
+    status.textContent = matches.length + " learning material(s) found.";
+    results.innerHTML = matches.map(item=>makeResourceCard(item,"material")).join("");
+
+    results.querySelectorAll("[data-file-path]").forEach(button=>{
+      button.addEventListener("click",()=>openStoredFile(button.dataset.filePath));
+    });
+  } catch(error) {
+    console.error(error);
+    status.className = "status error";
+    status.textContent = "We could not load the materials. Please refresh the page and try again.";
+  }
+}
+
+$("findMaterials").addEventListener("click",loadMaterials);
+
+async function loadRevision() {
+  const className = $("revisionClass").value;
+  const subject = $("revisionSubject").value;
+  const status = $("revisionStatus");
+  const results = $("revisionResults");
+
+  results.innerHTML = "";
+  if (!className || !subject) {
+    status.className = "status";
+    status.textContent = "Please select both a class and a subject.";
+    return;
+  }
+
+  status.className = "status";
+  status.textContent = "Loading revision resources...";
+
+  try {
+    const {data,error} = await db.from("learning_links")
+      .select("id,title,class_level,subject,link_type,url,description,created_at")
+      .order("created_at",{ascending:false});
+
+    if (error) throw error;
+
+    const matches = (data || []).filter(item =>
+      normalize(item.class_level)===normalize(className) &&
+      normalize(item.subject)===normalize(subject)
+    );
+
+    if (!matches.length) {
+      status.textContent = "No revision resources have been added for this class and subject yet.";
+      return;
+    }
+
+    status.textContent = matches.length + " revision resource(s) found.";
+    results.innerHTML = matches.map(item=>makeResourceCard(item,"revision")).join("");
+  } catch(error) {
+    console.error(error);
+    status.className = "status error";
+    status.textContent = "We could not load revision resources. Please try again later.";
+  }
+}
+
+$("findRevision").addEventListener("click",loadRevision);
+
+async function loadWebsiteSettings() {
+  try {
+    const {data,error} = await db.from("site_settings")
+      .select("setting_key,setting_value");
+
+    if (error) throw error;
+
+    const settings = {};
+    (data || []).forEach(row=>settings[row.setting_key]=row.setting_value || "");
+
+    if (settings.about_us) $("aboutText").textContent = settings.about_us;
+    if (settings.mission) {
+      $("missionContainer").classList.remove("hidden");
+      $("missionText").textContent = settings.mission;
+    }
+    if (settings.vision) {
+      $("visionContainer").classList.remove("hidden");
+      $("visionText").textContent = settings.vision;
+    }
+
+    if (settings.contact_phone) {
+      $("contactPhoneLine").classList.remove("hidden");
+      $("contactPhoneLink").textContent = settings.contact_phone;
+      $("contactPhoneLink").href = "tel:" + settings.contact_phone.replace(/[^\d+]/g,"");
+    }
+
+    if (settings.contact_email) {
+      $("contactEmailLine").classList.remove("hidden");
+      $("contactEmailLink").textContent = settings.contact_email;
+      $("contactEmailLink").href = "mailto:" + settings.contact_email;
+    }
+
+    if (settings.contact_address) {
+      $("contactAddressLine").classList.remove("hidden");
+      $("contactAddressText").textContent = settings.contact_address;
+    }
+
+    if (settings.contact_whatsapp) {
+      let number = settings.contact_whatsapp.replace(/\D/g,"");
+      if (number.startsWith("0")) number = "234" + number.slice(1);
+      $("contactWhatsAppLine").classList.remove("hidden");
+      $("contactWhatsAppLink").href = "https://wa.me/" + number;
+    }
+
+    const hasContact = Boolean(settings.contact_phone || settings.contact_email ||
+      settings.contact_address || settings.contact_whatsapp);
+    if (hasContact) $("contactFallback").classList.add("hidden");
+
+    if (settings.school_logo) {
+      const {data:logoData,error:logoError} = await db.storage
+        .from(BUCKET).createSignedUrl(settings.school_logo,3600);
+      if (!logoError && logoData && logoData.signedUrl) {
+        $("schoolLogo").src = logoData.signedUrl;
+        $("schoolLogo").style.display = "block";
+      }
+    }
+  } catch(error) {
+    console.error("Website settings could not be loaded:",error);
+  }
+}
+
+document.querySelectorAll("[data-section]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const section = $(button.dataset.section);
+    if (section) section.scrollIntoView({behavior:"smooth",block:"start"});
   });
+});
 
-  document.getElementById("result").textContent =
-    "You scored " + score + " out of 3. " +
-    (score === 3 ? "Excellent work!" : "Keep practising and try again!");
-}
+document.querySelectorAll("[data-goto]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const section = $(button.dataset.goto);
+    if (section) section.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
 
-function showAbout() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("aboutSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-function showContact() {
-  hideAll();
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("contactSection").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-
-document.getElementById("year").textContent = new Date().getFullYear();
+$("year").textContent = new Date().getFullYear();
+loadWebsiteSettings();
 </script>
-
 </body>
 </html>
