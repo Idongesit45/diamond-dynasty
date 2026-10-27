@@ -3,504 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tutor Matching | Diamond Dynasty</title>
+<title>Find a Tutor | Diamond Dynasty</title>
 
 <style>
-:root {
-  --navy:#102542;
-  --blue:#1769aa;
-  --gold:#f4b942;
-  --light:#f4f7fb;
-  --white:#fff;
-  --text:#263445;
-  --green:#16834a;
-  --red:#b42318;
-}
-
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--light);
-  color:var(--text);
-  line-height:1.6;
-}
-
-header {
-  background:var(--navy);
-  color:white;
-  padding:22px 16px;
-  text-align:center;
-}
-
-header h1 {
-  margin:0;
-  font-size:clamp(25px,5vw,38px);
-}
-
-header p { margin:6px 0 0; }
-
-nav {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  padding:12px;
-  background:#fff;
-  box-shadow:0 2px 7px #00000012;
-}
-
-nav a {
-  color:var(--navy);
-  text-decoration:none;
-  font-weight:bold;
-  padding:7px 10px;
-}
-
-.container {
-  width:min(1050px,94%);
-  margin:24px auto;
-}
-
-.hero {
-  background:linear-gradient(135deg,#102542,#1769aa);
-  color:white;
-  padding:30px 22px;
-  border-radius:16px;
-  text-align:center;
-}
-
-.hero h2 { margin:0 0 10px; font-size:28px; }
-
-.hero p {
-  max-width:720px;
-  margin:0 auto;
-}
-
-.tabs {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-  margin:22px 0;
-}
-
-button,.button {
-  border:0;
-  border-radius:8px;
-  padding:11px 16px;
-  font-size:15px;
-  font-weight:bold;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-block;
-}
-
-.primary { background:var(--blue); color:white; }
-.secondary { background:var(--gold); color:#172033; }
-.dark { background:var(--navy); color:white; }
-
-.card {
-  background:white;
-  border-radius:14px;
-  padding:22px;
-  margin:18px 0;
-  box-shadow:0 4px 18px #1720330c;
-}
-
-.card h2,.card h3 {
-  color:var(--navy);
-  margin-top:0;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
-}
-
-label {
-  display:block;
-  font-weight:bold;
-  margin:12px 0 5px;
-}
-
-input,select,textarea {
-  display:block;
-  width:100%;
-  padding:11px;
-  border:1px solid #ccd5df;
-  border-radius:7px;
-  font:inherit;
-  background:white;
-}
-
-textarea {
-  min-height:95px;
-  resize:vertical;
-}
-
-small,.muted { color:#657386; }
-
-form button { margin-top:18px; }
-
-.status {
-  margin-top:12px;
-  padding:12px;
-  border-radius:8px;
-  display:none;
-}
-
-.status.success {
-  display:block;
-  background:#e7f7ed;
-  color:#176b38;
-}
-
-.status.error {
-  display:block;
-  background:#fff0ef;
-  color:var(--red);
-}
-
-.section { display:none; }
-.section.active { display:block; }
-
-.notice {
-  background:#fff7df;
-  border-left:4px solid var(--gold);
-  padding:12px;
-  border-radius:5px;
-}
-
-.result-card {
-  border:1px solid #e1e7ef;
-  border-radius:10px;
-  padding:14px;
-  margin:12px 0;
-  overflow-wrap:anywhere;
-}
-
-footer {
-  background:var(--navy);
-  color:white;
-  text-align:center;
-  padding:22px;
-  margin-top:35px;
-}
-
-[hidden] { display:none !important; }
-
-@media(max-width:500px) {
-  .card { padding:16px; }
-  .hero { padding:25px 16px; }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#17233d;line-height:1.6}
+header{background:#102650;color:white;padding:24px 16px;text-align:center}
+header h1{margin:0;color:#f5c542}
+header p{margin:6px 0}
+nav{background:#17386c;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:6px 10px;display:inline-block}
+.container{max-width:1000px;margin:24px auto;padding:0 14px}
+.intro,.card{background:white;border-radius:12px;padding:22px;margin-bottom:22px;box-shadow:0 3px 12px #0000000d}
+h2{color:#17386c;margin-top:0}
+h3{color:#17386c}
+label{display:block;font-weight:bold;margin-top:12px}
+input,select,textarea{width:100%;padding:12px;margin-top:5px;border:1px solid #ccd3df;border-radius:7px;font-size:16px;background:white}
+textarea{min-height:85px;resize:vertical}
+button,.button{display:inline-block;background:#17386c;color:white;padding:12px 18px;border:0;border-radius:7px;font-size:16px;cursor:pointer;text-decoration:none;margin-top:16px}
+button:hover,.button:hover{background:#244f91}
+.gold{background:#d6a91d;color:#17233d}
+.notice{padding:12px;border-radius:7px;margin-top:12px;display:none;overflow-wrap:anywhere}
+.success{background:#e1f7e8;color:#14532d}
+.error{background:#ffebeb;color:#991b1b}
+.small{font-size:14px;color:#536078}
+.hidden{display:none!important}
+.record{padding:14px;border:1px solid #dce2ec;border-radius:8px;margin:12px 0;overflow-wrap:anywhere}
+footer{text-align:center;padding:25px;background:#102650;color:white;margin-top:35px}
+hr{border:0;border-top:1px solid #e2e7ef;margin:25px 0}
+@media(min-width:700px){.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}}
 </style>
 </head>
 
 <body>
-
 <header>
-  <h1>Diamond Dynasty</h1>
-  <p>Making Learning Easier, Building Brighter Futures</p>
+<h1>DIAMOND DYNASTY</h1>
+<p>Making Learning Easier, Building Brighter Futures</p>
+<p>Find the right tutor for your child's learning journey.</p>
 </header>
 
 <nav>
-  <a href="index.html">Home</a>
-  <a href="exams.html">Examination Centre</a>
-  <a href="#parent" onclick="showSection('parent')">Find a Tutor</a>
-  <a href="#tutor" onclick="showSection('tutor')">Become a Tutor</a>
-  <a href="#admin" onclick="showSection('admin')">Admin</a>
+<a href="index.html">Home</a>
+<a href="exams.html">Examination Centre</a>
+<a href="#parent">Find a Tutor</a>
+<a href="#apply">Become a Tutor</a>
+<a href="#admin">Admin</a>
 </nav>
 
 <main class="container">
 
-<section class="hero">
-  <h2>Connect with the Right Tutor</h2>
-  <p>
-    Find suitable support for your child's learning. Choose online lessons
-    or private home tutoring, and let Diamond Dynasty help coordinate the match.
-  </p>
+<section class="intro">
+<h2>Welcome to Our Tutor Matching Service</h2>
+<p>We connect parents and learners with tutors who suit their subjects, class levels, schedules and budgets.</p>
+<p>Choose online tutoring or private home tutoring. Submit your request, and our team will review it and work to find a suitable tutor.</p>
+<p class="small">Submitting a request does not guarantee immediate placement. We will contact you using the details you provide.</p>
 </section>
 
-<div class="tabs">
-  <button class="primary" onclick="showSection('parent')">Find a Tutor</button>
-  <button class="secondary" onclick="showSection('tutor')">Register as a Tutor</button>
-  <button class="dark" onclick="showSection('admin')">Administrator</button>
+<div class="grid">
+
+<section class="card" id="parent">
+<h2>Parent/Guardian Request Form</h2>
+<p>Complete this form if you need a tutor for your child.</p>
+
+<form id="parentForm">
+<label for="parentName">Parent/Guardian Full Name *</label>
+<input id="parentName" required maxlength="120" autocomplete="name">
+
+<label for="parentPhone">Phone Number *</label>
+<input id="parentPhone" required maxlength="30" autocomplete="tel">
+
+<label for="parentEmail">Email Address</label>
+<input id="parentEmail" type="email" maxlength="160" autocomplete="email">
+
+<label for="childClass">Learner's Class *</label>
+<select id="childClass" required>
+<option value="">Select class</option>
+<option>Primary 1</option><option>Primary 2</option>
+<option>Primary 3</option><option>Primary 4</option>
+<option>Primary 5</option><option>Primary 6</option>
+<option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
+<option>SS 1</option><option>SS 2</option><option>SS 3</option>
+<option>Other</option>
+</select>
+
+<label for="subject">Subject Needed *</label>
+<input id="subject" required maxlength="120" placeholder="e.g. Mathematics, English">
+
+<label for="mode">Tutoring Preference *</label>
+<select id="mode" required>
+<option value="">Select preference</option>
+<option value="online">Online tutoring</option>
+<option value="home">Private/home tutoring</option>
+<option value="both">Online or home tutoring</option>
+</select>
+
+<label for="parentLocation">Location (town/area) *</label>
+<input id="parentLocation" maxlength="180" placeholder="For home tutoring, enter your area">
+
+<label for="budget">Budget *</label>
+<input id="budget" type="number" min="0" step="0.01" required placeholder="Enter your budget in Naira">
+
+<label for="schedule">Preferred Days and Times *</label>
+<textarea id="schedule" required maxlength="1000" placeholder="e.g. Mondays and Wednesdays, 4 pm"></textarea>
+
+<label for="parentDetails">Additional Information</label>
+<textarea id="parentDetails" maxlength="2000" placeholder="Tell us about your learning needs"></textarea>
+
+<button type="submit">Submit Tutor Request</button>
+<div id="parentMessage" class="notice" role="status"></div>
+</form>
+</section>
+
+<section class="card" id="apply">
+<h2>Tutor Application Form</h2>
+<p>Are you a tutor interested in teaching through Diamond Dynasty? Apply below.</p>
+
+<form id="tutorForm">
+<label for="tutorName">Full Name *</label>
+<input id="tutorName" required maxlength="120" autocomplete="name">
+
+<label for="tutorEmail">Email Address *</label>
+<input id="tutorEmail" type="email" required maxlength="160" autocomplete="email">
+
+<label for="tutorPhone">Phone Number *</label>
+<input id="tutorPhone" required maxlength="30" autocomplete="tel">
+
+<label for="tutorLocation">Your Location *</label>
+<input id="tutorLocation" required maxlength="180" placeholder="Town/city and state">
+
+<label for="qualifications">Qualifications *</label>
+<textarea id="qualifications" required maxlength="1000" placeholder="e.g. NCE, B.Ed., subject certifications"></textarea>
+
+<label for="experience">Years of Teaching Experience *</label>
+<input id="experience" type="number" min="0" max="60" step="1" required>
+
+<label for="subjects">Subjects You Can Teach *</label>
+<input id="subjects" required maxlength="500" placeholder="Separate subjects with commas">
+
+<label for="classes">Class Levels You Can Teach *</label>
+<select id="classes" multiple required size="7">
+<option>Primary 1</option><option>Primary 2</option>
+<option>Primary 3</option><option>Primary 4</option>
+<option>Primary 5</option><option>Primary 6</option>
+<option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
+<option>SS 1</option><option>SS 2</option><option>SS 3</option>
+</select>
+<p class="small">On a phone, tap the classes you can teach. You can select more than one.</p>
+
+<label for="tutorModes">Tutoring Mode *</label>
+<select id="tutorModes" multiple required size="3">
+<option value="online">Online tutoring</option>
+<option value="home">Private/home tutoring</option>
+</select>
+<p class="small">Select one or both options.</p>
+
+<label for="preferredLocations">Preferred Home-Tutoring Locations</label>
+<input id="preferredLocations" maxlength="500" placeholder="Areas you can travel to, separated by commas">
+
+<label for="availability">Availability *</label>
+<textarea id="availability" required maxlength="1000" placeholder="Days and times you are available"></textarea>
+
+<label for="fee">Expected Fee in Naira *</label>
+<input id="fee" type="number" min="0" step="0.01" required>
+
+<label for="feeBasis">Fee Basis *</label>
+<select id="feeBasis" required>
+<option value="">Select fee basis</option>
+<option value="hour">Per hour</option>
+<option value="session">Per session</option>
+<option value="month">Per month</option>
+</select>
+
+<label for="bio">Brief Introduction</label>
+<textarea id="bio" maxlength="2000" placeholder="Describe your teaching experience and approach"></textarea>
+
+<button type="submit">Submit Tutor Application</button>
+<div id="tutorMessage" class="notice" role="status"></div>
+</form>
+
+<p class="small">All applications are subject to review. Submission does not mean automatic approval or placement.</p>
+</section>
+
 </div>
 
-<!-- PARENT REQUEST FORM -->
-<section id="parent" class="section active card">
-  <h2>Parent / Guardian Tutor Request</h2>
-  <p>Complete this form and our team will review your request.</p>
+<section class="card" id="admin">
+<h2>Administrator Login</h2>
+<p class="small">For authorised Diamond Dynasty administrators only.</p>
 
-  <div class="notice">
-    Submitting this form does not guarantee immediate placement.
-    We will review your requirements and work towards a suitable match.
-  </div>
+<form id="adminLoginForm">
+<label for="adminEmail">Administrator Email</label>
+<input id="adminEmail" type="email" required autocomplete="username">
 
-  <form id="parentForm">
-    <div class="grid">
+<label for="adminPassword">Password</label>
+<input id="adminPassword" type="password" required autocomplete="current-password">
 
-      <div>
-        <label for="parentName">Parent or Guardian's Name *</label>
-        <input id="parentName" maxlength="120" required>
-      </div>
+<button type="submit">Sign In</button>
+<div id="adminMessage" class="notice" role="status"></div>
+</form>
 
-      <div>
-        <label for="parentPhone">Phone Number *</label>
-        <input id="parentPhone" type="tel" maxlength="30" required>
-      </div>
+<div id="adminDashboard" class="hidden">
+<hr>
+<h2>Administration Dashboard</h2>
+<p>Use this dashboard to review incoming tutor requests and applications.</p>
+<button type="button" id="refreshButton">Refresh Records</button>
+<button type="button" id="logoutButton" class="gold">Sign Out</button>
 
-      <div>
-        <label for="parentEmail">Email Address</label>
-        <input id="parentEmail" type="email" maxlength="254">
-      </div>
+<h3>Parent/Guardian Requests</h3>
+<div id="requestsList">Sign in to load records.</div>
 
-      <div>
-        <label for="childClass">Child's Class *</label>
-        <select id="childClass" required>
-          <option value="">Choose class</option>
-          <option>Primary 1</option>
-          <option>Primary 2</option>
-          <option>Primary 3</option>
-          <option>Primary 4</option>
-          <option>Primary 5</option>
-          <option>Primary 6</option>
-          <option>JSS 1</option>
-          <option>JSS 2</option>
-          <option>JSS 3</option>
-          <option>SS 1</option>
-          <option>SS 2</option>
-          <option>SS 3</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="parentSubject">Subject Needed *</label>
-        <input id="parentSubject" maxlength="120"
-               placeholder="e.g. Mathematics, English" required>
-      </div>
-
-      <div>
-        <label for="tutoringMode">Tutoring Preference *</label>
-        <select id="tutoringMode" required>
-          <option value="">Choose preference</option>
-          <option value="online">Online tutoring</option>
-          <option value="home">Private/home tutoring</option>
-          <option value="both">Either online or home tutoring</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="parentLocation">Location *</label>
-        <input id="parentLocation" maxlength="200"
-               placeholder="Town or area; required for home tutoring">
-      </div>
-
-      <div>
-        <label for="parentBudget">Budget (₦) *</label>
-        <input id="parentBudget" type="number" min="0" step="any" required>
-      </div>
-
-      <div>
-        <label for="parentSchedule">Preferred Days and Times *</label>
-        <input id="parentSchedule" maxlength="250" required
-               placeholder="e.g. Saturdays, 10 am">
-      </div>
-
-    </div>
-
-    <label for="parentDetails">Additional Information</label>
-    <textarea id="parentDetails" maxlength="1500"
-      placeholder="Learning needs, lesson frequency, or other requirements"></textarea>
-
-    <button class="primary" type="submit">Submit Tutor Request</button>
-    <div id="parentStatus" class="status" role="status"></div>
-  </form>
-</section>
-
-<!-- TUTOR REGISTRATION FORM -->
-<section id="tutor" class="section card">
-  <h2>Tutor Registration</h2>
-  <p>Register your interest in teaching through Diamond Dynasty.</p>
-
-  <p class="notice">
-    New applications are marked pending until reviewed by the administrator.
-    Do not include passwords or sensitive identity documents in this form.
-  </p>
-
-  <form id="tutorForm">
-    <div class="grid">
-
-      <div>
-        <label for="tutorName">Full Name *</label>
-        <input id="tutorName" maxlength="120" required>
-      </div>
-
-      <div>
-        <label for="tutorEmail">Email Address *</label>
-        <input id="tutorEmail" type="email" maxlength="254" required>
-      </div>
-
-      <div>
-        <label for="tutorPhone">Phone Number *</label>
-        <input id="tutorPhone" type="tel" maxlength="30" required>
-      </div>
-
-      <div>
-        <label for="tutorLocation">Current Location *</label>
-        <input id="tutorLocation" maxlength="200" required>
-      </div>
-
-      <div>
-        <label for="tutorQualifications">Qualifications *</label>
-        <input id="tutorQualifications" maxlength="300" required
-               placeholder="e.g. B.Ed., NCE">
-      </div>
-
-      <div>
-        <label for="tutorExperience">Years of Experience *</label>
-        <input id="tutorExperience" type="number" min="0" max="60"
-               step="1" required>
-      </div>
-
-      <div>
-        <label for="tutorSubjects">Subjects You Teach *</label>
-        <input id="tutorSubjects" maxlength="300" required
-               placeholder="Separate subjects with commas">
-      </div>
-
-      <div>
-        <label for="tutorClasses">Classes You Teach *</label>
-        <input id="tutorClasses" maxlength="300" required
-               placeholder="e.g. Primary 4, JSS 2, SS 1">
-      </div>
-
-      <div>
-        <label for="tutorModes">Teaching Mode *</label>
-        <select id="tutorModes" required>
-          <option value="">Choose mode</option>
-          <option value="online">Online only</option>
-          <option value="home">Home tutoring only</option>
-          <option value="both">Online and home tutoring</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="tutorAreas">Preferred Home-Tutoring Areas</label>
-        <input id="tutorAreas" maxlength="300"
-               placeholder="Separate areas with commas">
-      </div>
-
-      <div>
-        <label for="tutorAvailability">Availability *</label>
-        <input id="tutorAvailability" maxlength="250" required
-               placeholder="Days and times available">
-      </div>
-
-      <div>
-        <label for="tutorFee">Expected Fee (₦) *</label>
-        <input id="tutorFee" type="number" min="0" step="any" required>
-      </div>
-
-      <div>
-        <label for="tutorFeeBasis">Fee Basis *</label>
-        <select id="tutorFeeBasis" required>
-          <option value="">Choose basis</option>
-          <option value="per_hour">Per hour</option>
-          <option value="per_lesson">Per lesson</option>
-          <option value="per_week">Per week</option>
-          <option value="per_month">Per month</option>
-        </select>
-      </div>
-
-    </div>
-
-    <label for="tutorBio">Brief Professional Profile *</label>
-    <textarea id="tutorBio" maxlength="1500" required
-      placeholder="Describe your teaching approach and experience"></textarea>
-
-    <button class="primary" type="submit">Submit Tutor Application</button>
-    <div id="tutorStatus" class="status" role="status"></div>
-  </form>
-</section>
-
-<!-- ADMIN DASHBOARD -->
-<section id="admin" class="section card">
-  <h2>Administrator Dashboard</h2>
-  <p>
-    Sign in with your existing Supabase administrator account to review
-    applications and parent requests.
-  </p>
-
-  <form id="adminLoginForm">
-    <label for="adminEmail">Administrator Email</label>
-    <input id="adminEmail" type="email" autocomplete="username" required>
-
-    <label for="adminPassword">Password</label>
-    <input id="adminPassword" type="password"
-           autocomplete="current-password" required>
-
-    <button class="primary" type="submit">Sign In</button>
-    <div id="adminLoginStatus" class="status" role="status"></div>
-  </form>
-
-  <div id="adminPanel" hidden>
-    <hr>
-
-    <h3>Parent Requests</h3>
-    <button class="primary" onclick="loadAdminData()">Refresh Dashboard</button>
-    <div id="requestsOutput"></div>
-
-    <h3>Tutor Applications</h3>
-    <div id="tutorsOutput"></div>
-
-    <h3>Placement and Commission Tracking</h3>
-    <p class="muted">
-      Placement creation, tutor approval controls, and commission tracking
-      still need to be added.
-    </p>
-
-    <button class="dark" onclick="adminSignOut()">Sign Out</button>
-    <div id="adminDataStatus" class="status" role="status"></div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>How the Service Works</h2>
-
-  <div class="grid">
-    <div>
-      <h3>1. Send a Request</h3>
-      <p>Parents tell us the class, subject, budget, and preferred schedule.</p>
-    </div>
-
-    <div>
-      <h3>2. Review and Match</h3>
-      <p>We review suitable tutor applications and coordinate a potential match.</p>
-    </div>
-
-    <div>
-      <h3>3. Agree on Terms</h3>
-      <p>The parties confirm lesson arrangements and applicable service fees before starting.</p>
-    </div>
-  </div>
+<h3>Tutor Applications</h3>
+<div id="tutorsList">Sign in to load records.</div>
+</div>
 </section>
 
 </main>
 
 <footer>
-  <strong>Diamond Dynasty</strong>
-  <p>Making Learning Easier, Building Brighter Futures</p>
-  <p>&copy; <span id="year"></span> Diamond Dynasty</p>
+<p><strong>Diamond Dynasty</strong></p>
+<p>Making Learning Easier, Building Brighter Futures</p>
+<p>&copy; <span id="year"></span> Diamond Dynasty. All rights reserved.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
+(() => {
+"use strict";
+
 const SUPABASE_URL = "https://nmurlbjnkhcpaosgicet.supabase.co";
 const SUPABASE_KEY = "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
 
@@ -508,54 +236,47 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-function showSection(id) {
-  document.querySelectorAll(".section").forEach(section => {
-    section.classList.toggle("active", section.id === id);
-  });
-
-  if (id === "admin") checkAdminSession();
+function showMessage(id, message, isError = false) {
+  const el = document.getElementById(id);
+  el.textContent = message;
+  el.className = "notice " + (isError ? "error" : "success");
+  el.style.display = "block";
 }
 
-function showStatus(id, message, success) {
-  const box = document.getElementById(id);
-  box.textContent = message;
-  box.className = "status " + (success ? "success" : "error");
-}
-
-function clearStatus(id) {
-  const box = document.getElementById(id);
-  box.textContent = "";
-  box.className = "status";
+function hideMessage(id) {
+  const el = document.getElementById(id);
+  el.style.display = "none";
+  el.textContent = "";
 }
 
 function value(id) {
   return document.getElementById(id).value.trim();
 }
 
-function numberValue(id) {
-  return Number(document.getElementById(id).value);
+function selectedValues(id) {
+  return Array.from(document.getElementById(id).selectedOptions)
+    .map(option => option.value);
 }
 
 function splitList(text) {
   return text.split(",").map(item => item.trim()).filter(Boolean);
 }
 
-function getTutorModes() {
-  const selected = value("tutorModes");
-  return selected === "both" ? ["online", "home"] : [selected];
+function friendlyError(error) {
+  if (!error) return "Something went wrong. Please try again.";
+  return error.message || "Something went wrong. Please try again.";
 }
 
 /* PARENT REQUEST */
 document.getElementById("parentForm").addEventListener("submit", async event => {
   event.preventDefault();
-  clearStatus("parentStatus");
+  hideMessage("parentMessage");
 
-  const mode = value("tutoringMode");
+  const mode = value("mode");
   const location = value("parentLocation");
 
   if ((mode === "home" || mode === "both") && !location) {
-    showStatus("parentStatus",
-      "Please provide the location for home tutoring.", false);
+    showMessage("parentMessage", "Please enter your location for home tutoring.", true);
     return;
   }
 
@@ -569,45 +290,52 @@ document.getElementById("parentForm").addEventListener("submit", async event => 
       p_parent_phone: value("parentPhone"),
       p_parent_email: value("parentEmail") || null,
       p_class_level: value("childClass"),
-      p_subject: value("parentSubject"),
+      p_subject: value("subject"),
       p_tutoring_mode: mode,
       p_location: location || null,
-      p_budget: numberValue("parentBudget"),
-      p_preferred_schedule: value("parentSchedule"),
+      p_budget: Number(value("budget")),
+      p_preferred_schedule: value("schedule"),
       p_additional_details: value("parentDetails") || null
     });
 
     if (error) throw error;
 
-    showStatus(
-      "parentStatus",
-      "Your request has been submitted successfully. Reference number: " +
-      String(data) + ". Please keep this number for your records.",
+    document.getElementById("parentForm").reset();
+    showMessage(
+      "parentMessage",
+      "Your request has been submitted successfully. Your reference number is " +
+      String(data) + ". Please keep it for your records."
+    );
+  } catch (error) {
+    showMessage(
+      "parentMessage",
+      "We could not submit your request. " + friendlyError(error),
       true
     );
-
-    event.target.reset();
-
-  } catch (error) {
-    console.error("Parent request submission failed:", error);
-
-    showStatus(
-      "parentStatus",
-      "We could not submit your request. Please check your entries and try again. " +
-      (error.message || ""),
-      false
-    );
-
   } finally {
     button.disabled = false;
     button.textContent = "Submit Tutor Request";
   }
 });
 
-/* TUTOR REGISTRATION */
+/* TUTOR APPLICATION */
 document.getElementById("tutorForm").addEventListener("submit", async event => {
   event.preventDefault();
-  clearStatus("tutorStatus");
+  hideMessage("tutorMessage");
+
+  const subjects = splitList(value("subjects"));
+  const classLevels = selectedValues("classes");
+  const modes = selectedValues("tutorModes");
+
+  if (!subjects.length) {
+    showMessage("tutorMessage", "Please enter at least one subject.", true);
+    return;
+  }
+
+  if (!classLevels.length || !modes.length) {
+    showMessage("tutorMessage", "Please select your class levels and tutoring mode.", true);
+    return;
+  }
 
   const button = event.submitter;
   button.disabled = true;
@@ -619,67 +347,46 @@ document.getElementById("tutorForm").addEventListener("submit", async event => {
       p_email: value("tutorEmail"),
       p_phone: value("tutorPhone"),
       p_location: value("tutorLocation"),
-      p_qualifications: value("tutorQualifications"),
-      p_experience_years: numberValue("tutorExperience"),
-      p_subjects: splitList(value("tutorSubjects")),
-      p_class_levels: splitList(value("tutorClasses")),
-      p_tutoring_modes: getTutorModes(),
-      p_preferred_locations: splitList(value("tutorAreas")),
-      p_availability: value("tutorAvailability"),
-      p_expected_fee: numberValue("tutorFee"),
-      p_fee_basis: value("tutorFeeBasis"),
-      p_bio: value("tutorBio")
+      p_qualifications: value("qualifications"),
+      p_experience_years: Number(value("experience")),
+      p_subjects: subjects,
+      p_class_levels: classLevels,
+      p_tutoring_modes: modes,
+      p_preferred_locations: splitList(value("preferredLocations")),
+      p_availability: value("availability"),
+      p_expected_fee: Number(value("fee")),
+      p_fee_basis: value("feeBasis"),
+      p_bio: value("bio") || null
     });
 
     if (error) throw error;
 
-    showStatus(
-      "tutorStatus",
-      "Your application has been submitted. Application reference: " +
-      String(data) +
-      ". Your status is pending until the administrator reviews it.",
+    document.getElementById("tutorForm").reset();
+    showMessage(
+      "tutorMessage",
+      "Your application has been received. Your application reference number is " +
+      String(data) + ". It will be reviewed by the administrator before approval."
+    );
+  } catch (error) {
+    showMessage(
+      "tutorMessage",
+      "We could not submit your application. " + friendlyError(error),
       true
     );
-
-    event.target.reset();
-
-  } catch (error) {
-    console.error("Tutor registration failed:", error);
-
-    showStatus(
-      "tutorStatus",
-      "We could not submit your application. Please check your entries and try again. " +
-      (error.message || ""),
-      false
-    );
-
   } finally {
     button.disabled = false;
     button.textContent = "Submit Tutor Application";
   }
 });
 
-/* ADMINISTRATOR LOGIN */
-async function checkAdminSession() {
-  const { data } = await db.auth.getSession();
-
-  if (data.session) {
-    document.getElementById("adminLoginForm").hidden = true;
-    document.getElementById("adminPanel").hidden = false;
-    await loadAdminData();
-  } else {
-    document.getElementById("adminLoginForm").hidden = false;
-    document.getElementById("adminPanel").hidden = true;
-  }
-}
-
-document.getElementById("adminLoginForm").addEventListener("submit",
-async event => {
+/* ADMIN LOGIN */
+document.getElementById("adminLoginForm").addEventListener("submit", async event => {
   event.preventDefault();
-  clearStatus("adminLoginStatus");
+  hideMessage("adminMessage");
 
   const button = event.submitter;
   button.disabled = true;
+  button.textContent = "Signing in...";
 
   try {
     const { error } = await db.auth.signInWithPassword({
@@ -689,167 +396,139 @@ async event => {
 
     if (error) throw error;
 
-    document.getElementById("adminPassword").value = "";
-    document.getElementById("adminLoginForm").hidden = true;
-    document.getElementById("adminPanel").hidden = false;
+    const { data: userData, error: userError } = await db.auth.getUser();
+    if (userError) throw userError;
 
-    showStatus("adminLoginStatus", "Signed in successfully.", true);
+    const { data: adminRecord, error: adminError } = await db
+      .from("site_admins")
+      .select("user_id")
+      .eq("user_id", userData.user.id)
+      .maybeSingle();
 
-    await loadAdminData();
+    if (adminError) throw adminError;
+
+    if (!adminRecord) {
+      await db.auth.signOut();
+      throw new Error("This account is not authorised to administer the website.");
+    }
+
+    showMessage("adminMessage", "Login successful.");
+    document.getElementById("adminDashboard").classList.remove("hidden");
+    document.getElementById("adminLoginForm").classList.add("hidden");
+    await loadAdminRecords();
 
   } catch (error) {
-    console.error("Administrator sign-in failed:", error);
-
-    showStatus(
-      "adminLoginStatus",
-      "Sign-in failed. Check your administrator credentials.",
-      false
-    );
-
+    showMessage("adminMessage", friendlyError(error), true);
   } finally {
     button.disabled = false;
+    button.textContent = "Sign In";
   }
 });
 
-async function adminSignOut() {
-  await db.auth.signOut();
+/* ADMIN RECORDS */
+async function loadAdminRecords() {
+  const requestsList = document.getElementById("requestsList");
+  const tutorsList = document.getElementById("tutorsList");
 
-  document.getElementById("adminLoginForm").hidden = false;
-  document.getElementById("adminPanel").hidden = true;
-
-  document.getElementById("requestsOutput").replaceChildren();
-  document.getElementById("tutorsOutput").replaceChildren();
-
-  showStatus("adminLoginStatus", "You have signed out.", true);
-}
-
-function makeElement(tag, text, className) {
-  const el = document.createElement(tag);
-  el.textContent = text == null ? "" : String(text);
-
-  if (className) el.className = className;
-
-  return el;
-}
-
-function renderRecords(containerId, rows, columns, emptyMessage) {
-  const container = document.getElementById(containerId);
-  container.replaceChildren();
-
-  if (!rows || rows.length === 0) {
-    container.appendChild(makeElement("p", emptyMessage));
-    return;
-  }
-
-  rows.forEach(row => {
-    const card = makeElement("div", null, "result-card");
-
-    columns.forEach(([label, key]) => {
-      const recordValue = Array.isArray(row[key])
-        ? row[key].join(", ")
-        : row[key];
-
-      const line = makeElement("p", null);
-      line.appendChild(makeElement("strong", label + ": "));
-
-      line.appendChild(document.createTextNode(
-        recordValue == null || recordValue === ""
-          ? "Not provided"
-          : String(recordValue)
-      ));
-
-      card.appendChild(line);
-    });
-
-    container.appendChild(card);
-  });
-}
-
-async function loadAdminData() {
-  clearStatus("adminDataStatus");
-
-  const { data: sessionData, error: sessionError } =
-    await db.auth.getSession();
-
-  if (sessionError || !sessionData.session) {
-    document.getElementById("adminPanel").hidden = true;
-    document.getElementById("adminLoginForm").hidden = false;
-
-    showStatus(
-      "adminDataStatus",
-      "Please sign in again to access the dashboard.",
-      false
-    );
-
-    return;
-  }
+  requestsList.textContent = "Loading requests...";
+  tutorsList.textContent = "Loading applications...";
 
   try {
-    const { data: requests, error: requestsError } = await db
+    const { data: requests, error: requestError } = await db
       .from("tutor_requests")
-      .select(
-        "id,parent_name,parent_phone,parent_email,class_level,subject,tutoring_mode,location,budget,preferred_schedule,request_status,created_at"
-      )
+      .select("*")
       .order("created_at", { ascending: false });
 
-    if (requestsError) throw requestsError;
+    if (requestError) throw requestError;
 
-    renderRecords("requestsOutput", requests, [
-      ["Request ID", "id"],
-      ["Parent", "parent_name"],
-      ["Phone", "parent_phone"],
-      ["Email", "parent_email"],
-      ["Class", "class_level"],
-      ["Subject", "subject"],
-      ["Mode", "tutoring_mode"],
-      ["Location", "location"],
-      ["Budget (₦)", "budget"],
-      ["Schedule", "preferred_schedule"],
-      ["Status", "request_status"],
-      ["Submitted", "created_at"]
-    ], "No parent requests have been submitted yet.");
+    requestsList.replaceChildren();
 
-    const { data: tutors, error: tutorsError } = await db
+    if (!requests || !requests.length) {
+      requestsList.textContent = "No parent requests yet.";
+    } else {
+      requests.forEach(record => {
+        const box = document.createElement("div");
+        box.className = "record";
+        addLine(box, "Reference", record.id);
+        addLine(box, "Parent", record.parent_name);
+        addLine(box, "Phone", record.parent_phone);
+        addLine(box, "Email", record.parent_email);
+        addLine(box, "Class", record.class_level);
+        addLine(box, "Subject", record.subject);
+        addLine(box, "Mode", record.tutoring_mode);
+        addLine(box, "Location", record.location);
+        addLine(box, "Budget", record.budget);
+        addLine(box, "Schedule", record.preferred_schedule);
+        addLine(box, "Status", record.request_status);
+        addLine(box, "Submitted", record.created_at);
+        requestsList.appendChild(box);
+      });
+    }
+
+    const { data: tutors, error: tutorError } = await db
       .from("tutors")
-      .select(
-        "id,full_name,email,phone,location,qualifications,experience_years,subjects,class_levels,tutoring_modes,availability,expected_fee,fee_basis,verification_status,created_at"
-      )
+      .select("*")
       .order("created_at", { ascending: false });
 
-    if (tutorsError) throw tutorsError;
+    if (tutorError) throw tutorError;
 
-    renderRecords("tutorsOutput", tutors, [
-      ["Tutor ID", "id"],
-      ["Name", "full_name"],
-      ["Email", "email"],
-      ["Phone", "phone"],
-      ["Location", "location"],
-      ["Qualifications", "qualifications"],
-      ["Experience (years)", "experience_years"],
-      ["Subjects", "subjects"],
-      ["Classes", "class_levels"],
-      ["Modes", "tutoring_modes"],
-      ["Availability", "availability"],
-      ["Expected fee (₦)", "expected_fee"],
-      ["Fee basis", "fee_basis"],
-      ["Application status", "verification_status"],
-      ["Submitted", "created_at"]
-    ], "No tutor applications have been submitted yet.");
+    tutorsList.replaceChildren();
 
-    showStatus("adminDataStatus", "Dashboard data refreshed.", true);
+    if (!tutors || !tutors.length) {
+      tutorsList.textContent = "No tutor applications yet.";
+    } else {
+      tutors.forEach(record => {
+        const box = document.createElement("div");
+        box.className = "record";
+        addLine(box, "Reference", record.id);
+        addLine(box, "Name", record.full_name);
+        addLine(box, "Email", record.email);
+        addLine(box, "Phone", record.phone);
+        addLine(box, "Location", record.location);
+        addLine(box, "Qualifications", record.qualifications);
+        addLine(box, "Experience (years)", record.experience_years);
+        addLine(box, "Subjects", record.subjects);
+        addLine(box, "Class levels", record.class_levels);
+        addLine(box, "Tutoring modes", record.tutoring_modes);
+        addLine(box, "Preferred locations", record.preferred_locations);
+        addLine(box, "Availability", record.availability);
+        addLine(box, "Expected fee", record.expected_fee);
+        addLine(box, "Fee basis", record.fee_basis);
+        addLine(box, "Verification status", record.verification_status);
+        addLine(box, "Submitted", record.created_at);
+        tutorsList.appendChild(box);
+      });
+    }
 
   } catch (error) {
-    console.error("Dashboard loading failed:", error);
-
-    showStatus(
-      "adminDataStatus",
-      "Could not load dashboard data. Check the table permissions and administrator policies. " +
-      (error.message || ""),
-      false
-    );
+    requestsList.textContent = "Could not load requests: " + friendlyError(error);
+    tutorsList.textContent = "Could not load applications: " + friendlyError(error);
   }
 }
-</script>
 
+function addLine(container, label, content) {
+  if (content === null || content === undefined || content === "") return;
+  const p = document.createElement("p");
+  const strong = document.createElement("strong");
+  strong.textContent = label + ": ";
+  p.appendChild(strong);
+  p.appendChild(document.createTextNode(
+    Array.isArray(content) ? content.join(", ") : String(content)
+  ));
+  container.appendChild(p);
+}
+
+document.getElementById("refreshButton").addEventListener("click", loadAdminRecords);
+
+document.getElementById("logoutButton").addEventListener("click", async () => {
+  await db.auth.signOut();
+  document.getElementById("adminDashboard").classList.add("hidden");
+  document.getElementById("adminLoginForm").classList.remove("hidden");
+  document.getElementById("adminPassword").value = "";
+  showMessage("adminMessage", "You have signed out.");
+});
+
+})();
+</script>
 </body>
 </html>
