@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diamond Dynasty | Online Examinations</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
+  color: #202b3c;
+}
+
+header {
+  background: #123b70;
+  color: white;
+  padding: 22px 15px;
+  text-align: center;
+}
+
+header h1 { margin: 0 0 8px; }
+header p { margin: 0; }
+
+main {
+  max-width: 950px;
+  margin: 22px auto;
+  padding: 0 14px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px #0000000d;
+}
+
+h2 { color: #123b70; }
+
+label {
+  display: block;
+  margin-top: 13px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccd4df;
+  border-radius: 7px;
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  border-radius: 7px;
+  padding: 12px 16px;
+  margin-top: 14px;
+  background: #1457a6;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.secondary { background: #52657d; }
+.danger { background: #b42318; }
+.success { background: #167747; }
+
+.hidden { display: none !important; }
+
+.notice {
+  padding: 12px;
+  background: #edf4ff;
+  border-radius: 7px;
+  margin: 12px 0;
+}
+
+.question {
+  border: 1px solid #d9e1ec;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.option {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 12px 0;
+  font-weight: normal;
+}
+
+.option input {
+  width: auto;
+  margin-top: 3px;
+}
+
+.small { color: #617086; font-size: 14px; }
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #65738a;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Diamond Dynasty</h1>
+  <p>Making Learning Easier, Building Brighter Futures</p>
+  <p>Online Examination Centre</p>
+</header>
+
+<main>
+
+  <div class="card">
+    <a href="index.html">← Back to Homepage</a>
+    <p id="status" class="notice">Connecting to examination service...</p>
+  </div>
+
+  <!-- ADMIN LOGIN -->
+  <section class="card" id="loginSection">
+    <h2>Administrator Login</h2>
+    <p class="small">
+      Sign in with your existing Diamond Dynasty administrator account
+      to create and manage examinations.
+    </p>
+
+    <form id="loginForm">
+      <label>Email address</label>
+      <input id="adminEmail" type="email" required autocomplete="username">
+
+      <label>Password</label>
+      <input id="adminPassword" type="password" required
+             autocomplete="current-password">
+
+      <button type="submit">Sign In</button>
+    </form>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  <section id="adminSection" class="hidden">
+
+    <div class="card">
+      <h2>Examination Manager</h2>
+      <p id="adminIdentity" class="small"></p>
+      <button id="logoutButton" class="secondary">Sign Out</button>
+    </div>
+
+    <div class="card">
+      <h2>1. Create an Examination</h2>
+
+      <form id="createExamForm">
+        <label>Examination title</label>
+        <input id="examTitle" required
+               placeholder="e.g. First Term Mathematics Test">
+
+        <label>Class</label>
+        <select id="examClass" required>
+          <option value="">Select class</option>
+          <option>Primary 1</option>
+          <option>Primary 2</option>
+          <option>Primary 3</option>
+          <option>Primary 4</option>
+          <option>Primary 5</option>
+          <option>Primary 6</option>
+          <option>JSS 1</option>
+          <option>JSS 2</option>
+          <option>JSS 3</option>
+          <option>SS 1</option>
+          <option>SS 2</option>
+          <option>SS 3</option>
+        </select>
+
+        <label>Subject</label>
+        <input id="examSubject" required placeholder="e.g. Mathematics">
+
+        <label>Instructions</label>
+        <textarea id="examInstructions" rows="3"
+          placeholder="Read every question carefully."></textarea>
+
+        <label>Duration in minutes</label>
+        <input id="examDuration" type="number" min="1" max="300"
+               value="30" required>
+
+        <button type="submit">Create Examination</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>2. Add Questions</h2>
+
+      <label>Select examination</label>
+      <select id="questionExamSelect">
+        <option value="">Select an examination</option>
+      </select>
+
+      <form id="questionForm">
+        <label>Question</label>
+        <textarea id="questionText" rows="3" required></textarea>
+
+        <label>Option A</label>
+        <input id="optionA" required>
+
+        <label>Option B</label>
+        <input id="optionB" required>
+
+        <label>Option C</label>
+        <input id="optionC" required>
+
+        <label>Option D</label>
+        <input id="optionD" required>
+
+        <label>Correct answer</label>
+        <select id="correctAnswer" required>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+
+        <label>Marks</label>
+        <input id="questionMarks" type="number" min="1" value="1" required>
+
+        <button type="submit">Save Question</button>
+      </form>
+
+      <p class="small">
+        Save each question separately. Make sure you select the correct
+        examination before adding questions.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>3. Publish Examinations</h2>
+      <p class="small">
+        Only publish an examination after you have added all its questions.
+      </p>
+      <div id="adminExamList">Loading examinations...</div>
+    </div>
+
+    <div class="card">
+      <h2>4. Examination Results</h2>
+      <button id="refreshResults" class="secondary">Refresh Results</button>
+      <div id="resultsArea">Click Refresh Results to load results.</div>
+    </div>
+
+  </section>
+
+  <!-- LEARNER EXAM LIST -->
+  <section id="learnerSection" class="hidden">
+    <div class="card">
+      <h2>Available Examinations</h2>
+      <p>Select an examination to begin.</p>
+
+      <label>Filter by class</label>
+      <select id="learnerClass">
+        <option value="">All classes</option>
+        <option>Primary 1</option>
+        <option>Primary 2</option>
+        <option>Primary 3</option>
+        <option>Primary 4</option>
+        <option>Primary 5</option>
+        <option>Primary 6</option>
+        <option>JSS 1</option>
+        <option>JSS 2</option>
+        <option>JSS 3</option>
+        <option>SS 1</option>
+        <option>SS 2</option>
+        <option>SS 3</option>
+      </select>
+
+      <div id="learnerExamList">Loading examinations...</div>
+    </div>
+  </section>
+
+  <!-- LEARNER TAKING EXAM -->
+  <section id="takingSection" class="hidden">
+    <div class="card">
+      <h2 id="takingTitle"></h2>
+      <p id="takingDetails" class="small"></p>
+      <p id="takingInstructions" class="notice"></p>
+
+      <label>Learner's full name</label>
+      <input id="learnerName" maxlength="100" required>
+
+      <p id="timer" class="notice"></p>
+
+      <form id="takingForm">
+        <div id="questionDisplay"></div>
+        <button id="submitExamButton" type="submit">
+          Submit Examination
+        </button>
+      </form>
+
+      <button id="cancelExamButton" class="secondary">
+        Return to Examination List
+      </button>
+    </div>
+  </section>
+
+  <section id="scoreSection" class="hidden">
+    <div class="card">
+      <h2>Examination Submitted</h2>
+      <div id="scoreDisplay"></div>
+      <button id="backToTests" class="success">Back to Examinations</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Diamond Dynasty · Making Learning Easier, Building Brighter Futures
+</footer>
+
+<script>
+const SUPABASE_URL = "https://nmurlbjnkhcpaosgicet.supabase.co";
+const SUPABASE_KEY = "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = id => document.getElementById(id);
+
+let currentUser = null;
+let currentExam = null;
+let currentQuestions = [];
+let examTimer = null;
+let examEndsAt = 0;
+let submitting = false;
+
+function message(text) {
+  $("status").textContent = text;
+}
+
+function showSection(id) {
+  [
+    "loginSection",
+    "adminSection",
+    "learnerSection",
+    "takingSection",
+    "scoreSection"
+  ].forEach(section => $(section).classList.add("hidden"));
+
+  $(id).classList.remove("hidden");
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function showError(error) {
+  message(error?.message || String(error));
+}
+
+async function checkAdministrator(user) {
+  const { data, error } = await db
+    .from("site_admins")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  if (!data) {
+    await db.auth.signOut();
+    throw new Error("This account is not registered as a site administrator.");
+  }
+
+  return true;
+}
+
+async function refreshAdminExams() {
+  const { data, error } = await db
+    .from("examinations")
+    .select("id,title,class_level,subject,duration_minutes,is_published")
+    .order("id", { ascending: false });
+
+  if (error) throw error;
+
+  const select = $("questionExamSelect");
+  const previousValue = select.value;
+
+  select.innerHTML = '<option value="">Select an examination</option>';
+
+  (data || []).forEach(exam => {
+    const option = document.createElement("option");
+    option.value = exam.id;
+    option.textContent =
+      `${exam.title} — ${exam.class_level} ${exam.is_published ? "(Published)" : "(Draft)"}`;
+    select.appendChild(option);
+  });
+
+  if (previousValue) select.value = previousValue;
+
+  $("adminExamList").innerHTML = "";
+
+  if (!data?.length) {
+    $("adminExamList").textContent = "No examinations have been created yet.";
+    return;
+  }
+
+  for (const exam of data) {
+    const box = document.createElement("div");
+    box.className = "question";
+
+    const heading = document.createElement("h3");
+    heading.textContent = exam.title;
+
+    const details = document.createElement("p");
+    details.textContent =
+      `${exam.class_level} · ${exam.subject} · ${exam.duration_minutes} minutes · ` +
+      (exam.is_published ? "Published" : "Draft");
+
+    const publishButton = document.createElement("button");
+    publishButton.textContent = exam.is_published ? "Unpublish" : "Publish";
+    publishButton.className = exam.is_published ? "secondary" : "success";
+
+    publishButton.onclick = () => togglePublish(exam);
+
+    box.append(heading, details, publishButton);
+    $("adminExamList").appendChild(box);
+  }
+}
+
+async function togglePublish(exam) {
+  try {
+    const newValue = !exam.is_published;
+
+    if (newValue) {
+      const { count, error: countError } = await db
+        .from("examination_questions")
+        .select("id", { count: "exact", head: true })
+        .eq("examination_id", exam.id);
+
+      if (countError) throw countError;
+
+      if (!count) {
+        alert("Add at least one question before publishing.");
+        return;
+      }
+
+      const { count: keyCount, error: keyError } = await db
+        .from("examination_answer_keys")
+        .select("question_id", { count: "exact", head: true })
+        .in(
+          "question_id",
+          (await db
+            .from("examination_questions")
+            .select("id")
+            .eq("examination_id", exam.id)).data?.map(q => q.id) || []
+        );
+
+      if (keyError) throw keyError;
+
+      if (keyCount !== count) {
+        alert("Some questions are missing answer keys. Check the questions before publishing.");
+        return;
+      }
+
+      if (!confirm("Publish this examination for learners?")) return;
+    } else {
+      if (!confirm("Unpublish this examination?")) return;
+    }
+
+    const { error } = await db
+      .from("examinations")
+      .update({ is_published: newValue })
+      .eq("id", exam.id);
+
+    if (error) throw error;
+
+    await refreshAdminExams();
+    message("Examination updated successfully.");
+  } catch (error) {
+    showError(error);
+  }
+}
+
+async function refreshLearnerExams() {
+  const selectedClass = $("learnerClass").value;
+
+  let query = db
+    .from("examinations")
+    .select("id,title,class_level,subject,instructions,duration_minutes")
+    .eq("is_published", true)
+    .order("id", { ascending: false });
+
+  if (selectedClass) query = query.eq("class_level", selectedClass);
+
+  const { data, error } = await query;
+
+  if (error) throw error;
+
+  const container = $("learnerExamList");
+  container.innerHTML = "";
+
+  if (!data?.length) {
+    container.textContent = "No published examinations are available for this selection.";
+    return;
+  }
+
+  data.forEach(exam => {
+    const box = document.createElement("div");
+    box.className = "question";
+
+    const title = document.createElement("h3");
+    title.textContent = exam.title;
+
+    const details = document.createElement("p");
+    details.textContent =
+      `${exam.class_level} · ${exam.subject} · ${exam.duration_minutes} minutes`;
+
+    const button = document.createElement("button");
+    button.textContent = "Start Examination";
+    button.onclick = () => startExam(exam);
+
+    box.append(title, details, button);
+    container.appendChild(box);
+  });
+}
+
+async function startExam(exam) {
+  try {
+    if (!confirm(`Start "${exam.title}" now?`)) return;
+
+    const { data, error } = await db
+      .from("examination_questions")
+      .select(
+        "id,examination_id,question_text,option_a,option_b,option_c,option_d,marks,question_order"
+      )
+      .eq("examination_id", exam.id)
+      .order("question_order", { ascending: true })
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+
+    if (!data?.length) {
+      alert("This examination has no questions yet.");
+      return;
+    }
+
+    currentExam = exam;
+    currentQuestions = data;
+    submitting = false;
+
+    $("takingTitle").textContent = exam.title;
+    $("takingDetails").textContent =
+      `${exam.class_level} · ${exam.subject} · ${data.length} questions`;
+    $("takingInstructions").textContent = exam.instructions || "Answer every question.";
+
+    $("questionDisplay").innerHTML = "";
+
+    data.forEach((q, index) => {
+      const box = document.createElement("div");
+      box.className = "question";
+
+      const title = document.createElement("h3");
+      title.textContent = `${index + 1}. ${q.question_text} (${q.marks} mark${q.marks === 1 ? "" : "s"})`;
+      box.appendChild(title);
+
+      [
+        ["A", q.option_a],
+        ["B", q.option_b],
+        ["C", q.option_c],
+        ["D", q.option_d]
+      ].forEach(([letter, optionText]) => {
+        const label = document.createElement("label");
+        label.className = "option";
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `question_${q.id}`;
+        radio.value = letter;
+
+        const text = document.createElement("span");
+        text.textContent = `${letter}. ${optionText}`;
+
+        label.append(radio, text);
+        box.appendChild(label);
+      });
+
+      $("questionDisplay").appendChild(box);
+    });
+
+    showSection("takingSection");
+
+    examEndsAt = Date.now() + exam.duration_minutes * 60 * 1000;
+    updateTimer();
+
+    clearInterval(examTimer);
+    examTimer = setInterval(updateTimer, 1000);
+  } catch (error) {
+    showError(error);
+  }
+}
+
+function updateTimer() {
+  const remaining = Math.max(0, examEndsAt - Date.now());
+  const seconds = Math.floor(remaining / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const remainder = seconds % 60;
+
+  $("timer").textContent =
+    `Time remaining: ${minutes}:${String(remainder).padStart(2, "0")}`;
+
+  if (remaining <= 0 && !submitting) {
+    clearInterval(examTimer);
+    $("takingForm").requestSubmit();
+  }
+}
+
+async function submitExam(event) {
+  event.preventDefault();
+
+  if (submitting) return;
+
+  const name = $("learnerName").value.trim();
+
+  if (name.length < 2) {
+    alert("Enter the learner's full name before submitting.");
+    return;
+  }
+
+  const answers = currentQuestions.map(q => {
+    const selected = document.querySelector(
+      `input[name="question_${q.id}"]:checked`
+    );
+
+    return {
+      question_id: String(q.id),
+      answer: selected ? selected.value : ""
+    };
+  });
+
+  if (Date.now() < examEndsAt &&
+      !confirm("Are you sure you want to submit your examination?")) {
+    return;
+  }
+
+  submitting = true;
+  $("submitExamButton").disabled = true;
+  clearInterval(examTimer);
+
+  try {
+    const { data, error } = await db.rpc("submit_examination", {
+      p_examination_id: currentExam.id,
+      p_learner_name: name,
+      p_answers: answers
+    });
+
+    if (error) throw error;
+
+    $("scoreDisplay").innerHTML =
+      `<p><strong>Learner:</strong> ${escapeHTML(name)}</p>` +
+      `<p><strong>Score:</strong> ${escapeHTML(data.score)} / ${escapeHTML(data.total_marks)}</p>` +
+      `<p><strong>Percentage:</strong> ${escapeHTML(data.percentage ?? (100 * data.score / data.total_marks).toFixed(2))}%</p>`;
+
+    showSection("scoreSection");
+    message("Examination submitted successfully.");
+  } catch (error) {
+    submitting = false;
+    $("submitExamButton").disabled = false;
+    showError(error);
+    alert("Submission failed: " + (error.message || error));
+  }
+}
+
+async function refreshResults() {
+  try {
+    const { data, error } = await db
+      .from("examination_attempts")
+      .select("id,examination_id,learner_name,score,total_marks,submitted_at")
+      .order("submitted_at", { ascending: false });
+
+    if (error) throw error;
+
+    const container = $("resultsArea");
+    container.innerHTML = "";
+
+    if (!data?.length) {
+      container.textContent = "No examination results have been submitted yet.";
+      return;
+    }
+
+    data.forEach(result => {
+      const box = document.createElement("div");
+      box.className = "question";
+
+      const details = document.createElement("p");
+      details.textContent =
+        `${result.learner_name} · Score: ${result.score}/${result.total_marks} · ` +
+        new Date(result.submitted_at).toLocaleString();
+
+      box.appendChild(details);
+      container.appendChild(box);
+    });
+  } catch (error) {
+    showError(error);
+    $("resultsArea").textContent =
+      "Could not load results. Check the administrator permissions.";
+  }
+}
+
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  try {
+    message("Signing in...");
+
+    const { data, error } = await db.auth.signInWithPassword({
+      email: $("adminEmail").value.trim(),
+      password: $("adminPassword").value
+    });
+
+    if (error) throw error;
+
+    await checkAdministrator(data.user);
+
+    currentUser = data.user;
+    $("adminIdentity").textContent = data.user.email;
+
+    showSection("adminSection");
+    await refreshAdminExams();
+
+    message("Administrator signed in.");
+  } catch (error) {
+    showError(error);
+    alert(error.message || error);
+  }
+});
+
+$("logoutButton").addEventListener("click", async () => {
+  await db.auth.signOut();
+  currentUser = null;
+  showSection("loginSection");
+  message("Signed out.");
+});
+
+$("createExamForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  try {
+    if (!currentUser) throw new Error("Sign in as an administrator first.");
+
+    const payload = {
+      title: $("examTitle").value.trim(),
+      class_level: $("examClass").value,
+      subject: $("examSubject").value.trim(),
+      instructions: $("examInstructions").value.trim(),
+      duration_minutes: Number($("examDuration").value),
+      is_published: false
+    };
+
+    const { data, error } = await db
+      .from("examinations")
+      .insert(payload)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    $("createExamForm").reset();
+    $("examDuration").value = 30;
+
+    await refreshAdminExams();
+    $("questionExamSelect").value = data.id;
+
+    message("Examination created. Add its questions next.");
+    alert("Examination created successfully.");
+  } catch (error) {
+    showError(error);
+    alert(error.message || error);
+  }
+});
+
+$("questionForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  try {
+    if (!currentUser) throw new Error("Sign in as an administrator first.");
+
+    const examId = $("questionExamSelect").value;
+
+    if (!examId) throw new Error("Select an examination first.");
+
+    const correctAnswer = $("correctAnswer").value;
+
+    const question = {
+      examination_id: Number(examId),
+      question_text: $("questionText").value.trim(),
+      option_a: $("optionA").value.trim(),
+      option_b: $("optionB").value.trim(),
+      option_c: $("optionC").value.trim(),
+      option_d: $("optionD").value.trim(),
+      correct_answer: correctAnswer,
+      marks: Number($("questionMarks").value)
+    };
+
+    const { data, error } = await db
+      .from("examination_questions")
+      .insert(question)
+      .select("id")
+      .single();
+
+    if (error) throw error;
+
+    const { error: keyError } = await db
+      .from("examination_answer_keys")
+      .insert({
+        question_id: data.id,
+        correct_answer: correctAnswer
+      });
+
+    if (keyError) {
+      await db.from("examination_questions").delete().eq("id", data.id);
+      throw keyError;
+    }
+
+    $("questionForm").reset();
+    $("questionMarks").value = 1;
+
+    message("Question and answer key saved.");
+    alert("Question saved successfully.");
+  } catch (error) {
+    showError(error);
+    alert(error.message || error);
+  }
+});
+
+$("refreshResults").addEventListener("click", refreshResults);
+
+$("learnerClass").addEventListener("change", async () => {
+  try {
+    await refreshLearnerExams();
+  } catch (error) {
+    showError(error);
+  }
+});
+
+$("takingForm").addEventListener("submit", submitExam);
+
+$("cancelExamButton").addEventListener("click", async () => {
+  clearInterval(examTimer);
+  submitting = false;
+  showSection("learnerSection");
+
+  try {
+    await refreshLearnerExams();
+  } catch (error) {
+    showError(error);
+  }
+});
+
+$("backToTests").addEventListener("click", async () => {
+  showSection("learnerSection");
+
+  try {
+    await refreshLearnerExams();
+  } catch (error) {
+    showError(error);
+  }
+});
+
+async function initialize() {
+  try {
+    const { data: sessionData } = await db.auth.getSession();
+
+    if (sessionData.session?.user) {
+      try {
+        await checkAdministrator(sessionData.session.user);
+
+        currentUser = sessionData.session.user;
+        $("adminIdentity").textContent = currentUser.email;
+
+        showSection("adminSection");
+        await refreshAdminExams();
+
+        message("Administrator session restored.");
+        return;
+      } catch (error) {
+        console.warn("No administrator session:", error.message);
+      }
+    }
+
+    showSection("learnerSection");
+    await refreshLearnerExams();
+
+    message("Ready. Select an examination to begin.");
+  } catch (error) {
+    showSection("learnerSection");
+    message("Connection error: " + (error.message || error));
+  }
+}
+
+initialize();
+</script>
+
+</body>
+</html>
