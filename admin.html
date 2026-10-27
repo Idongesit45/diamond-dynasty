@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +35,7 @@ nav button{margin:0}
 .section.active{display:block}
 #app{display:none}
 footer{text-align:center;padding:22px;color:#647086;font-size:13px}
+.exam-button{background:#0b7650}
 </style>
 </head>
 <body>
@@ -73,28 +75,25 @@ footer{text-align:center;padding:22px;color:#647086;font-size:13px}
 </section>
 
 <nav>
-<button data-tab="materials">Learning Materials</button>
-<button data-tab="revision">Revision Centre</button>
-<button data-tab="settings">Website Settings</button>
+<button type="button" data-tab="materials">Learning Materials</button>
+<button type="button" data-tab="revision">Revision Centre</button>
+<button type="button" data-tab="settings">Website Settings</button>
+<button type="button" class="exam-button" id="openExams">Examination Centre</button>
 </nav>
 
 <section id="materials" class="section active">
 <div class="panel">
 <h2>Upload Learning Materials</h2>
 <p class="small">Available classes: Primary 1–6, JSS 1–3, and SS 1–3.</p>
-
 <form id="materialForm">
 <label for="materialTitle">Material title</label>
 <input id="materialTitle" required maxlength="180" placeholder="e.g. Introduction to Algebra">
-
 <div class="grid">
 <div>
 <label for="materialClass">Class</label>
 <select id="materialClass" required>
 <option value="">Select class</option>
-<option>Primary 1</option><option>Primary 2</option>
-<option>Primary 3</option><option>Primary 4</option>
-<option>Primary 5</option><option>Primary 6</option>
+<option>Primary 1</option><option>Primary 2</option><option>Primary 3</option><option>Primary 4</option><option>Primary 5</option><option>Primary 6</option>
 <option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
 <option>SS 1</option><option>SS 2</option><option>SS 3</option>
 </select>
@@ -104,52 +103,34 @@ footer{text-align:center;padding:22px;color:#647086;font-size:13px}
 <input id="materialSubject" required list="subjects" placeholder="Choose or type a subject">
 </div>
 </div>
-
 <datalist id="subjects">
-<option value="Mathematics"><option value="English Language">
-<option value="English Studies"><option value="Basic Science">
-<option value="Basic Science and Technology"><option value="Basic Technology">
-<option value="Physics"><option value="Chemistry"><option value="Biology">
-<option value="Further Mathematics"><option value="Economics">
-<option value="Government"><option value="Literature in English">
-<option value="Geography"><option value="History"><option value="Accounting">
-<option value="Commerce"><option value="Business Studies">
-<option value="Computer Studies"><option value="Agricultural Science">
-<option value="Social Studies"><option value="Civic Education">
-<option value="Christian Religious Studies"><option value="Religious Studies">
-<option value="Physical and Health Education"><option value="Creative Arts">
-<option value="Food and Nutrition"><option value="Technical Drawing">
-<option value="Data Processing"><option value="Marketing">
-<option value="Financial Accounting"><option value="Insurance">
-<option value="Home Economics"><option value="French">
-<option value="Yoruba"><option value="Urhobo"><option value="Music">
+<option value="Mathematics"><option value="English Language"><option value="English Studies">
+<option value="Basic Science"><option value="Basic Science and Technology"><option value="Basic Technology">
+<option value="Physics"><option value="Chemistry"><option value="Biology"><option value="Further Mathematics">
+<option value="Economics"><option value="Government"><option value="Literature in English"><option value="Geography">
+<option value="History"><option value="Accounting"><option value="Commerce"><option value="Business Studies">
+<option value="Computer Studies"><option value="Agricultural Science"><option value="Social Studies">
+<option value="Civic Education"><option value="Christian Religious Studies"><option value="Religious Studies">
+<option value="Physical and Health Education"><option value="Creative Arts"><option value="Food and Nutrition">
+<option value="Technical Drawing"><option value="Data Processing"><option value="Marketing"><option value="Financial Accounting">
+<option value="Insurance"><option value="Home Economics"><option value="French"><option value="Yoruba">
+<option value="Urhobo"><option value="Music">
 </datalist>
-
 <label for="materialType">Material type</label>
 <select id="materialType">
-<option value="note">Lesson Note</option>
-<option value="worksheet">Worksheet</option>
-<option value="document">Document</option>
-<option value="video">Video</option>
-<option value="audio">Audio</option>
-<option value="image">Image</option>
-<option value="other">Other</option>
+<option value="note">Lesson Note</option><option value="worksheet">Worksheet</option><option value="document">Document</option>
+<option value="video">Video</option><option value="audio">Audio</option><option value="image">Image</option><option value="other">Other</option>
 </select>
-
 <label for="materialDescription">Description (optional)</label>
 <textarea id="materialDescription" placeholder="Brief description of the material"></textarea>
-
 <label for="materialFile">Choose file (optional if using a URL)</label>
 <input id="materialFile" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.webp,.mp3,.mp4,.webm,.wav">
-
 <label for="materialVideo">Video or external resource URL (optional)</label>
 <input id="materialVideo" type="url" placeholder="https://...">
-
 <p class="small">Maximum file size: 50 MB. You must select a file or enter a URL.</p>
 <button type="submit">Save Learning Material</button>
 </form>
 </div>
-
 <div class="panel">
 <h2>Manage Learning Materials</h2>
 <button id="refreshMaterials" class="secondary">Refresh Materials</button>
@@ -161,21 +142,16 @@ footer{text-align:center;padding:22px;color:#647086;font-size:13px}
 <div class="panel">
 <h2>Revision Centre</h2>
 <p class="small">Add revision materials, practice links, and Google Forms quizzes for any of the 12 classes.</p>
-
 <form id="linkForm">
 <label for="linkTitle">Resource title</label>
 <input id="linkTitle" required maxlength="180" placeholder="e.g. SS 1 Mathematics Revision Test">
-
 <div class="grid">
 <div>
 <label for="linkClass">Class</label>
 <select id="linkClass" required>
 <option value="">Select class</option>
-<option>Primary 1</option><option>Primary 2</option>
-<option>Primary 3</option><option>Primary 4</option>
-<option>Primary 5</option><option>Primary 6</option>
-<option>JSS 1</option><option>JSS 2</option><option>JSS 3</option>
-<option>SS 1</option><option>SS 2</option><option>SS 3</option>
+<option>Primary 1</option><option>Primary 2</option><option>Primary 3</option><option>Primary 4</option><option>Primary 5</option><option>Primary 6</option>
+<option>JSS 1</option><option>JSS 2</option><option>JSS 3</option><option>SS 1</option><option>SS 2</option><option>SS 3</option>
 </select>
 </div>
 <div>
@@ -183,23 +159,15 @@ footer{text-align:center;padding:22px;color:#647086;font-size:13px}
 <input id="linkSubject" required list="subjects" placeholder="Choose or type a subject">
 </div>
 </div>
-
 <label for="linkType">Resource type</label>
-<select id="linkType">
-<option value="revision">Revision Material / Practice Link</option>
-<option value="google_form">Google Forms Quiz or Test</option>
-</select>
-
+<select id="linkType"><option value="revision">Revision Material / Practice Link</option><option value="google_form">Google Forms Quiz or Test</option></select>
 <label for="linkUrl">Resource URL</label>
 <input id="linkUrl" type="url" required placeholder="https://...">
-
 <label for="linkDescription">Description (optional)</label>
 <textarea id="linkDescription" placeholder="Instructions for learners"></textarea>
-
 <button type="submit">Add Resource</button>
 </form>
 </div>
-
 <div class="panel">
 <h2>Manage Revision Resources</h2>
 <button id="refreshLinks" class="secondary">Refresh Resources</button>
@@ -211,33 +179,17 @@ footer{text-align:center;padding:22px;color:#647086;font-size:13px}
 <div class="panel">
 <h2>Website Information</h2>
 <p class="small">Changes saved here can be displayed on the public website.</p>
-
 <form id="settingsForm">
-<label for="aboutUs">About Us</label>
-<textarea id="aboutUs"></textarea>
-
-<label for="mission">Our Mission</label>
-<textarea id="mission"></textarea>
-
-<label for="vision">Our Vision</label>
-<textarea id="vision"></textarea>
-
-<label for="contactPhone">Contact Phone</label>
-<input id="contactPhone" type="text">
-
-<label for="contactEmail">Contact Email</label>
-<input id="contactEmail" type="email">
-
-<label for="contactAddress">Contact Address</label>
-<textarea id="contactAddress"></textarea>
-
-<label for="contactWhatsApp">WhatsApp Number</label>
-<input id="contactWhatsApp" type="text" placeholder="e.g. 2348012345678">
-
+<label for="aboutUs">About Us</label><textarea id="aboutUs"></textarea>
+<label for="mission">Our Mission</label><textarea id="mission"></textarea>
+<label for="vision">Our Vision</label><textarea id="vision"></textarea>
+<label for="contactPhone">Contact Phone</label><input id="contactPhone" type="text">
+<label for="contactEmail">Contact Email</label><input id="contactEmail" type="email">
+<label for="contactAddress">Contact Address</label><textarea id="contactAddress"></textarea>
+<label for="contactWhatsApp">WhatsApp Number</label><input id="contactWhatsApp" type="text" placeholder="e.g. 2348012345678">
 <button type="submit">Save Website Information</button>
 </form>
 </div>
-
 <div class="panel">
 <h2>School Logo</h2>
 <form id="logoForm">
@@ -257,11 +209,11 @@ footer{text-align:center;padding:22px;color:#647086;font-size:13px}
 <script>
 "use strict";
 
-const SUPABASE_URL = "https://nmurlbjnkhcpaosgicet.supabase.co";
-const SUPABASE_KEY = "sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
-const BUCKET = "diamond-learning-files";
-const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $ = id => document.getElementById(id);
+const SUPABASE_URL="https://nmurlbjnkhcpaosgicet.supabase.co";
+const SUPABASE_KEY="sb_publishable_h9nfMHXi_aw-MVuLsFGj_A_XTxy1t_t";
+const BUCKET="diamond-learning-files";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
 
 function message(text,type="info"){
   const box=$("message");
@@ -273,18 +225,11 @@ function clearMessage(){
   $("message").className="notice";
 }
 function safe(value){
-  return String(value??"").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+  return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function clean(value){
-  return String(value||"").trim().replace(/\s+/g," ");
-}
+function clean(value){return String(value||"").trim().replace(/\s+/g," ");}
 function validUrl(value){
-  try{
-    const u=new URL(value);
-    return u.protocol==="https:"||u.protocol==="http:";
-  }catch{return false;}
+  try{const u=new URL(value);return u.protocol==="https:"||u.protocol==="http:";}catch{return false;}
 }
 function newFileName(name){
   const ext=name.includes(".")?name.split(".").pop().toLowerCase().replace(/[^a-z0-9]/g,""):"bin";
@@ -296,8 +241,7 @@ async function getUser(){
   return data.user;
 }
 async function verifyAdmin(user){
-  const {data,error}=await db.from("site_admins")
-    .select("user_id").eq("user_id",user.id).maybeSingle();
+  const {data,error}=await db.from("site_admins").select("user_id").eq("user_id",user.id).maybeSingle();
   if(error)throw error;
   if(!data)throw new Error("This account is not registered as an administrator.");
 }
@@ -310,7 +254,6 @@ function hideApp(){
   $("loginPanel").style.display="block";
   $("app").style.display="none";
 }
-
 async function initialize(){
   try{
     const user=await getUser();
@@ -323,6 +266,10 @@ async function initialize(){
     message(error.message||"Could not verify administrator access.","error");
   }
 }
+
+$("openExams").addEventListener("click",()=>{
+  window.location.href="exams.html";
+});
 
 $("loginForm").addEventListener("submit",async e=>{
   e.preventDefault();clearMessage();
@@ -337,25 +284,20 @@ $("loginForm").addEventListener("submit",async e=>{
     message("Login successful.","success");
     await Promise.all([loadMaterials(),loadLinks(),loadSettings()]);
   }catch(err){
-    await db.auth.signOut();hideApp();
-    message(err.message,"error");
+    await db.auth.signOut();hideApp();message(err.message,"error");
   }
 });
 
 $("resetPassword").addEventListener("click",async()=>{
   const email=$("email").value.trim();
   if(!email){message("Enter your administrator email first.","error");return;}
-  const {error}=await db.auth.resetPasswordForEmail(email,{
-    redirectTo:location.origin+location.pathname
-  });
+  const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
   if(error)message(error.message,"error");
   else message("If the email is registered, a password-reset email will be sent.","success");
 });
 
 $("logoutButton").addEventListener("click",async()=>{
-  await db.auth.signOut();
-  hideApp();
-  message("You have signed out.","success");
+  await db.auth.signOut();hideApp();message("You have signed out.","success");
 });
 
 document.querySelectorAll("nav [data-tab]").forEach(button=>{
@@ -368,15 +310,12 @@ document.querySelectorAll("nav [data-tab]").forEach(button=>{
 
 $("materialForm").addEventListener("submit",async e=>{
   e.preventDefault();clearMessage();
-  const button=e.submitter;
-  button.disabled=true;
+  const button=e.submitter;button.disabled=true;
   let uploadedPath=null;
-
   try{
     const user=await getUser();
     if(!user)throw new Error("Please sign in again.");
     await verifyAdmin(user);
-
     const title=clean($("materialTitle").value);
     const classLevel=clean($("materialClass").value);
     const subject=clean($("materialSubject").value);
@@ -384,51 +323,35 @@ $("materialForm").addEventListener("submit",async e=>{
     const description=$("materialDescription").value.trim();
     const file=$("materialFile").files[0];
     const videoUrl=$("materialVideo").value.trim();
-
     if(!file&&!videoUrl)throw new Error("Choose a file or enter a resource URL.");
     if(videoUrl&&!validUrl(videoUrl))throw new Error("Enter a valid HTTP or HTTPS URL.");
     if(file&&file.size>50*1024*1024)throw new Error("The file exceeds 50 MB.");
-
     if(file){
       uploadedPath=user.id+"/materials/"+newFileName(file.name);
-      const {error}=await db.storage.from(BUCKET).upload(uploadedPath,file,{
-        cacheControl:"3600",upsert:false,contentType:file.type||undefined
-      });
+      const {error}=await db.storage.from(BUCKET).upload(uploadedPath,file,{cacheControl:"3600",upsert:false,contentType:file.type||undefined});
       if(error)throw error;
     }
-
     const {error}=await db.from("learning_content").insert({
-      title,
-      class_level:classLevel,
-      subject,
-      content_type:contentType,
-      description,
-      file_path:uploadedPath,
-      video_url:videoUrl||null,
-      created_by:user.id
+      title,class_level:classLevel,subject,content_type:contentType,description,
+      file_path:uploadedPath,video_url:videoUrl||null,created_by:user.id
     });
     if(error)throw error;
-
     $("materialForm").reset();
     message("Learning material saved successfully.","success");
     await loadMaterials();
   }catch(error){
     if(uploadedPath)await db.storage.from(BUCKET).remove([uploadedPath]);
     message("Could not save material: "+error.message,"error");
-  }finally{
-    button.disabled=false;
-  }
+  }finally{button.disabled=false;}
 });
 
 async function loadMaterials(){
-  const box=$("materialsList");
-  box.textContent="Loading materials...";
+  const box=$("materialsList");box.textContent="Loading materials...";
   const {data,error}=await db.from("learning_content")
     .select("id,title,class_level,subject,content_type,description,file_path,video_url,created_at")
     .order("created_at",{ascending:false});
   if(error){box.textContent="Could not load materials: "+error.message;return;}
   if(!data?.length){box.textContent="No learning materials have been uploaded.";return;}
-
   box.innerHTML=data.map(item=>`
     <article class="item">
       <h3>${safe(item.title)}</h3>
@@ -439,22 +362,18 @@ async function loadMaterials(){
       <p class="small">${safe(item.created_at?new Date(item.created_at).toLocaleString():"")}</p>
       <button type="button" data-open-material="${safe(item.id)}">Open Resource</button>
       <button type="button" class="danger" data-delete-material="${safe(item.id)}">Delete</button>
-    </article>
-  `).join("");
-
+    </article>`).join("");
   box.querySelectorAll("[data-open-material]").forEach(button=>{
     button.addEventListener("click",async()=>{
       const item=data.find(x=>String(x.id)===button.dataset.openMaterial);
-      if(item.video_url&&validUrl(item.video_url)){
-        window.open(item.video_url,"_blank","noopener,noreferrer");
-      }else if(item.file_path){
+      if(item.video_url&&validUrl(item.video_url))window.open(item.video_url,"_blank","noopener,noreferrer");
+      else if(item.file_path){
         const {data:link,error}=await db.storage.from(BUCKET).createSignedUrl(item.file_path,3600);
         if(error)message("Could not open file: "+error.message,"error");
         else window.open(link.signedUrl,"_blank","noopener,noreferrer");
       }else message("No file or external URL is attached.","info");
     });
   });
-
   box.querySelectorAll("[data-delete-material]").forEach(button=>{
     button.addEventListener("click",async()=>{
       if(!confirm("Delete this learning material?"))return;
@@ -466,8 +385,7 @@ async function loadMaterials(){
           const {error:storageError}=await db.storage.from(BUCKET).remove([item.file_path]);
           if(storageError)message("Record deleted, but file removal failed: "+storageError.message,"error");
         }
-        await loadMaterials();
-        message("Learning material deleted.","success");
+        await loadMaterials();message("Learning material deleted.","success");
       }catch(err){message("Delete failed: "+err.message,"error");}
     });
   });
@@ -476,42 +394,32 @@ $("refreshMaterials").addEventListener("click",loadMaterials);
 
 $("linkForm").addEventListener("submit",async e=>{
   e.preventDefault();clearMessage();
-  const button=e.submitter;
-  button.disabled=true;
+  const button=e.submitter;button.disabled=true;
   try{
     const user=await getUser();
     if(!user)throw new Error("Please sign in again.");
     await verifyAdmin(user);
-
     const url=$("linkUrl").value.trim();
     if(!validUrl(url))throw new Error("Enter a valid HTTP or HTTPS URL.");
-
     const {error}=await db.from("learning_links").insert({
-      title:clean($("linkTitle").value),
-      class_level:clean($("linkClass").value),
-      subject:clean($("linkSubject").value),
-      link_type:$("linkType").value,
-      url,
+      title:clean($("linkTitle").value),class_level:clean($("linkClass").value),
+      subject:clean($("linkSubject").value),link_type:$("linkType").value,url,
       description:$("linkDescription").value.trim()
     });
     if(error)throw error;
-
-    $("linkForm").reset();
-    message("Resource added to the Revision Centre.","success");
+    $("linkForm").reset();message("Resource added to the Revision Centre.","success");
     await loadLinks();
   }catch(error){message("Could not add resource: "+error.message,"error");}
   finally{button.disabled=false;}
 });
 
 async function loadLinks(){
-  const box=$("linksList");
-  box.textContent="Loading resources...";
+  const box=$("linksList");box.textContent="Loading resources...";
   const {data,error}=await db.from("learning_links")
     .select("id,title,class_level,subject,link_type,url,description,created_at")
     .order("created_at",{ascending:false});
   if(error){box.textContent="Could not load resources: "+error.message;return;}
   if(!data?.length){box.textContent="No revision resources have been added.";return;}
-
   box.innerHTML=data.map(item=>`
     <article class="item">
       <h3>${safe(item.title)}</h3>
@@ -521,24 +429,20 @@ async function loadLinks(){
       <p>${safe(item.description||"")}</p>
       <button type="button" data-open-link="${safe(item.id)}">Open Link</button>
       <button type="button" class="danger" data-delete-link="${safe(item.id)}">Delete</button>
-    </article>
-  `).join("");
-
+    </article>`).join("");
   box.querySelectorAll("[data-open-link]").forEach(button=>{
     button.addEventListener("click",()=>{
       const item=data.find(x=>String(x.id)===button.dataset.openLink);
       if(item&&validUrl(item.url))window.open(item.url,"_blank","noopener,noreferrer");
     });
   });
-
   box.querySelectorAll("[data-delete-link]").forEach(button=>{
     button.addEventListener("click",async()=>{
       if(!confirm("Delete this revision resource?"))return;
       try{
         const {error}=await db.from("learning_links").delete().eq("id",button.dataset.deleteLink);
         if(error)throw error;
-        await loadLinks();
-        message("Revision resource deleted.","success");
+        await loadLinks();message("Revision resource deleted.","success");
       }catch(err){message("Delete failed: "+err.message,"error");}
     });
   });
@@ -546,19 +450,13 @@ async function loadLinks(){
 $("refreshLinks").addEventListener("click",loadLinks);
 
 const settingFields={
-  aboutUs:"about_us",
-  mission:"mission",
-  vision:"vision",
-  contactPhone:"contact_phone",
-  contactEmail:"contact_email",
-  contactAddress:"contact_address",
-  contactWhatsApp:"contact_whatsapp"
+  aboutUs:"about_us",mission:"mission",vision:"vision",contactPhone:"contact_phone",
+  contactEmail:"contact_email",contactAddress:"contact_address",contactWhatsApp:"contact_whatsapp"
 };
 
 async function loadSettings(){
   const {data,error}=await db.from("site_settings").select("setting_key,setting_value");
   if(error){message("Could not load website settings: "+error.message,"error");return;}
-
   const values={};
   (data||[]).forEach(row=>values[row.setting_key]=row.setting_value||"");
   Object.entries(settingFields).forEach(([field,key])=>$(field).value=values[key]||"");
@@ -567,19 +465,14 @@ async function loadSettings(){
 
 $("settingsForm").addEventListener("submit",async e=>{
   e.preventDefault();clearMessage();
-  const button=e.submitter;
-  button.disabled=true;
+  const button=e.submitter;button.disabled=true;
   try{
     const user=await getUser();
     if(!user)throw new Error("Please sign in again.");
     await verifyAdmin(user);
-
     const rows=Object.entries(settingFields).map(([field,key])=>({
-      setting_key:key,
-      setting_value:$(field).value.trim(),
-      updated_at:new Date().toISOString()
+      setting_key:key,setting_value:$(field).value.trim(),updated_at:new Date().toISOString()
     }));
-
     const {error}=await db.from("site_settings").upsert(rows,{onConflict:"setting_key"});
     if(error)throw error;
     message("Website information saved successfully.","success");
@@ -589,33 +482,23 @@ $("settingsForm").addEventListener("submit",async e=>{
 
 $("logoForm").addEventListener("submit",async e=>{
   e.preventDefault();clearMessage();
-  const button=e.submitter;
-  button.disabled=true;
+  const button=e.submitter;button.disabled=true;
   let path=null;
   try{
     const user=await getUser();
     if(!user)throw new Error("Please sign in again.");
     await verifyAdmin(user);
-
     const file=$("logoFile").files[0];
     if(!file)throw new Error("Choose a logo image.");
-    if(!["image/png","image/jpeg","image/webp"].includes(file.type))
-      throw new Error("Use a PNG, JPEG or WebP image.");
+    if(!["image/png","image/jpeg","image/webp"].includes(file.type))throw new Error("Use a PNG, JPEG or WebP image.");
     if(file.size>5*1024*1024)throw new Error("The logo must be 5 MB or smaller.");
-
     path=user.id+"/logo/"+newFileName(file.name);
-    const {error:uploadError}=await db.storage.from(BUCKET).upload(path,file,{
-      cacheControl:"3600",upsert:false,contentType:file.type
-    });
+    const {error:uploadError}=await db.storage.from(BUCKET).upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});
     if(uploadError)throw uploadError;
-
     const {error:saveError}=await db.from("site_settings").upsert({
-      setting_key:"school_logo",
-      setting_value:path,
-      updated_at:new Date().toISOString()
+      setting_key:"school_logo",setting_value:path,updated_at:new Date().toISOString()
     },{onConflict:"setting_key"});
     if(saveError)throw saveError;
-
     $("logoForm").reset();
     $("logoStatus").textContent="Logo uploaded successfully.";
     message("School logo saved. The homepage will display it if its logo-loading feature is enabled.","success");
@@ -625,7 +508,7 @@ $("logoForm").addEventListener("submit",async e=>{
   }finally{button.disabled=false;}
 });
 
-db.auth.onAuthStateChange((event)=>{
+db.auth.onAuthStateChange(event=>{
   if(event==="SIGNED_OUT")hideApp();
 });
 
