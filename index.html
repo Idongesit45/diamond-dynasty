@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,7 @@ nav{display:flex;flex-wrap:wrap;gap:7px}
 nav button{background:transparent;color:white;border:1px solid #627594;border-radius:6px;padding:9px 12px;cursor:pointer;font-weight:bold}
 nav button:hover{background:var(--blue)}
 .hero{padding:65px 18px;text-align:center;background:linear-gradient(135deg,#12264a,#2056a5);color:white}
-.hero h2{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0 auto 18px;max-width:800px}
+.hero h2{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0 auto 18px;max-width:800px;color:white}
 .hero p{max-width:700px;margin:0 auto 22px;font-size:17px}
 .primary-button,.secondary-button{display:inline-block;padding:12px 19px;border:0;border-radius:7px;font-weight:bold;text-decoration:none;cursor:pointer;margin:4px}
 .primary-button{background:var(--gold);color:#172033}
@@ -42,9 +43,17 @@ select{width:100%;padding:12px;border:1px solid #cbd4e2;border-radius:7px;font-s
 .badge{display:inline-block;background:#e9effa;color:#174681;padding:4px 8px;border-radius:5px;font-size:12px;margin:2px}
 .card p{margin:8px 0;white-space:pre-wrap}
 .link-button{display:inline-block;margin-top:8px;padding:9px 13px;background:var(--blue);color:white;text-decoration:none;border:0;border-radius:6px;font-weight:bold;cursor:pointer}
+.exam-panel{background:#fff;border:1px solid #dce4ef;border-radius:12px;padding:22px;margin-bottom:22px}
+.exam-panel p{margin-bottom:12px}
 footer{background:var(--navy);color:white;text-align:center;padding:28px 15px;margin-top:35px}
 .hidden{display:none!important}
-@media(max-width:600px){header{align-items:flex-start}.brand h1{font-size:19px}.hero{padding:45px 16px}.panel{padding:16px}nav button{font-size:12px;padding:8px}}
+@media(max-width:600px){
+header{align-items:flex-start}
+.brand h1{font-size:19px}
+.hero{padding:45px 16px}
+.panel,.exam-panel{padding:16px}
+nav button{font-size:12px;padding:8px}
+}
 </style>
 </head>
 <body>
@@ -58,19 +67,21 @@ footer{background:var(--navy);color:white;text-align:center;padding:28px 15px;ma
 </div>
 </div>
 <nav aria-label="Main navigation">
-<button data-goto="home">Home</button>
-<button data-goto="classes">Classes</button>
-<button data-goto="revision">Revision Centre</button>
-<button data-goto="about">About Us</button>
-<button data-goto="contact">Contact</button>
+<button type="button" data-goto="home">Home</button>
+<button type="button" data-goto="classes">Classes</button>
+<button type="button" data-goto="revision">Revision Centre</button>
+<button type="button" onclick="window.location.href='exams.html'">Examination Centre</button>
+<button type="button" data-goto="about">About Us</button>
+<button type="button" data-goto="contact">Contact</button>
 </nav>
 </header>
 
 <section class="hero" id="home">
 <h2>Welcome to Diamond Dynasty</h2>
-<p>Making learning easier and building brighter futures through accessible learning materials, practice activities and revision resources.</p>
-<button class="primary-button" data-goto="classes">Explore Learning Materials</button>
-<button class="secondary-button" data-goto="revision">Visit Revision Centre</button>
+<p>Making learning easier and building brighter futures through accessible learning materials, practice activities, revision resources and online examinations.</p>
+<button type="button" class="primary-button" data-goto="classes">Explore Learning Materials</button>
+<button type="button" class="secondary-button" data-goto="revision">Visit Revision Centre</button>
+<a class="primary-button" href="exams.html">Take an Examination</a>
 </section>
 
 <main>
@@ -99,7 +110,7 @@ footer{background:var(--navy);color:white;text-align:center;padding:28px 15px;ma
 <select id="subjectSelect"><option value="">Choose your subject</option></select>
 </div>
 </div>
-<button class="primary-button" id="findMaterials">Find Learning Materials</button>
+<button type="button" class="primary-button" id="findMaterials">Find Learning Materials</button>
 <div id="materialsStatus" class="status">Choose a class and subject to begin.</div>
 <div id="materialsResults"></div>
 </section>
@@ -129,9 +140,16 @@ footer{background:var(--navy);color:white;text-align:center;padding:28px 15px;ma
 <select id="revisionSubject"><option value="">Choose your subject</option></select>
 </div>
 </div>
-<button class="primary-button" id="findRevision">Find Revision Resources</button>
+<button type="button" class="primary-button" id="findRevision">Find Revision Resources</button>
 <div id="revisionStatus" class="status">Choose a class and subject to find revision materials.</div>
 <div id="revisionResults"></div>
+</section>
+
+<section class="exam-panel" id="examination">
+<h2>Examination Centre</h2>
+<p>Take your online examinations, answer questions and submit your work for marking.</p>
+<p>Choose your examination below to begin.</p>
+<a class="primary-button" href="exams.html">Open Examination Centre</a>
 </section>
 
 <section class="panel" id="about">
